@@ -1,47 +1,43 @@
 <script setup>
-import { totalCountInCart } from '~/js/client-helper.js'
+import { initialize } from '~/js/client-initialize'
+import { LOADING_TYPE } from '~/js/data-types/loading-type.js'
 
-const route = useRoute()
+const dataForComponentLoadingType = ref(LOADING_TYPE.LOADING)
+const error = ref()
 
-//функция вместо якорных ссылок, т.к. якорные ссылки не работают с контроллером меню
-function btnTopPressed() {
-   if (route.name == 'index') {
-      window.scrollTo({
-         top: 0,
-         behavior: "smooth",
-      })
+onBeforeMount(async () => {
+   try {
+      await initialize()
+      dataForComponentLoadingType.value = LOADING_TYPE.COMPLETE
+      // setBrowserTitleForClient()
    }
-   else {
-      navigateTo('/')
+   catch (err) {
+      dataForComponentLoadingType.value = LOADING_TYPE.ERROR
+      error.value = err
    }
+
+})
+
+function reloadPage() {
+   location.reload()
 }
-
 </script>
 
 <template>
 
    <!-- <cookies></cookies> -->
 
-   <slot></slot>
+   <slot />
 
-   <div class="flex h-12 bg-white fixed bottom-0 border-t border-gray-400 w-full md:hidden">
+   <BaseSpinner v-if="dataForComponentLoadingType === LOADING_TYPE.LOADING" />
 
-      <NuxtLink class="flex-1 flex justify-center items-center"
-                @click="btnTopPressed()">
-         <IconCircleUp />
-      </NuxtLink>
-
-      <NuxtLink class="flex-1 flex justify-center items-center"
-                to="/user">
-         <IconUser />
-      </NuxtLink>
-
-      <NuxtLink class="flex-1 flex justify-center items-center"
-                to="/cart">
-         <IconCart />
-      </NuxtLink>
-
+   <div v-if="dataForComponentLoadingType === LOADING_TYPE.ERROR">
+      <p>Ошибка загрузки данных. Попробуйте обновить страницу</p>
+      <p>{{ error }}</p>
+      <button @click="reloadPage()">Обновить</button>
    </div>
+
+   <MobileNav />
 
    <!-- <DialogMini /> -->
 
