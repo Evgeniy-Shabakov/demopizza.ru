@@ -1,0 +1,5 @@
+body {
+   min-height: 100vh;
+   background-color: var(--background_page_main_color);
+   color: var(--text_color_main);
+}
