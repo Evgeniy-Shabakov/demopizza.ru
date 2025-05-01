@@ -16,7 +16,7 @@ function btnCloseCookiesPressed() {
 </script>
 
 <template>
-   <div class="bg-[var(--background_page_elements_color)]"
+   <div class="bg-(--background-page-elements-color)"
         v-if="isCookiesAccepted == false">
 
       <div class="my-container">

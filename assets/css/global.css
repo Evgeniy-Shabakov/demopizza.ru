@@ -1,11 +1,11 @@
 body {
    min-height: 100vh;
-   background-color: var(--background_page_main_color);
-   color: var(--text_color_main);
+   background-color: var(--background-page-main-color);
+   color: var(--text-color-main);
 }
 
 @layer components {
    .my-container {
-     @apply container mx-auto px-2.5;
+      @apply container mx-auto px-2.5;
    }
- }
+}

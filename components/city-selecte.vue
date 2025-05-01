@@ -7,8 +7,8 @@ import { cities } from '~/js/axios-helper.js'
 <template>
 
    <select v-if="cities"
-           class="w-full p-1 text-base text-black bg-[var(--text-color-on-brand-color)] 
-                  rounded-[var(--border-radius-main)] "
+           class="w-full p-1 text-base text-black bg-(--text-color-on-brand-color) 
+                  rounded-(--border-radius-main) "
            v-model="selectedCity">
       <option v-for="city in cities"
               :value="city">{{ city.title }}</option>

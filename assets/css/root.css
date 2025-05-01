@@ -6,15 +6,16 @@
    --btn-font-size: 15px;
 
    /*эти парметры получаем с бэка, здесь установлены стартовые значения до загрузки с бэка*/
-   --background_page_main_color: #f3f4f6;
-   --background_page_elements_color: #ffffff;
+   --background-page-main-color: #f3f4f6;
+   --background-page-elements-color: #ffffff;
    --brand-color: rgb(107 114 128);
-   --text_color_main: #000000;
+   --text-color-main: #000000;
    --text-color-on-brand-color: #ffffff;
-   --text_color_accent: #42db00;
-   --bottom_nav_color: #a6a6a6;
+   --text-color-accent: #42db00;
+   --bottom-nav-color: #a6a6a6;
 
-   /*эти параметры устанавливаем при инициализации приложения с помощью функции, здесь установлены стартовые значения до инициализации*/
+   /*эти параметры устанавливаем при инициализации приложения с помощью функции,
+    здесь установлены стартовые значения до инициализации*/
    --brand-color-hover: rgb(156 163 175);
    --brand-color-active: rgb(17 24 39);
    --background-active-category: #f3f4f6;

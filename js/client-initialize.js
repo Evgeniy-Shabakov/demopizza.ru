@@ -165,13 +165,13 @@ export async function initializeDesign() {
       const root = document.documentElement
 
       // Устанавливаем новое значение для CSS переменной
-      root.style.setProperty('--background_page_main_color', activeDesign.value.background_page_main_color)
-      root.style.setProperty('--background_page_elements_color', activeDesign.value.background_page_elements_color)
+      root.style.setProperty('--background-page-main-color', activeDesign.value.background_page_main_color)
+      root.style.setProperty('--background-page-elements-color', activeDesign.value.background_page_elements_color)
       root.style.setProperty('--brand-color', activeDesign.value.brand_color)
-      root.style.setProperty('--text_color_main', activeDesign.value.text_color_main)
+      root.style.setProperty('--text-color-main', activeDesign.value.text_color_main)
       root.style.setProperty('--text-color-on-brand-color', activeDesign.value.text_color_on_brand_color)
-      root.style.setProperty('--text_color_accent', activeDesign.value.text_color_accent) 
-      root.style.setProperty('--bottom_nav_color', activeDesign.value.bottom_nav_color)
+      root.style.setProperty('--text-color-accent', activeDesign.value.text_color_accent) 
+      root.style.setProperty('--bottom-nav-color', activeDesign.value.bottom_nav_color)
 
       root.style.setProperty('--brand-color-hover', adjustColor(activeDesign.value.brand_color, -20))
       root.style.setProperty('--brand-color-active', adjustColor(activeDesign.value.brand_color, 20))

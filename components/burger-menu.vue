@@ -31,17 +31,17 @@ function closeBurgerMenu() {
       <button @click="toggleBurgerMenu"
               @click.stop>
          <IconXmark v-if="burgerMenuIsOpen"
-                    class="w-7 h-7 text-[var(--brand-color)]" />
+                    class="w-7 h-7 text-(--brand-color)" />
          <IconBurgerMenu v-else
-                         class="w-7 h-7 text-[var(--brand-color)]" />
+                         class="w-7 h-7 text-(--brand-color)" />
 
       </button>
 
       <div v-if="burgerMenuIsOpen"
-           class="fixed top-12 right-0 p-2 bg-[var(--brand-color)] rounded-[var(--border-radius-main)]"
+           class="fixed top-12 right-0 p-2 bg-(--brand-color) rounded-(--border-radius-main)"
            @click.stop>
 
-         <div class="space-y-3 text-xl text-center text-[var(--text-color-on-brand-color)]">
+         <div class="space-y-3 text-xl text-center text-(--text-color-on-brand-color)">
 
             <CitySelecte />
 
@@ -57,7 +57,7 @@ function closeBurgerMenu() {
                </span>
             </div>
 
-            <div class="bg-[var(--brand-color-hover)] p-2 rounded-[var(--border-radius-main)]">
+            <div class="bg-(--brand-color-hover) p-2 rounded-(--border-radius-main)">
                <a v-if="company && company.phone"
                   :href="`tel:${company.phone}`"
                   target="_blank"

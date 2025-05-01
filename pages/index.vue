@@ -8,9 +8,6 @@ const contentInner = ref()
 const categoriesItems = ref([])
 const contentSections = ref([])
 
-const btnBurgerMenu = ref(null)
-const burgerMenu = ref(null)
-
 onMounted(() => {
    // activateSelecteMenuController(contentSections.value, categoriesItems.value)
    // activateMoveMenuController(contentSections.value, categoriesItems.value, categoriesMenuInner.value)
@@ -45,7 +42,7 @@ function scrollToCategory(index) {
 
    <div>
 
-      <header class="bg-[var(--background_page_elements_color)]">
+      <header class="bg-(--background-page-elements-color)">
 
          <section class="shadow-md hidden md:block">
 
@@ -64,7 +61,7 @@ function scrollToCategory(index) {
                        class=" h-10 w-10 lg:h-20 lg:w-20"
                        :src="company.logo_url">
                   <div v-if="company">
-                     <h1 class="text-2xl lg:text-4xl font-bold">{{ company.brand_title }}</h1>
+                     <h1 class="text-2xl font-bold lg:text-4xl">{{ company.brand_title }}</h1>
                      <div class="hidden lg:block">{{ company.tagline }}</div>
                   </div>
                </div>
