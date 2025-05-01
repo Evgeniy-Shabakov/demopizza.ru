@@ -19,4 +19,9 @@
    --brand-color-active: rgb(17 24 39);
    --background-active-category: #f3f4f6;
    --border-color-order-settings: grey;
+
+
+   --inactive-color: var(--color-gray-600);
+
+   --border-radius-main: 10px;
 }

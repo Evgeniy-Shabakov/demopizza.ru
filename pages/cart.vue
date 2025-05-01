@@ -2,7 +2,7 @@
 </script>
 
 <template>
-   <div>
+   <div class="my-container">
       cart page
    </div>
 </template>

@@ -3,3 +3,9 @@ body {
    background-color: var(--background_page_main_color);
    color: var(--text_color_main);
 }
+
+@layer components {
+   .my-container {
+     @apply container mx-auto px-2.5;
+   }
+ }

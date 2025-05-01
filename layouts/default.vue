@@ -25,19 +25,29 @@ function reloadPage() {
 
 <template>
 
-   <!-- <cookies></cookies> -->
+   <Cookies />
 
    <slot />
 
+   <MobileNav />
+
    <BaseSpinner v-if="dataForComponentLoadingType === LOADING_TYPE.LOADING" />
 
-   <div v-if="dataForComponentLoadingType === LOADING_TYPE.ERROR">
-      <p>Ошибка загрузки данных. Попробуйте обновить страницу</p>
-      <p>{{ error }}</p>
-      <button @click="reloadPage()">Обновить</button>
-   </div>
+   <DialogStandart :isActive="dataForComponentLoadingType === LOADING_TYPE.ERROR">
+      <template #title>
+         Ошибка загрузки данных
+      </template>
 
-   <MobileNav />
+      <div class=" text-center">
+         <div>{{ error }}</div>
+         <div>Попробуйте обновить страницу </div>
+      </div>
+
+      <template #actions>
+         <BaseButton :click="reloadPage">Обновить</BaseButton>
+      </template>
+
+   </DialogStandart>
 
    <!-- <DialogMini /> -->
 

@@ -2,8 +2,8 @@
 </script>
 
 <template>
-   <div>
-      user page
+   <div class="my-container">
+      legal documents
    </div>
 </template>
 
