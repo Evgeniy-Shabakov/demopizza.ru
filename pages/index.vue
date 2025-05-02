@@ -81,8 +81,10 @@ function scrollToCategory(index) {
 
       </header>
 
-      index
-
+      <div class="my-container">
+         index
+      </div>
+      
    </div>
 
 </template>
