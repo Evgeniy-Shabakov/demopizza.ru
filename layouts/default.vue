@@ -8,8 +8,6 @@ const dataForComponentLoadingType = ref(LOADING_TYPE.LOADING)
 const error = ref()
 
 const categoriesMenu = ref()
-const categoriesMenuInner = ref()
-const contentInner = ref()
 const categoriesItems = ref([])
 const contentSections = ref([])
 
@@ -26,16 +24,17 @@ onBeforeMount(async () => {
 
 })
 
-watch([contentSections, categoriesItems], () => {
-   console.log(111111)
-   
-   if (contentSections.value.length > 0 && categoriesItems.value > 0) {
-      console.log(2222)
-      activateSelecteMenuController(contentSections.value, categoriesItems.value)
-      // activateMoveMenuController(contentSections.value, categoriesItems.value, categoriesMenuInner.value) 
-   }
-})
+checkAndActivateMenuControllers()
 
+function checkAndActivateMenuControllers() {
+   if (contentSections.value.length > 0 && categoriesItems.value.length > 0 && categoriesMenu.value) {
+      activateSelecteMenuController(contentSections.value, categoriesItems.value)
+      activateMoveMenuController(contentSections.value, categoriesItems.value, categoriesMenu.value);
+   }
+   else {
+      setTimeout(checkAndActivateMenuControllers, 300)
+   }
+}
 
 //функция вместо якорных ссылок, т.к. якорные ссылки не работают с MenuController
 function scrollToCategory(index) {
@@ -101,16 +100,15 @@ function reloadPage() {
          <div class="my-container">
 
             <div v-if="categories"
-                 ref="categoriesMenuInner"
                  class="flex gap-1 sm:gap-2 lg:flex-wrap">
 
                <div v-for="(category, index) in categories"
                     ref="categoriesItems"
-                    :key="index"
+                    :key="category.id"
                     @click="scrollToCategory(index)"
                     class="px-3 py-0.5 shadow-md text-nowrap cursor-pointer
-                  bg-(--background-page-main-color) rounded-(--border-radius-categories-menu)
-                  hover:text-(--brand-color) active:text-(--brand-color)">
+                           bg-(--background-page-main-color) rounded-(--border-radius-categories-menu)
+                           hover:text-(--brand-color) active:text-(--brand-color)">
                   {{ category.title }}
 
                </div>
@@ -121,8 +119,7 @@ function reloadPage() {
       </nav>
 
       <main class="my-container">
-         <div ref="contentInner"
-              class="py-4 space-y-8">
+         <div class="py-4 space-y-8">
 
             <section v-for="category in categories"
                      ref="contentSections">
@@ -139,14 +136,14 @@ function reloadPage() {
 
                      <ProductCard :product="product" />
 
-                     <!-- <template v-for="(userConfig, index) in product.userConfigs"
-                      :key="userConfig.userConfigID">
+                     <template v-for="(userConfig, index) in product.userConfigs"
+                               :key="userConfig.userConfigID">
 
-               <ProductCard :product="product"
-                            :userConfig="userConfig"
-                            :index="index" />
+                        <ProductCard :product="product"
+                                     :userConfig="userConfig"
+                                     :index="index" />
 
-            </template> -->
+                     </template>
 
                   </template>
 
@@ -162,14 +159,12 @@ function reloadPage() {
 
    <BaseSpinner v-if="dataForComponentLoadingType === LOADING_TYPE.LOADING" />
 
-
-
    <DialogStandart :isActive="dataForComponentLoadingType === LOADING_TYPE.ERROR">
       <template #title>
          Ошибка загрузки данных
       </template>
 
-      <div class=" text-center">
+      <div class="text-center">
          <div>{{ error }}</div>
          <div>Попробуйте обновить страницу </div>
       </div>

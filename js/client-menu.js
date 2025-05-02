@@ -33,12 +33,12 @@ export function activateSelecteMenuController(contentSections, categoriesItems) 
       categoriesItems[index].classList.add(...className.split(' '))
    }
 
-   onUnmounted(() => {
-      window.removeEventListener('scroll', scrollHandler)
-   })
+   // onUnmounted(() => {
+   //    window.removeEventListener('scroll', scrollHandler)
+   // })
 }
 
-export function activateMoveMenuController(contentSections, categoriesItems, categoriesMenuInner) {
+export function activateMoveMenuController(contentSections, categoriesItems, categoriesMenu) {
    const scrollHandler = throttle(moveMenu, 150)
 
    window.addEventListener('scroll', scrollHandler)
@@ -60,18 +60,18 @@ export function activateMoveMenuController(contentSections, categoriesItems, cat
    function moveMenu() {
       const index = getIndexCentrSection(contentSections)
 
-      categoriesMenuInner.scrollTo({
+      categoriesMenu.scrollTo({
          left: categoriesItems[index].offsetLeft
-            - (categoriesMenuInner.clientWidth / 2 - categoriesItems[index].clientWidth / 2),
+            - (categoriesMenu.clientWidth / 2 - categoriesItems[index].clientWidth / 2),
          behavior: "smooth",
       })
 
-      moveMenuHelper(categoriesMenuInner)
+      moveMenuHelper(categoriesMenu)
    }
 
-   onUnmounted(() => {
-      window.removeEventListener('scroll', scrollHandler)
-   })
+   // onUnmounted(() => {
+   //    window.removeEventListener('scroll', scrollHandler)
+   // })
 }
 
 export function getIndexCentrSection(arrayElements) {
