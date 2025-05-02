@@ -23,7 +23,7 @@ function btnTopPressed() {
    <div class="bg-(--background-page-elements-color) 
                text-(--bottom-nav-color)
                border-t border-(--bottom-nav-color)
-               fixed bottom-0 w-full h-12 flex
+               fixed bottom-0 w-full flex
                md:hidden">
 
       <button class="flex-1 flex justify-center items-center cursor-pointer

@@ -1,107 +1,109 @@
 import { throttle } from '~/js/helpers/throttle'
 
 export function activateSelecteMenuController(contentSections, categoriesItems) {
-    categoriesItems[0].classList.add('active') //выделение меню при старте
+   const className = 'bg-[var(--background-active-category)] text-[var(--brand-color)]'
+   
+   categoriesItems[0].classList.add(...className.split(' ')) //выделение меню при старте
 
-    const scrollHandler = throttle(selectMenu, 150)
+   const scrollHandler = throttle(selectMenu, 150)
 
-    //выделение пункта меню при скролле
-    window.addEventListener('scroll', scrollHandler)
+   //выделение пункта меню при скролле
+   window.addEventListener('scroll', scrollHandler)
 
-    //чтобы при клике меню сразу выделялось
-    categoriesItems.forEach((el, i) => {
-        el.addEventListener('click', () => {
-            categoriesItems.forEach(el => el.classList.remove('active'))
-            categoriesItems[i].classList.add('active')
+   //чтобы при клике меню сразу выделялось
+   categoriesItems.forEach((el, i) => {
+      el.addEventListener('click', () => {
+         categoriesItems.forEach(el => el.classList.remove(...className.split(' ')))
+         categoriesItems[i].classList.add(...className.split(' '))
 
-            window.removeEventListener('scroll', scrollHandler)
+         window.removeEventListener('scroll', scrollHandler)
 
-            window.addEventListener('scrollend', function scrollendHandler() {
-                window.removeEventListener('scrollend', scrollendHandler)
+         window.addEventListener('scrollend', function scrollendHandler() {
+            window.removeEventListener('scrollend', scrollendHandler)
 
-                window.addEventListener('scroll', scrollHandler)
-            })
-        })
-    })
+            window.addEventListener('scroll', scrollHandler)
+         })
+      })
+   })
 
-    function selectMenu() {
-        categoriesItems.forEach(el => el.classList.remove('active'))
+   function selectMenu() {
+      categoriesItems.forEach(el => el.classList.remove(...className.split(' ')))
 
-        let index = getIndexCentrSection(contentSections)
-        categoriesItems[index].classList.add('active')
-    }
+      let index = getIndexCentrSection(contentSections)
+      categoriesItems[index].classList.add(...className.split(' '))
+   }
 
-    onUnmounted(() => {
-        window.removeEventListener('scroll', scrollHandler)
-    })
+   onUnmounted(() => {
+      window.removeEventListener('scroll', scrollHandler)
+   })
 }
 
 export function activateMoveMenuController(contentSections, categoriesItems, categoriesMenuInner) {
-    const scrollHandler = throttle(moveMenu, 150)
+   const scrollHandler = throttle(moveMenu, 150)
 
-    window.addEventListener('scroll', scrollHandler)
+   window.addEventListener('scroll', scrollHandler)
 
-    //чтобы не было дерганья меню при клике
-    categoriesItems.forEach((el, i) => {
-        el.addEventListener('click', () => {
-            window.removeEventListener('scroll', scrollHandler)
+   //чтобы не было дерганья меню при клике
+   categoriesItems.forEach((el, i) => {
+      el.addEventListener('click', () => {
+         window.removeEventListener('scroll', scrollHandler)
 
-            window.addEventListener('scrollend', function scrollendHandler() {
-                window.removeEventListener('scrollend', scrollendHandler)
+         window.addEventListener('scrollend', function scrollendHandler() {
+            window.removeEventListener('scrollend', scrollendHandler)
 
-                window.addEventListener('scroll', scrollHandler)
-                moveMenu()
-            })
-        })
-    })
+            window.addEventListener('scroll', scrollHandler)
+            moveMenu()
+         })
+      })
+   })
 
-    function moveMenu() {
-        const index = getIndexCentrSection(contentSections)
+   function moveMenu() {
+      const index = getIndexCentrSection(contentSections)
 
-        categoriesMenuInner.scrollTo({
-            left: categoriesItems[index].offsetLeft 
+      categoriesMenuInner.scrollTo({
+         left: categoriesItems[index].offsetLeft
             - (categoriesMenuInner.clientWidth / 2 - categoriesItems[index].clientWidth / 2),
-            behavior: "smooth",
-        })
+         behavior: "smooth",
+      })
 
-        moveMenuHelper(categoriesMenuInner)
-    }
+      moveMenuHelper(categoriesMenuInner)
+   }
 
-    onUnmounted(() => {
-        window.removeEventListener('scroll', scrollHandler)
-    })
+   onUnmounted(() => {
+      window.removeEventListener('scroll', scrollHandler)
+   })
 }
 
 export function getIndexCentrSection(arrayElements) {
-    for (let i = 0; i < arrayElements.length; i++) {
-        const rect = arrayElements[i].getBoundingClientRect()
+   for (let i = 0; i < arrayElements.length; i++) {
+      const rect = arrayElements[i].getBoundingClientRect()
 
-        if (rect.bottom > window.innerHeight / 2 - 60)
-            return i
-    }
+      if (rect.bottom > window.innerHeight / 2 - 60)
+         return i
+   }
 }
 
 
 //дополнительная проверка когда в последний категории мало товаров 
 //чтобы меню проскроллилось доконца вправо 
 function moveMenuHelper(menu) {
-    
-    const documentHeight = document.documentElement.scrollHeight;
 
-    // Высота видимой области окна
-    const windowHeight = window.innerHeight;
+   const documentHeight = document.documentElement.scrollHeight;
 
-    // Текущая позиция прокрутки
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+   // Высота видимой области окна
+   const windowHeight = window.innerHeight;
 
-    // Проверка, достиг ли скролл конца страницы
-    if (scrollTop + windowHeight >= documentHeight) {
-        // Прокрутка до крайней правой позиции
-        menu.scrollTo({
-            left: menu.scrollWidth,
-            behavior: 'smooth' // Опционально, для плавной прокрутки
-        });
-    }
+   // Текущая позиция прокрутки
+   const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+   // Проверка, достиг ли скролл конца страницы
+   if (scrollTop + windowHeight >= documentHeight) {
+      // Прокрутка до крайней правой позиции
+      menu.scrollTo({
+         left: menu.scrollWidth,
+         behavior: 'smooth' // Опционально, для плавной прокрутки
+      });
+   }
 }
 
 

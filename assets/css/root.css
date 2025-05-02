@@ -1,9 +1,5 @@
 :root {
-   --scroll-padding-top: 65px;
    --vh-mobile: 1vh;
-   --popup-title-height: 45px;
-   --spinner-widht-higth: 40px;
-   --btn-font-size: 15px;
 
    /*эти парметры получаем с бэка, здесь установлены стартовые значения до загрузки с бэка*/
    --background-page-main-color: #f3f4f6;
