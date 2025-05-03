@@ -19,7 +19,7 @@
 
 
    --inactive-color: var(--color-gray-600);
+   --danger-color: var(--color-red-600);
 
-   --border-radius-main: 8px;
-   --border-radius-categories-menu: 30px;
+   --border-radius-main: 14px;
 }

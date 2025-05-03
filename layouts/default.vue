@@ -107,7 +107,7 @@ function reloadPage() {
                     :key="category.id"
                     @click="scrollToCategory(index)"
                     class="px-3 py-0.5 shadow-md text-nowrap cursor-pointer
-                           bg-(--background-page-main-color) rounded-(--border-radius-categories-menu)
+                           bg-(--background-page-main-color) rounded-(--border-radius-main)
                            hover:text-(--brand-color) active:text-(--brand-color)">
                   {{ category.title }}
 

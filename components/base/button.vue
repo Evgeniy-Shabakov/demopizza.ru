@@ -42,7 +42,7 @@ const props = defineProps({
    border-radius: var(--border-radius-main);
    background-color: var(--brand-color);
    color: var(--text-color-on-brand-color);
-   padding: 7px 10px;
+   padding: 8px 12px;
 }
 
 /*чтобы работало только на компе с мышкой */
@@ -57,7 +57,7 @@ const props = defineProps({
 }
 
 .btn--is-icon {
-   padding: 5px;
+   padding: 4px;
 }
 
 /* неактивная  */
