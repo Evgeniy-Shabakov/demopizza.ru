@@ -1,11 +1,13 @@
- <script setup>
- </script>
- 
- <template>
-    <div>
+<script setup>
+
+</script>
+
+<template>
+
+   <PopupPageWrapper>
       user
-    </div>
- </template>
- 
- <style scoped>
- </style>
+   </PopupPageWrapper>
+
+</template>
+
+<style scoped></style>

@@ -24,7 +24,7 @@ function btnTopPressed() {
                text-(--bottom-nav-color)
                border-t border-(--bottom-nav-color)
                fixed bottom-0 w-full flex
-               md:hidden">
+               lg:hidden">
 
       <button class="flex-1 flex justify-center items-center cursor-pointer
                      hover:text-(--brand-color) active:text-(--brand-color)"

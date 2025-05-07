@@ -2,9 +2,11 @@
 </script>
 
 <template>
-   <div class="my-container">
-      cart page
-   </div>
+
+   <PopupPageWrapper>
+      cart
+   </PopupPageWrapper>
+
 </template>
 
 <style scoped></style>

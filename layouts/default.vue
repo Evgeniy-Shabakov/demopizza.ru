@@ -47,6 +47,7 @@ function scrollToCategory(index) {
 function reloadPage() {
    location.reload()
 }
+
 </script>
 
 <template>
