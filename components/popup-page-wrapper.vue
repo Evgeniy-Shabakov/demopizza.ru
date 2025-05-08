@@ -4,7 +4,7 @@
 <template>
 
    <div class="fixed inset-0 bottom-[48px] lg:bottom-0
-             bg-gray-200/35 z-20  
+             bg-gray-200/35 z-30  
                flex items-center justify-center"
         @click="navigateTo('/', { scroll: false })">
 

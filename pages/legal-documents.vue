@@ -2,9 +2,9 @@
 </script>
 
 <template>
-   <div class="my-container">
-      legal documents
-   </div>
+   <PopupPageWrapper>
+      legal-documents
+   </PopupPageWrapper>
 </template>
 
 <style scoped></style>

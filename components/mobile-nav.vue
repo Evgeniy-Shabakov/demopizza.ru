@@ -41,7 +41,16 @@ function btnTopPressed() {
       <NuxtLink class="flex-1 flex justify-center items-center 
                        hover:text-(--brand-color) active:text-(--brand-color)"
                 to="/cart">
-         <IconCart />
+         <div class="relative">
+            <IconCart />
+            <span v-if="totalCountInCart > 0"
+                  class="absolute top-[-30%] right-[-30%] w-5 h-5 rounded-full text-sm
+                         flex items-center justify-center
+                         bg-(--brand-color) text-(--text-color-on-brand-color)">
+               {{ totalCountInCart }}
+            </span>
+         </div>
+
       </NuxtLink>
 
    </div>
