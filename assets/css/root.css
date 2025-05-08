@@ -18,7 +18,7 @@
    --border-color-order-settings: grey;
 
 
-   --inactive-color: var(--color-gray-600);
+   --inactive-color: var(--color-gray-500);
    --danger-color: var(--color-red-600);
 
    --border-radius-main: 14px;
