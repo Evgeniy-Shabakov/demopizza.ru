@@ -1,3 +1,4 @@
 @theme {
+   --breakpoint-minxs: 21rem;
    --breakpoint-xs: 28rem;
  }
