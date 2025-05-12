@@ -61,7 +61,9 @@ import { ORDER_TYPE } from '~/js/data-types/order-type'
             <BaseButton :active="totalProductPrice > 0 &&
                (selectedOrderType !== ORDER_TYPE.delivery ||
                   totalProductPrice > selectedCity.min_order_value_for_delivery)"
-                        :click="() => navigateTo('/order-panel')">Далее</BaseButton>
+                        :click="() => navigateTo('/order-panel')">
+               Далее
+            </BaseButton>
 
          </div>
 

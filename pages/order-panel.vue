@@ -127,7 +127,7 @@ async function sendOrder() {
 
    <PopupPageWrapper>
 
-
+      order-panel
       <template #actions>
 
 
