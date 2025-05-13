@@ -8,4 +8,27 @@ body {
    .my-container {
       @apply mx-auto px-2 lg:px-3 xl:container;
    }
+
+   .base-selecte {
+      @apply w-full p-1 text-base text-black bg-(--text-color-on-brand-color);
+      @apply border border-(--brand-color) rounded-(--border-radius-main);
+   }
+
+   .base-btn-in-popup-page {
+      @apply w-full mx-2;
+   }
+
+   .btn-selecte {
+      border: 1px solid var(--border-color-order-settings);
+      border-radius: var(--border-radius-main);
+      background-color: var(--background-page-main-color);
+      padding: 2px 6px;
+      text-wrap: nowrap;
+      cursor: pointer;
+   }
+
+   .btn-selecte--active {
+      background-color: var(--brand-color);
+      color: var(--text-color-on-brand-color);
+   }
 }

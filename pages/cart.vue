@@ -33,16 +33,9 @@ import { ORDER_TYPE } from '~/js/data-types/order-type'
 
       <template #actions>
 
-         <div class="flex items-center justify-between gap-2 h-full">
+         <div class="flex items-center justify-between gap-2 w-full">
 
-            <div class="grid grid-cols-[max-content_max-content] gap-1 gap-y-0 text-sm">
-               <span v-if="selectedOrderType == ORDER_TYPE.delivery">Товары: </span>
-               <span v-if="selectedOrderType == ORDER_TYPE.delivery">{{ totalProductPrice }}р.</span>
-               <span v-if="selectedOrderType == ORDER_TYPE.delivery">Доставка: </span>
-               <span v-if="selectedOrderType == ORDER_TYPE.delivery">{{ deliveryPrice }}р.</span>
-               <span>Итого: </span>
-               <span>{{ totalPrice }}р.</span>
-            </div>
+            <TotalBlock />
 
             <div v-if="selectedOrderType == ORDER_TYPE.delivery"
                  class="text-xs text-center">
@@ -61,6 +54,7 @@ import { ORDER_TYPE } from '~/js/data-types/order-type'
             <BaseButton :active="totalProductPrice > 0 &&
                (selectedOrderType !== ORDER_TYPE.delivery ||
                   totalProductPrice > selectedCity.min_order_value_for_delivery)"
+                        class="w-1/4"
                         :click="() => navigateTo('/order-panel')">
                Далее
             </BaseButton>

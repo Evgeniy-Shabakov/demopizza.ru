@@ -130,7 +130,7 @@ async function loginVue() {
                   {{ inputedCode.length == 0 ? codeError : '' }}
                </div>
             </div>
-            
+
          </div>
 
          <div class="h-16 text-sm text-center flex flex-col justify-end">
@@ -167,36 +167,29 @@ async function loginVue() {
 
       <template #actions>
 
-         <div class="h-full flex items-center justify-center">
+         <BaseButton v-if="openPhoneInput"
+                     class="base-btn-in-popup-page"
+                     :active="phoneNumberForServer.length == 12 && timerForSendVerifyCodeAllowed == null"
+                     :click="sendVerifyCodeHandler">
+            {{ timerForSendVerifyCodeAllowed == null ? 'ПРОДОЛЖИТЬ' : 'Отправить код повторно' }}
+         </BaseButton>
 
+         <template v-else>
 
-            <template v-if="openPhoneInput">
+            <BaseButton v-if="inputedCode.length == 4"
+                        class="base-btn-in-popup-page"
+                        :click="loginVue">
+               Подтвердить код
+            </BaseButton>
 
-               <BaseButton class="w-full mx-2"
-                           :active="phoneNumberForServer.length == 12 && timerForSendVerifyCodeAllowed == null"
-                           :click="sendVerifyCodeHandler">
-                  {{ timerForSendVerifyCodeAllowed == null ? 'ПРОДОЛЖИТЬ' : 'Отправить код повторно' }}
-               </BaseButton>
+            <BaseButton v-else
+                        class="base-btn-in-popup-page"
+                        :active="timerForSendVerifyCodeAllowed == null"
+                        :click="sendVerifyCodeHandler">
+               Отправить код повторно
+            </BaseButton>
 
-            </template>
-
-            <template v-else>
-
-               <BaseButton v-if="inputedCode.length == 4"
-                           class="w-full mx-2"
-                           :click="loginVue">
-                  Подтвердить код
-               </BaseButton>
-
-               <BaseButton v-else
-                           class="w-full mx-2"
-                           :active="timerForSendVerifyCodeAllowed == null"
-                           :click="sendVerifyCodeHandler">
-                  Отправить код повторно
-               </BaseButton>
-
-            </template>
-         </div>
+         </template>
 
       </template>
 
