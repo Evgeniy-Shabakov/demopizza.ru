@@ -107,7 +107,7 @@ async function sendOrder() {
       lastOrderForUser.value = res.data.data
 
       removeAllProductsFromCart()
-      navigateTo('/order-status-panel')
+      navigateTo('/order-status')
    } catch (error) {
       console.log(error)
 
@@ -180,10 +180,12 @@ async function sendOrder() {
 
          <div v-else>
 
-            <BaseLabel v-if="selectedOrderType == ORDER_TYPE.pickUp" class="mb-2">
+            <BaseLabel v-if="selectedOrderType == ORDER_TYPE.pickUp"
+                       class="mb-2">
                Выберите точку самовывоза
             </BaseLabel>
-            <BaseLabel v-else-if="selectedOrderType == ORDER_TYPE.inRestaurant" class="mb-2">
+            <BaseLabel v-else-if="selectedOrderType == ORDER_TYPE.inRestaurant"
+                       class="mb-2">
                Выберите ресторан
             </BaseLabel>
             <RestaurantSelecte />
@@ -251,8 +253,7 @@ async function sendOrder() {
 
                      <div class="flex items-center gap-1.5">
                         <img class="w-8"
-                             :src="product.image_url"
-                             alt="">
+                             :src="product.image_url">
                         <span>{{ product.title }}</span>
                      </div>
 

@@ -11,7 +11,7 @@ const onInput = (event) => {
 
 <template>
 
-   <textarea class="border border-(--brand-color) rounded-(--border-radius-main) w-full p-2"
+   <textarea class="border rounded-(--border-radius-main) w-full p-2"
              :value="modelValue"
              @input="onInput" />
 
