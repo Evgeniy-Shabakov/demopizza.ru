@@ -85,7 +85,7 @@ if (currentOrder.value == null) {
                </div>
 
                <div>
-                  <span> Стоимость: </span>
+                  <span> Итого: </span>
                   <span>{{ currentOrder.total_price }}р.</span>
                </div>
 
@@ -103,7 +103,7 @@ if (currentOrder.value == null) {
          </div>
 
          <div class="grid grid-cols-[1fr_max-content_max-content] gap-2 gap-x-4 items-center p-1
-                     text-sm border border-(--brand-color) rounded-(--border-radius-main) mb-2">
+                     text-sm border border-(--brand-color) rounded-(--border-radius-main)">
 
             <template v-for="product in currentOrder.products">
 
