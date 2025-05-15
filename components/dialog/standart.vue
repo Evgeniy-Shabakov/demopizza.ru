@@ -1,5 +1,10 @@
 <script setup>
-const props = defineProps(['isActive'])
+const props = defineProps({
+   isActive: {
+      type: Boolean,
+      default: false
+   }
+})
 
 </script>
 
@@ -7,19 +12,20 @@ const props = defineProps(['isActive'])
 
    <div v-if="isActive"
         class="dialog-standart"
-        @click="$emit('closeDialog', false)">
+        @click="$emit('closeDialog')">
 
       <div @click.stop
            class="dialog-standart__inner">
 
-         <h3 class="dialog-standart__inner-title">
-            <slot name="title"></slot>
+         <h3 class="text-xl font-semibold leading-6">
+            <slot name="title" />
          </h3>
 
+         <div class="text-center">
+            <slot />
+         </div>
 
-         <slot></slot>
-
-         <slot name="actions"></slot>
+         <slot name="actions" />
 
       </div>
 
@@ -32,6 +38,8 @@ const props = defineProps(['isActive'])
    position: fixed;
    inset: 0;
    background-color: rgba(211, 211, 211, 0.35);
+
+   z-index: 100;
 
    display: flex;
    align-items: center;
@@ -51,11 +59,5 @@ const props = defineProps(['isActive'])
    flex-direction: column;
    align-items: center;
    gap: 25px;
-}
-
-.dialog-standart__inner-title {
-   text-align: center;
-   font-size: 20px;
-   font-weight: 600;
 }
 </style>

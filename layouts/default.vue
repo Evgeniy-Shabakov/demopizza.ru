@@ -3,6 +3,7 @@ import { initialize } from '~/js/client-initialize'
 import { LOADING_TYPE } from '~/js/data-types/loading-type.js'
 import { company, categories, authUser } from '~/js/axios-helper'
 import { activateSelecteMenuController, activateMoveMenuController } from '~/js/client-menu'
+import { openCloseTimeDialogIsActive } from '~/js/open-close-time'
 
 const dataForComponentLoadingType = ref(LOADING_TYPE.LOADING)
 const error = ref()
@@ -165,10 +166,8 @@ function reloadPage() {
          Ошибка загрузки данных
       </template>
 
-      <div class="text-center">
-         <div>{{ error }}</div>
-         <div>Попробуйте обновить страницу </div>
-      </div>
+      <div>{{ error }}</div>
+      <div>Попробуйте обновить страницу </div>
 
       <template #actions>
          <BaseButton :click="reloadPage">Обновить</BaseButton>
@@ -176,6 +175,24 @@ function reloadPage() {
 
    </DialogStandart>
 
-   <!-- <DialogMini /> -->
+   <DialogStandart :isActive=openCloseTimeDialogIsActive
+                   @closeDialog="openCloseTimeDialogIsActive = false">
+      <template #title>
+         Внимание!
+      </template>
+
+      <div v-if="company">
+         Мы принимаем заказы
+         <br>
+         {{ `с ${company.open_time} до ${company.close_time}` }}
+         <br>
+         Пока вы можете добавить их в корзину
+      </div>
+
+      <template #actions>
+         <BaseButton :click="() => openCloseTimeDialogIsActive = false">Закрыть</BaseButton>
+      </template>
+
+   </DialogStandart>
 
 </template>
