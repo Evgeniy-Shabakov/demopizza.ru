@@ -1,0 +1,34 @@
+<script setup>
+</script>
+
+<template>
+   <div class="loader">
+      <div class="bar"></div>
+   </div>
+</template>
+
+<style scoped>
+.loader {
+   width: 100%;
+   height: 5px;
+   background-color: #e6e4e4;
+   border-radius: 5px;
+}
+
+.loader .bar {
+   height: 100%;
+   background-color: var(--brand-color);
+   animation: loading 1.5s infinite;
+   border-radius: 5px;
+}
+
+@keyframes loading {
+   0% {
+      width: 0;
+   }
+
+   100% {
+      width: 100%;
+   }
+}
+</style>

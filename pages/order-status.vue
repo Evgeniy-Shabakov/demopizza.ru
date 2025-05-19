@@ -14,7 +14,7 @@ if (currentOrder.value == null) {
 
       <h1 v-if="currentOrder"
           class="text-xl text-center">
-         <div class="font-bold">{{ currentOrder.city.title }}</div>
+         <div class="font-semibold">{{ currentOrder.city.title }}</div>
          <div class="text-(--text-color-accent)">({{ currentOrder.order_type }})</div>
       </h1>
 
@@ -86,7 +86,7 @@ if (currentOrder.value == null) {
 
                <div>
                   <span> Итого: </span>
-                  <span>{{ currentOrder.total_price }}р.</span>
+                  <span>{{ Number(currentOrder.total_price) }}р.</span>
                </div>
 
                <div>

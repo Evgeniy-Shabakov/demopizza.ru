@@ -4,6 +4,7 @@ import { LOADING_TYPE } from '~/js/data-types/loading-type.js'
 import { company, categories, authUser } from '~/js/axios-helper'
 import { activateSelecteMenuController, activateMoveMenuController } from '~/js/client-menu'
 import { openCloseTimeDialogIsActive } from '~/js/open-close-time'
+import { repeatOrderDialogIsActive, repeatOrderDialogContent } from '~/js/user-panel'
 
 const dataForComponentLoadingType = ref(LOADING_TYPE.LOADING)
 const error = ref()
@@ -191,6 +192,22 @@ function reloadPage() {
 
       <template #actions>
          <BaseButton :click="() => openCloseTimeDialogIsActive = false">Закрыть</BaseButton>
+      </template>
+
+   </DialogStandart>
+
+   <DialogStandart :isActive=repeatOrderDialogIsActive
+                   @closeDialog="repeatOrderDialogIsActive = false">
+      <template #title>
+         Внимание!
+      </template>
+
+      <div>
+         {{ repeatOrderDialogContent }}
+      </div>
+
+      <template #actions>
+         <BaseButton :click="() => repeatOrderDialogIsActive = false">Закрыть</BaseButton>
       </template>
 
    </DialogStandart>

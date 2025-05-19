@@ -127,7 +127,7 @@ async function sendOrder() {
 
       <h1 v-if="selectedCity"
           class="text-xl text-center">
-         <div class="font-bold">{{ selectedCity.title }}</div>
+         <div class="font-semibold">{{ selectedCity.title }}</div>
          <div class="text-(--text-color-accent)">{{ selectedOrderType }}</div>
          <div class="text-sm font-normal">(оформление заказа)</div>
          <BaseInvalidateText>{{ otherErrors }}</BaseInvalidateText>
