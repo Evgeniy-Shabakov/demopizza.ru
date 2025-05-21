@@ -44,23 +44,6 @@ function openOrderStatusPanel(order) {
    navigateTo('/order-status')
 }
 
-function openAddresses() {
-   navigateTo('/user/adresses')
-   router.push({ name: 'client.menu.popup.addresses' })
-}
-
-function openProfileManagement() {
-   navigateTo('/user/profile-management')
-}
-
-function openOrdersHistory() {
-   navigateTo('/user/orders-history')
-}
-
-function openUserEditPanel() {
-   navigateTo('/user/edit')
-}
-
 </script>
 
 <template>
@@ -80,21 +63,21 @@ function openUserEditPanel() {
          <section class="flex items-center justify-between gap-1">
             <span>{{ authUser.name || 'Гость' }}</span>
             <BaseButton :isIcon="true"
-                        :click="openUserEditPanel">
+                        :click="() => navigateTo('/user/edit')">
                <IconPenсil class="h-6 w-6 scale-85 -scale-x-85" />
             </BaseButton>
          </section>
 
          <BaseButton :isIcon="true"
-                     :click="openAddresses">
+                     :click="() => navigateTo('/user/adresses')">
             Адреса доставки
          </BaseButton>
          <BaseButton :isIcon="true"
-                     :click="openProfileManagement">
+                     :click="() => navigateTo('/user/profile-management')">
             Управление профилем
          </BaseButton>
          <BaseButton :isIcon="true"
-                     :click="openOrdersHistory">
+                     :click="() => navigateTo('/user/orders-history')">
             История заказов
          </BaseButton>
 

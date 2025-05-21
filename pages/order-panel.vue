@@ -156,7 +156,7 @@ async function sendOrder() {
                      </option>
                   </select>
 
-                  <NuxtLink to="/">
+                  <NuxtLink to="/user/adresses/create">
                      <BaseButton :isIcon="true">
                         <IconPlus />
                      </BaseButton>
@@ -168,7 +168,7 @@ async function sendOrder() {
 
             <div v-else
                  class="text-center">
-               <NuxtLink to="/">
+               <NuxtLink to="/user/adresses/create">
                   <BaseButton>
                      Добавить адрес доставки
                   </BaseButton>
