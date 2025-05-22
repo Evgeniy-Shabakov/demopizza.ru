@@ -10,28 +10,31 @@ import { ORDER_TYPE } from '~/js/data-types/order-type'
 
    <PopupPageWrapper>
 
-      <CitySelecte />
+      <template v-if="selectedCity">
 
-      <OrderTypeSettings></OrderTypeSettings>
+         <CitySelecte />
 
-      <div class="mt-2 flex flex-col gap-4">
-         <CartItem v-for="product in productsInCart"
-                   :key="product.userConfigID || product.id"
-                   :productOrUserConfig="product" />
+         <OrderTypeSettings></OrderTypeSettings>
 
-         <div v-if="selectedOrderType == ORDER_TYPE.delivery"
-              class="grid grid-cols-[100px_1fr_1fr] 
-               text-sm minxs:text-base
-               gap-1 minxs:gap-3 xs:gap-4 items-center
-               mt-5">
-            <IconTrack class="justify-self-center text-(--brand-color-active)" />
-            <div>Доставка</div>
-            <div class=" justify-self-end">{{ deliveryPrice }}р</div>
+         <div class="mt-2 flex flex-col gap-4">
+            <CartItem v-for="product in productsInCart"
+                      :key="product.userConfigID || product.id"
+                      :productOrUserConfig="product" />
+
+            <div v-if="selectedOrderType == ORDER_TYPE.delivery"
+                 class="grid grid-cols-[100px_1fr_1fr] 
+                     text-sm minxs:text-base
+                     gap-1 minxs:gap-3 xs:gap-4 items-center
+                     mt-5">
+               <IconTrack class="justify-self-center text-(--brand-color-active)" />
+               <div>Доставка</div>
+               <div class=" justify-self-end">{{ deliveryPrice }}р</div>
+            </div>
          </div>
-      </div>
 
+      </template>
 
-      <template #actions>
+      <template #actions v-if="selectedCity">
 
          <div class="flex items-center justify-between gap-2 w-full">
 
