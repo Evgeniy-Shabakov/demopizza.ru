@@ -24,7 +24,7 @@ onMounted(() => {
 
    //для dialog-info-mini расположенных внутри  popup-pages 
    // т.к. document.addEventListener('scroll', closeDialog) не отрабатывает в элементах с overflow
-   popupParentPage = dialogElement.value.closest('.client-popup-page-layout__main-section')
+   popupParentPage = dialogElement.value.closest('.popup-page__inner')
 })
 
 function activateDialog() {
@@ -37,6 +37,7 @@ function activateDialog() {
       document.addEventListener('scroll', closeDialog)
 
       if (popupParentPage) popupParentPage.addEventListener('scroll', closeDialog)
+      if (popupParentPage) popupParentPage.addEventListener('click', closeDialog)
    })
 }
 
@@ -46,6 +47,7 @@ function closeDialog() {
    document.removeEventListener('scroll', closeDialog)
 
    if (popupParentPage) popupParentPage.removeEventListener('scroll', closeDialog)
+   if (popupParentPage) popupParentPage.removeEventListener('click', closeDialog)
 }
 
 //на всякий случай удаляем обработчики при размонтировании компонента
@@ -54,6 +56,7 @@ onBeforeUnmount(() => {
    document.removeEventListener('scroll', closeDialog)
 
    if (popupParentPage) popupParentPage.removeEventListener('scroll', closeDialog)
+   if (popupParentPage) popupParentPage.removeEventListener('click', closeDialog)
 })
 
 </script>

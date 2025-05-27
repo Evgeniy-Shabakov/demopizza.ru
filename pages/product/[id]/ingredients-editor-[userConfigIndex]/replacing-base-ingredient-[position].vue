@@ -2,9 +2,9 @@
  </script>
  
  <template>
-    <div>
-      ingredients-editor
-    </div>
+    <PopupPageWrapper>
+      replacing base ingredient
+    </PopupPageWrapper>
  </template>
  
  <style scoped>

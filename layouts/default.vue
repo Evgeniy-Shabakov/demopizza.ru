@@ -13,18 +13,15 @@ const categoriesMenu = ref()
 const categoriesItems = ref([])
 const contentSections = ref([])
 
-onBeforeMount(async () => {
-   try {
-      await initialize()
-      dataForComponentLoadingType.value = LOADING_TYPE.COMPLETE
-      // setBrowserTitleForClient()
-   }
-   catch (err) {
-      dataForComponentLoadingType.value = LOADING_TYPE.ERROR
-      error.value = err
-   }
-
-})
+try {
+   await initialize()
+   dataForComponentLoadingType.value = LOADING_TYPE.COMPLETE
+   // setBrowserTitleForClient()
+}
+catch (err) {
+   dataForComponentLoadingType.value = LOADING_TYPE.ERROR
+   error.value = err
+}
 
 checkAndActivateMenuControllers()
 

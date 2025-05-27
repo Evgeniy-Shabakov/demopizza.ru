@@ -57,7 +57,7 @@ function deleteUserConfig() {
 
          <NuxtLink v-if="product.base_ingredients.length > 0 || product.additional_ingredients.length > 0"
                    class="product-card__btn-edit"
-                   :to="`/product/${product.id}/ingredients-editor/${index >= 0 ? index : null}`">
+                   :to="`/product/${product.id}/ingredients-editor-${index >= 0 ? index : 'base'}`">
             изменить
          </NuxtLink>
 
