@@ -68,7 +68,7 @@ function scrollToNewProductUserConfig() {
 
    if (!element) return
 
-   element.scrollIntoView({ block: "center" })
+   element.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 </script>
 
@@ -89,7 +89,8 @@ function scrollToNewProductUserConfig() {
       </p>
 
       <div class="flex items-center justify-between">
-         <BaseButton :isIcon="true" :click="() => resetCurrentConfig(product, userConfigIndex)">
+         <BaseButton :isIcon="true"
+                     :click="() => resetCurrentConfig(product, userConfigIndex)">
             Сбросить изменения
          </BaseButton>
 
@@ -142,12 +143,15 @@ function scrollToNewProductUserConfig() {
          </div>
       </section>
 
-      <section v-if="product.additional_ingredients.length > 0"
-               class="ingredients-editor__additional-ingredients">
-         <NuxtLink class="ingredients-editor__additional-ingredients-btn-add btn--secondary"
-                   :to="`/product/${productID}/ingredients-editor-${userConfigIndex || 'base'}/adding-additional-ingredients`">
-            Добавить дополнительные ингредиенты
-         </NuxtLink>
+      <section v-if="product.additional_ingredients.length > 0">
+
+         <BaseButton class="w-full"
+                     :isIcon="true">
+            <NuxtLink
+                      :to="`/product/${productID}/ingredients-editor-${userConfigIndex || 'base'}/adding-additional-ingredients`">
+               Добавить дополнительные ингредиенты
+            </NuxtLink>
+         </BaseButton>
 
          <div class="ingredients-editor__additional-ingredients-list">
             <template v-for="additionalIngredient in product.userAdditionalIngredientsTemporary">
@@ -166,12 +170,11 @@ function scrollToNewProductUserConfig() {
 
       <template #actions>
 
-         <div class="product-card__price-and-btn ingredients-editor__price-and-btn">
-            <p class="product-card__price"> {{ Number(totalPrice) }} р.</p>
-            <button class="btn btn-submit"
-                    @click="saveConfig()">
+         <div class="flex items-center justify-between w-full">
+            <p> {{ Number(totalPrice) }}р.</p>
+            <BaseButton :click="saveConfig">
                Сохранить конфигурацию
-            </button>
+            </BaseButton>
          </div>
 
       </template>
@@ -296,18 +299,6 @@ function scrollToNewProductUserConfig() {
    border-color: var(--brand-color-hover);
 }
 
-.ingredients-editor__additional-ingredients {
-   font-size: 16px;
-}
-
-.ingredients-editor__additional-ingredients-btn-add {
-   display: block;
-   text-decoration: none;
-   text-align: center;
-   width: 100%;
-   margin-bottom: 10px;
-}
-
 .ingredients-editor__additional-ingredients-list {
    display: flex;
    flex-wrap: wrap;
@@ -340,10 +331,5 @@ function scrollToNewProductUserConfig() {
    font-weight: 500;
    color: var(--text-color-on-brand-color);
    background-color: var(--brand-color);
-}
-
-.ingredients-editor__price-and-btn {
-   align-self: normal;
-   width: 100%;
 }
 </style>
