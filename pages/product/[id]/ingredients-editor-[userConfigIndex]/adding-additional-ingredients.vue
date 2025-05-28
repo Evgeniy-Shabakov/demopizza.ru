@@ -58,6 +58,7 @@ function save() {
 
             <BaseButton v-if="additonalIngredient.ingredient.is_in_stop_list"
                         :isIcon="true"
+                        class="w-28"
                         :active=false>
                Будет позже
             </BaseButton>

@@ -90,6 +90,7 @@ function scrollToNewProductUserConfig() {
 
       <div class="flex items-center justify-between">
          <BaseButton :isIcon="true"
+                     class="w-50"
                      :click="() => resetCurrentConfig(product, userConfigIndex)">
             Сбросить изменения
          </BaseButton>
@@ -103,29 +104,31 @@ function scrollToNewProductUserConfig() {
          </button>
       </div>
 
-      <section v-if="product.userBaseIngredientsTemporary.length > 0"
-               class="ingredients-editor__base-ingredients">
-         <div class="ingredients-editor__base-ingredients-title">Базовые ингредиенты</div>
+      <section v-if="product.userBaseIngredientsTemporary.length > 0">
+
+         <div>Базовые ингредиенты</div>
+
          <div v-for="(baseIngredient, index) in product.userBaseIngredientsTemporary"
-              class="ingredients-editor__base-ingredients-item">
-            <div class="ingredients-editor__base-ingredients-item-image-and-title">
-               <img class="ingredients-editor__base-ingredients-item-image"
+              class="flex items-center justify-between gap-2 mt-2">
+
+            <div class="flex items-center gap-1">
+               <img class="w-6 h-6"
                     :class="{
-                     'image-gray': baseIngredient.isDelete
+                     'grayscale': baseIngredient.isDelete
                         || baseIngredient.ingredient.is_in_stop_list
                         || !baseIngredient.ingredient.is_active
                   }"
                     :src="baseIngredient.ingredient.image_url"
                     alt="">
-               <span class="ingredients-editor__base-ingredients-item-title"
-                     :class="{ 'text-line-through': baseIngredient.isDelete }">
+               <span class="text-sm text-(--text-color-main)/60"
+                     :class="{ 'line-through': baseIngredient.isDelete }">
                   {{ baseIngredient.ingredient.title }}
                   <span v-if="baseIngredient.ingredient.is_in_stop_list">(будет позже)</span>
                   <span v-if="!baseIngredient.ingredient.is_active">(недоступен)</span>
                </span>
             </div>
 
-            <div class="ingredients-editor__base-ingredients-item-btns-section">
+            <div class="flex">
                <button v-if="baseIngredient.ingredient.can_delete"
                        class="ingredients-editor__base-ingredients-item-btn-delete"
                        @click="baseIngredient.isDelete = !baseIngredient.isDelete">
@@ -140,7 +143,9 @@ function scrollToNewProductUserConfig() {
 
 
             </div>
+
          </div>
+
       </section>
 
       <section v-if="product.additional_ingredients.length > 0">
@@ -153,11 +158,11 @@ function scrollToNewProductUserConfig() {
             </NuxtLink>
          </BaseButton>
 
-         <div class="ingredients-editor__additional-ingredients-list">
+         <div class="flex flex-wrap gap-5 mt-3">
             <template v-for="additionalIngredient in product.userAdditionalIngredientsTemporary">
                <div v-if="additionalIngredient.quantity > 0"
-                    class="ingredients-editor__additional-ingredients-item">
-                  <img class="ingredients-editor__additional-ingredients-item-image"
+                    class="relative">
+                  <img class="w-10 h-10"
                        :src="additionalIngredient.ingredient.image_url"
                        alt="">
                   <span class="ingredients-editor__additional-ingredients-item-quantity ">
@@ -204,55 +209,7 @@ function scrollToNewProductUserConfig() {
    color: var(--brand-color-active);
 }
 
-.ingredients-editor__base-ingredients {
-   margin-top: 10px;
-   font-size: 16px;
-   margin-bottom: 25px;
-}
-
-.ingredients-editor__base-ingredients-title {
-   margin-bottom: 10px;
-}
-
-.ingredients-editor__base-ingredients-item {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   gap: 10px;
-   margin-bottom: 10px;
-}
-
-.ingredients-editor__base-ingredients-item-image-and-title {
-   display: flex;
-   align-items: center;
-   gap: 5px;
-}
-
-.ingredients-editor__base-ingredients-item-btns-section {
-   /* для запрета переноса кнопок при длинном имени ингредиента   */
-   display: flex;
-}
-
-.ingredients-editor__base-ingredients-item-image {
-   width: 25px;
-   aspect-ratio: 1/1;
-}
-
-.ingredients-editor__base-ingredients-item-title {
-   font-size: 14px;
-   color: grey;
-}
-
-.image-gray {
-   filter: grayscale(100%);
-}
-
-.text-line-through {
-   text-decoration: line-through;
-}
-
 .ingredients-editor__base-ingredients-item-btn-edit {
-   font-family: Arial, Helvetica, sans-serif;
    display: inline-block;
    text-decoration: none;
    border: 2px solid var(--brand-color);
@@ -299,21 +256,6 @@ function scrollToNewProductUserConfig() {
    border-color: var(--brand-color-hover);
 }
 
-.ingredients-editor__additional-ingredients-list {
-   display: flex;
-   flex-wrap: wrap;
-   gap: 20px;
-}
-
-.ingredients-editor__additional-ingredients-item {
-   position: relative;
-}
-
-.ingredients-editor__additional-ingredients-item-image {
-   width: 40px;
-   aspect-ratio: 1/1;
-}
-
 .ingredients-editor__additional-ingredients-item-quantity {
    position: absolute;
    bottom: 0;
@@ -327,7 +269,6 @@ function scrollToNewProductUserConfig() {
    width: 20px;
    height: 20px;
 
-   font-size: 10px;
    font-weight: 500;
    color: var(--text-color-on-brand-color);
    background-color: var(--brand-color);
