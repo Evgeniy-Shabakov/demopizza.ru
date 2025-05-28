@@ -152,7 +152,7 @@ export const totalPrice = computed(() => {
 
 export function plusProductToCart(product, userConfig, quantity = 1) {
    if(!checkProductAvailabilityForCart(product)) return
-
+ 
    if (userConfig) {
       if (productsInCart.value.includes(userConfig)) {
          userConfig.countInCart += quantity

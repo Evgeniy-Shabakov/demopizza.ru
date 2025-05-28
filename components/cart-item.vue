@@ -3,8 +3,14 @@ import {
    minusProductInCartForCartPanel,
    plusProductToCart, removeProductFromCart,
 } from '~/js/client-helper.js'
+import { findProductById } from '~/js/models/product'
 
-defineProps(['productOrUserConfig'])
+const props = defineProps(['productOrUserConfig'])
+
+const product = props.productOrUserConfig.userConfigID ?
+   findProductById(props.productOrUserConfig.id) : props.productOrUserConfig
+
+const userConfig = props.productOrUserConfig.userConfigID ? props.productOrUserConfig : null
 
 </script>
 
@@ -27,19 +33,19 @@ defineProps(['productOrUserConfig'])
 
       <div>{{ productOrUserConfig.title }}</div>
 
-      <BaseButton :click="() => removeProductFromCart(productOrUserConfig)"
+      <BaseButton :click="() => removeProductFromCart(product, userConfig)"
                   class="justify-self-end btn-icon-trash">
          <IconTrash class="h-4 w-4" />
       </BaseButton>
 
       <div class="flex items-center gap-1.5 whitespace-nowrap">
          <BaseButton :isIcon="true"
-                     :click="() => minusProductInCartForCartPanel(productOrUserConfig)">
+                     :click="() => minusProductInCartForCartPanel(product, userConfig)">
             <IconMinus class="h-5 w-5" />
          </BaseButton>
          <div>{{ productOrUserConfig.countInCart }}</div>
          <BaseButton :isIcon="true"
-                     :click="() => plusProductToCart(productOrUserConfig)">
+                     :click="() => plusProductToCart(product, userConfig)">
             <IconPlus class="h-5 w-5" />
          </BaseButton>
          <div>x {{ Number(productOrUserConfig.price_default) }}р</div>
