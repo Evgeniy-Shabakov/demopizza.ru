@@ -8,7 +8,7 @@ import { ORDER_TYPE } from '~/js/data-types/order-type'
 
 <template>
 
-   <PopupPageWrapper>
+   <PopupPageWrapper >
 
       <template v-if="selectedCity">
 
@@ -16,7 +16,8 @@ import { ORDER_TYPE } from '~/js/data-types/order-type'
 
          <OrderTypeSettings></OrderTypeSettings>
 
-         <div class="mt-2 flex flex-col gap-4">
+         <div v-if="productsInCart.length > 0"
+              class="mt-2 flex flex-col gap-4">
             <CartItem v-for="product in productsInCart"
                       :key="product.userConfigID || product.id"
                       :productOrUserConfig="product" />
@@ -32,9 +33,14 @@ import { ORDER_TYPE } from '~/js/data-types/order-type'
             </div>
          </div>
 
+         <div v-else class="text-center mt-[calc(100vh/2-68px-48px)]">
+            Корзина пока пуста (((
+         </div>
+
       </template>
 
-      <template #actions v-if="selectedCity">
+      <template #actions
+                v-if="selectedCity">
 
          <div class="flex items-center justify-between gap-2 w-full">
 
