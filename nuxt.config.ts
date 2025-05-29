@@ -10,7 +10,7 @@ export default defineNuxtConfig({
    ssr: false,
    app: {
       head: {
-         // title: 'Админка',
+         title: 'Доставка еды',
          link: [
             { rel: 'icon', type: 'image/x-icon', href: `${serverUrl}/storage/images/favicon.png` },
          ]

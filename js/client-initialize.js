@@ -1,4 +1,4 @@
-import { categories, cities, activeDesign, restaurants } from '~/js/axios-helper.js'
+import { company, categories, cities, activeDesign, restaurants } from '~/js/axios-helper.js'
 import {
    selectedCity, selectedRestaurant, selectedOrderType,
    selectedOrderInRestaurantType, plusProductToCart
@@ -28,7 +28,12 @@ export async function initialize() {
 
       initializeCity().then(() => initializeRestaurant())
 
-      loadCompany().then(() => checkOperatingModeAndActivateDialog())
+      loadCompany().then(() => {
+         useHead({
+            title: `${company.value?.brand_title}`,
+         })
+         checkOperatingModeAndActivateDialog()
+      })
 
       loadCurrentAuthUser()
 
@@ -170,7 +175,7 @@ export async function initializeDesign() {
       root.style.setProperty('--brand-color', activeDesign.value.brand_color)
       root.style.setProperty('--text-color-main', activeDesign.value.text_color_main)
       root.style.setProperty('--text-color-on-brand-color', activeDesign.value.text_color_on_brand_color)
-      root.style.setProperty('--text-color-accent', activeDesign.value.text_color_accent) 
+      root.style.setProperty('--text-color-accent', activeDesign.value.text_color_accent)
       root.style.setProperty('--bottom-nav-color', activeDesign.value.bottom_nav_color)
 
       root.style.setProperty('--brand-color-hover', adjustColor(activeDesign.value.brand_color, -20))
