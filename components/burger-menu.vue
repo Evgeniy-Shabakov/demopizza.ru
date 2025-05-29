@@ -75,6 +75,16 @@ function closeBurgerMenu() {
                Правовая информация
             </NuxtLink>
 
+            <div class="text-sm mt-3">
+               <p>Сделано на платформе</p>
+               <NuxtLink class="underline active:text-black ml-2"
+                         to='https://food-it.ru'
+                         target="_blank"
+                         @click="closeBurgerMenu">
+                  food-it.ru
+               </NuxtLink>
+            </div>
+
          </div>
 
       </div>
