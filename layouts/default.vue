@@ -6,6 +6,11 @@ import { activateSelecteMenuController, activateMoveMenuController } from '~/js/
 import { openCloseTimeDialogIsActive } from '~/js/open-close-time'
 import { repeatOrderDialogIsActive, repeatOrderDialogContent } from '~/js/user-panel'
 import { formatPhone } from '~/js/phone-helper'
+import { totalCountInCart } from '~/js/client-helper.js'
+import {
+   selectedCity, productsInCart, totalProductPrice, deliveryPrice, totalPrice, selectedOrderType
+} from '~/js/client-helper.js'
+import { ORDER_TYPE } from '~/js/data-types/order-type'
 
 const dataForComponentLoadingType = ref(LOADING_TYPE.LOADING)
 const error = ref()
@@ -100,7 +105,8 @@ function reloadPage() {
 
                <div class="flex items-center justify-between py-1 md:py-2 lg:py-4 ">
 
-                  <div class="flex items-center gap-3.5">
+                  <NuxtLink to="/"
+                            class="flex items-center gap-3.5">
                      <img v-if="company"
                           class=" h-10 w-10 lg:h-20 lg:w-20"
                           :src="company.logo_url">
@@ -108,14 +114,21 @@ function reloadPage() {
                         <h1 class="text-2xl font-bold lg:text-4xl">{{ company.brand_title }}</h1>
                         <div class="hidden lg:block">{{ company.tagline }}</div>
                      </div>
-                  </div>
+                  </NuxtLink>
 
                   <div class="hidden md:flex md:items-center md:gap-4">
-                     <BaseLink v-if="authUser"
-                               to="/user">Личный&nbsp;кабинет</BaseLink>
-                     <BaseLink v-else
-                               to="/login">Войти</BaseLink>
-                     <CitySelecte />
+
+                     <BaseLink :to="authUser ? '/user' : '/login'">
+                        {{ authUser ? 'Личный&nbsp;кабинет' : 'Войти' }}
+                     </BaseLink>
+
+                     <BaseLink to="/cart"
+                               class="hidden lg:block">
+                        Корзина&nbsp;({{ totalCountInCart }})
+                     </BaseLink>
+
+                     <CitySelecte class="xl:hidden" />
+
                   </div>
 
                   <BurgerMenu class="md:hidden" />
@@ -154,35 +167,123 @@ function reloadPage() {
       <main class="my-container">
          <div class="py-4 space-y-8">
 
-            <section v-for="category in categories"
-                     ref="contentSections">
+            <NuxtLink to="/cart"
+                      class="hidden lg:block xl:hidden
+                      fixed right-20 bottom-10 z-100 hover:text-(--brand-color-hover)">
+               <div class="border border-(--brand-color) p-5 rounded-full">
+                  <div class="relative">
+                     <IconCart class="h-8 w-8" />
+                     <span v-if="totalCountInCart > 0"
+                           class="absolute top-[-30%] right-[-30%] w-5 h-5 rounded-full text-sm
+                         flex items-center justify-center
+                         bg-(--brand-color) text-(--text-color-on-brand-color)">
+                        {{ totalCountInCart }}
+                     </span>
+                  </div>
+               </div>
+            </NuxtLink>
 
-               <h2 :id="category.title"
-                   class="text-2xl font-bold mb-5 ml-2">
-                  {{ category.title }}
-               </h2>
+            <div class="flex gap-5">
 
-               <div class="grid grid-cols-1 gap-3.5 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:w-[80%]">
+               <div class="xl:w-[70%] 2xl:w-[75%]">
+                  <section v-for="category in categories"
+                           ref="contentSections">
 
-                  <template v-for="product in category.products"
-                            :key="product.id">
+                     <h2 :id="category.title"
+                         class="text-2xl font-bold mb-5 ml-2">
+                        {{ category.title }}
+                     </h2>
 
-                     <ProductCard :product="product" />
+                     <div class="grid grid-cols-1 gap-3.5 
+                                 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4">
 
-                     <template v-for="(userConfig, index) in product.userConfigs"
-                               :key="userConfig.userConfigID">
+                        <template v-for="product in category.products"
+                                  :key="product.id">
 
-                        <ProductCard :product="product"
-                                     :userConfig="userConfig"
-                                     :index="index" />
+                           <ProductCard :product="product" />
 
-                     </template>
+                           <template v-for="(userConfig, index) in product.userConfigs"
+                                     :key="userConfig.userConfigID">
+
+                              <ProductCard :product="product"
+                                           :userConfig="userConfig"
+                                           :index="index" />
+
+                           </template>
+
+                        </template>
+
+                     </div>
+
+                  </section>
+               </div>
+
+               <div class="hidden xl:block xl:w-[30%] 2xl:w-[25%] space-y-4 mt-2 sticky top-16 h-max">
+
+                  <template v-if="selectedCity">
+
+                     <CitySelecte />
+
+                     <OrderTypeSettings></OrderTypeSettings>
+
+                     <div class="mt-5 border border-(--brand-color) rounded-(--border-radius-main) p-2
+                       max-h-[calc(100vh-48px-112px-48px-220px)] overflow-auto">
+
+                        <div v-if="productsInCart.length > 0"
+                             class="flex flex-col gap-4">
+                           <CartItem v-for="product in productsInCart"
+                                     :key="product.userConfigID || product.id"
+                                     :productOrUserConfig="product" />
+
+                           <div v-if="selectedOrderType == ORDER_TYPE.delivery"
+                                class="grid grid-cols-[100px_1fr_1fr] 
+                                       text-sm minxs:text-base
+                                       gap-1 minxs:gap-3 xs:gap-4 items-center
+                                       mt-5">
+                              <IconTrack class="justify-self-center text-(--brand-color-active)" />
+                              <div>Доставка</div>
+                              <div class=" justify-self-end">{{ deliveryPrice }}р</div>
+                           </div>
+                        </div>
+                        <div v-else>
+                           Корзина пока пуста (((
+                        </div>
+
+                     </div>
+
+                     <div class="flex items-center justify-between gap-2 w-full">
+
+                        <TotalBlock />
+
+                        <div v-if="selectedOrderType == ORDER_TYPE.delivery"
+                             class="text-xs text-center">
+                           <div v-if="totalProductPrice < selectedCity.min_order_value_for_delivery">
+                              Минимальная сумма товаров для заказа {{ Number(selectedCity.min_order_value_for_delivery)
+                              }}р.
+                           </div>
+                           <div v-else-if="totalProductPrice < selectedCity.order_value_for_free_delivery">
+                              Бесплатная доставка от {{ Number(selectedCity.order_value_for_free_delivery) }}р.
+                           </div>
+                           <div v-else-if="totalProductPrice >= selectedCity.order_value_for_free_delivery"
+                                class="text-sm font-bold text-(--text-color-accent)">
+                              Бесплатная доставка!!!
+                           </div>
+                        </div>
+
+                        <BaseButton :active="totalProductPrice > 0 &&
+                           (selectedOrderType !== ORDER_TYPE.delivery ||
+                              totalProductPrice > selectedCity.min_order_value_for_delivery)"
+                                    class="w-1/4"
+                                    :click="() => navigateTo('/order-panel')">
+                           Далее
+                        </BaseButton>
+
+                     </div>
 
                   </template>
 
                </div>
-
-            </section>
+            </div>
 
          </div>
       </main>
