@@ -70,7 +70,8 @@ function closeBurgerMenu() {
             </div>
 
             <NuxtLink class="text-base underline active:text-black"
-                      to='/legal-documents'>
+                      to='/legal-documents'
+                      @click="closeBurgerMenu">
                Правовая информация
             </NuxtLink>
 

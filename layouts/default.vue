@@ -5,6 +5,7 @@ import { company, categories, authUser } from '~/js/axios-helper'
 import { activateSelecteMenuController, activateMoveMenuController } from '~/js/client-menu'
 import { openCloseTimeDialogIsActive } from '~/js/open-close-time'
 import { repeatOrderDialogIsActive, repeatOrderDialogContent } from '~/js/user-panel'
+import { formatPhone } from '~/js/phone-helper'
 
 const dataForComponentLoadingType = ref(LOADING_TYPE.LOADING)
 const error = ref()
@@ -60,36 +61,68 @@ function reloadPage() {
 
          <section class="shadow-md hidden md:block">
 
-            <div class="my-container py-3">
+            <ContainerX class="py-3 flex items-center justify-between">
+
                <BaseLink to='/legal-documents'>Правовая информация</BaseLink>
-            </div>
+
+               <div class="flex items-center gap-6">
+                  <div class="flex items-center gap-2">
+                     <IconClock />
+                     <span v-if="company">
+                        <template v-if="company.open_time && company.close_time">
+                           {{ company.open_time }} - {{ company.close_time }}
+                        </template>
+                        <template v-else>
+                           Круглосуточно
+                        </template>
+                     </span>
+                  </div>
+
+                  <a v-if="company && company.phone"
+                     :href="`tel:${company.phone}`"
+                     target="_blank"
+                     class="flex items-center justify-between gap-1">
+
+                     <IconPhone2 />
+                     <span>{{ formatPhone(company.phone) }}</span>
+
+                  </a>
+
+               </div>
+
+            </ContainerX>
 
          </section>
 
-         <section class="my-container">
+         <section>
 
-            <div class="flex items-center justify-between py-1 md:py-2 lg:py-4 ">
+            <ContainerX>
 
-               <div class="flex items-center gap-3.5">
-                  <img v-if="company"
-                       class=" h-10 w-10 lg:h-20 lg:w-20"
-                       :src="company.logo_url">
-                  <div v-if="company">
-                     <h1 class="text-2xl font-bold lg:text-4xl">{{ company.brand_title }}</h1>
-                     <div class="hidden lg:block">{{ company.tagline }}</div>
+               <div class="flex items-center justify-between py-1 md:py-2 lg:py-4 ">
+
+                  <div class="flex items-center gap-3.5">
+                     <img v-if="company"
+                          class=" h-10 w-10 lg:h-20 lg:w-20"
+                          :src="company.logo_url">
+                     <div v-if="company">
+                        <h1 class="text-2xl font-bold lg:text-4xl">{{ company.brand_title }}</h1>
+                        <div class="hidden lg:block">{{ company.tagline }}</div>
+                     </div>
                   </div>
+
+                  <div class="hidden md:flex md:items-center md:gap-4">
+                     <BaseLink v-if="authUser"
+                               to="/user">Личный&nbsp;кабинет</BaseLink>
+                     <BaseLink v-else
+                               to="/login">Войти</BaseLink>
+                     <CitySelecte />
+                  </div>
+
+                  <BurgerMenu class="md:hidden" />
+
                </div>
 
-               <div class="hidden md:block">
-                  <BaseLink v-if="authUser"
-                            to="/user">Личный кабинет</BaseLink>
-                  <BaseLink v-else
-                            to="/login">Войти</BaseLink>
-               </div>
-
-               <BurgerMenu class="md:hidden" />
-
-            </div>
+            </ContainerX>
 
          </section>
 
