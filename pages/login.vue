@@ -97,8 +97,7 @@ async function loginVue() {
 
    <PopupPageWrapper>
 
-      <div class="h-[calc(100vh-68px-48px-24px)] lg:h-[calc(600px-68px-26px)] 
-                  flex flex-col gap-2 justify-between">
+      <div class="h-full flex flex-col gap-2 justify-between">
 
          <div class="h-16"></div>
 

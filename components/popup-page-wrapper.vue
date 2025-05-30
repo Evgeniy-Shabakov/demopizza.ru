@@ -12,13 +12,17 @@
                   popup-page__inner"
            @click.stop>
 
-         <ContainerX class="h-[calc(100%-68px)] py-3 overflow-y-auto">
+         <ContainerX class="h-[calc(100%-68px)] pt-3 overflow-y-auto">
 
-            <div class="sm:w-3/4 sm:mx-auto lg:w-full
+            <div class="sm:w-3/4 sm:mx-auto lg:w-full h-full
                         flex flex-col gap-3">
 
                <slot />
 
+               <div class="text-[1px] text-transparent">
+                  Для отступа снизу при overflow-y-auto т.к. py-3 не работает снизу при переполнении,
+                  отступ в данном случае достигается за счет gap-3 в родительском контейнере
+               </div>
             </div>
 
          </ContainerX>

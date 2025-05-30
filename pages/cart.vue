@@ -33,7 +33,7 @@ import { ORDER_TYPE } from '~/js/data-types/order-type'
             </div>
          </div>
 
-         <div v-else class="text-center mt-[calc(100vh/2-68px-48px)]">
+         <div v-else class="flex-1 flex items-center justify-center">
             Корзина пока пуста (((
          </div>
 
