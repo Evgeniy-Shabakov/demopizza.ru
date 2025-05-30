@@ -101,7 +101,7 @@ function openOrderStatusPanel(order) {
 
             </div>
             <p v-else
-               class="text-center">У вас нет активных заказов</p>
+               class="text-center">У Вас нет активных заказов</p>
          </section>
 
          <section>
@@ -139,7 +139,7 @@ function openOrderStatusPanel(order) {
 
                </div>
 
-               <p v-else>У вас еще не было заказов</p>
+               <p v-else class="text-center">У Вас еще не было заказов</p>
 
             </template>
 
