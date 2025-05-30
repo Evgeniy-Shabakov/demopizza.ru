@@ -25,37 +25,31 @@ const addressesInSelectedCity = ref([])
 const validationErrors = ref({})
 const otherErrors = ref()
 
-if (authUser.value == null) {
-   loginForOrder.value = true
-   navigateTo('/login')
-}
-else {
-   productsInOrder.value = productsInCart.value
-      .filter(product => product.countInCart > 0)
+productsInOrder.value = productsInCart.value
+   .filter(product => product.countInCart > 0)
 
-   addressesInSelectedCity.value = userAddresses.value
-      .filter(address => address.city.id === selectedCity.value.id)
+addressesInSelectedCity.value = userAddresses.value
+   .filter(address => address.city.id === selectedCity.value.id)
 
-   setAddressForDelivery()
+setAddressForDelivery()
 
-   orderData.user_id = authUser.value.id
-   orderData.city_id = selectedCity.value.id
-   orderData.restaurant_id = selectedRestaurant.value ? selectedRestaurant.value.id : null
-   orderData.user_address_id = selectedAddressForDelivery.value ? selectedAddressForDelivery.value.id : null
-   orderData.order_type = selectedOrderType.value
-   orderData.order_in_restaurant_type = selectedOrderInRestaurantType.value
-   orderData.table_number = null
-   orderData.car_number = null
-   orderData.pack_takeaway = true
-   orderData.total_products_price = totalProductPrice.value
-   orderData.delivery_price = deliveryPrice.value
-   orderData.total_price = totalPrice.value
-   orderData.payment_type = PAYMENT_TYPE.CARD_OFFLINE
-   orderData.banknote_for_change = null
-   orderData.is_payment = false
-   orderData.comment = null
-   orderData.products_in_order = productsInOrder.value
-}
+orderData.user_id = authUser.value.id
+orderData.city_id = selectedCity.value.id
+orderData.restaurant_id = selectedRestaurant.value ? selectedRestaurant.value.id : null
+orderData.user_address_id = selectedAddressForDelivery.value ? selectedAddressForDelivery.value.id : null
+orderData.order_type = selectedOrderType.value
+orderData.order_in_restaurant_type = selectedOrderInRestaurantType.value
+orderData.table_number = null
+orderData.car_number = null
+orderData.pack_takeaway = true
+orderData.total_products_price = totalProductPrice.value
+orderData.delivery_price = deliveryPrice.value
+orderData.total_price = totalPrice.value
+orderData.payment_type = PAYMENT_TYPE.CARD_OFFLINE
+orderData.banknote_for_change = null
+orderData.is_payment = false
+orderData.comment = null
+orderData.products_in_order = productsInOrder.value
 
 watch(selectedAddressForDelivery, () => { //v-model это selectedAddressForDelivery, чтобы сохранить изменения
    orderData.user_address_id = selectedAddressForDelivery.value.id

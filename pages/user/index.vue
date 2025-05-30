@@ -11,11 +11,6 @@ import { formatPhone } from '~/js/phone-helper'
 const lastOrderLoadingType = ref(LOADING_TYPE.LOADING)
 
 onMounted(() => {
-   if (authUser.value == null) {
-      navigateTo('/login')
-      return
-   }
-
    loadActiveOrdersForUserAndRestartInterval(authUser.value.id)
 
    if (lastOrderForUser.value) {

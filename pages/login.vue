@@ -8,11 +8,6 @@ const openPhoneInput = ref(true)
 const codeError = ref('')
 const phoneError = ref('')
 
-onMounted(() => {
-   if (authUser.value)
-      navigateTo('/user')
-})
-
 //проверка если зашли на страницу и данные о текущем пользователе еще не загрузились - START
 watch(authUser, () => {
    if (authUser.value && !loginForOrder.value) {
