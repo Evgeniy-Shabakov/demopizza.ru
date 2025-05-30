@@ -22,7 +22,7 @@ if(!legalDocuments.value) getModelsAxios('legal-documents')
       <template #actions>
 
          <BaseButton class="w-full"
-                     :click="() => navigateTo('/')">
+                     :click="() => $router.back()">
             Назад
          </BaseButton>
 

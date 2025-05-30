@@ -7,7 +7,7 @@
    --brand-color: rgb(107 114 128);
    --text-color-main: #000000;
    --text-color-on-brand-color: #ffffff;
-   --text-color-accent: #42db00;
+   --text-color-accent: #008000;
    --bottom-nav-color: #a6a6a6;
 
    /*эти параметры устанавливаем при инициализации приложения с помощью функции,
