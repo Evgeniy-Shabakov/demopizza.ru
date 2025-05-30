@@ -187,10 +187,11 @@ function reloadPage() {
 
                <div class="xl:w-[70%] 2xl:w-[75%]">
                   <section v-for="category in categories"
-                           ref="contentSections">
+                           ref="contentSections"
+                           class="mb-5">
 
                      <h2 :id="category.title"
-                         class="text-2xl font-bold mb-5 ml-2">
+                         class="text-xl md:text-2xl font-bold mb-3 ml-2">
                         {{ category.title }}
                      </h2>
 
