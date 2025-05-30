@@ -38,7 +38,7 @@ function closeBurgerMenu() {
       </button>
 
       <div v-if="burgerMenuIsOpen"
-           class="fixed top-12 right-0 z-20 p-2 bg-(--brand-color) rounded-(--border-radius-main)"
+           class="fixed top-12 right-0 z-20 p-2 bg-(--brand-color-active) rounded-(--border-radius-main)"
            @click.stop>
 
          <div class="space-y-3 text-xl text-center text-(--text-color-on-brand-color)">
@@ -76,7 +76,7 @@ function closeBurgerMenu() {
             </NuxtLink>
 
             <div class="text-sm mt-3">
-               <p>Сделано на платформе</p>
+               <span>Сделано на платформе</span>
                <NuxtLink class="underline active:text-black ml-2"
                          to='https://food-it.ru'
                          target="_blank"
