@@ -159,6 +159,10 @@ function reloadPage() {
 
                </div>
 
+               <div class="text-[1px] text-transparent">
+                  Для отступа справа
+               </div>
+
             </div>
 
          </div>
