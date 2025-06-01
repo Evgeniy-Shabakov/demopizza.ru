@@ -41,7 +41,7 @@ function closeBurgerMenu() {
            class="fixed top-12 right-0 z-20 p-2 bg-(--brand-color-active) rounded-(--border-radius-main)"
            @click.stop>
 
-         <div class="space-y-3 text-xl text-center text-(--text-color-on-brand-color)">
+         <div class="flex flex-col gap-2 text-xl text-center text-(--text-color-on-brand-color)">
 
             <CitySelecte />
 
@@ -69,13 +69,19 @@ function closeBurgerMenu() {
                </a>
             </div>
 
+            <NuxtLink class="text-base underline active:text-black block"
+                      to='/map'
+                      @click="closeBurgerMenu">
+               Зоны доставки
+            </NuxtLink>
+
             <NuxtLink class="text-base underline active:text-black"
                       to='/legal-documents'
                       @click="closeBurgerMenu">
                Правовая информация
             </NuxtLink>
 
-            <div class="text-sm mt-3">
+            <div class="text-sm">
                <span>Сделано на платформе</span>
                <NuxtLink class="underline active:text-black ml-2"
                          to='https://food-it.ru'
