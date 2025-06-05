@@ -1,5 +1,22 @@
 <script setup>
-const mapSrc = 'https://yandex.ru/map-widget/v1/?um=constructor%3A5cb84ff2b9eb12c39112e51e39c61cf4bc13246e40bf5ca8d3794fd1f57b91ed&amp;source=constructor'
+import { selectedCity } from '~/js/client-helper.js'
+
+const mapSrc = ref(null)
+
+const stopWatch = watchEffect(() => { // watchEffect нужен при обновлении страницы, т.к. selectedCity не успевает загрузится
+   if (selectedCity.value?.map_iframe) {
+      mapSrc.value = extractSrcFromIframe(selectedCity.value.map_iframe)
+      // Останавливаем после следующего цикла обновления, чтобы не было ошибки инициализации stopWatch
+      nextTick(() => stopWatch())
+   }
+})
+
+function extractSrcFromIframe(iframeString) {
+   const parser = new DOMParser();
+   const doc = parser.parseFromString(iframeString, 'text/html');
+   const iframe = doc.querySelector('iframe');
+   return iframe ? iframe.getAttribute('src') : null;
+}
 </script>
 
 <template>
@@ -13,7 +30,6 @@ const mapSrc = 'https://yandex.ru/map-widget/v1/?um=constructor%3A5cb84ff2b9eb12
               height="312"
               frameborder="0"
               class="h-full w-full" />
-
 
       <template #actions>
 
