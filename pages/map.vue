@@ -6,8 +6,7 @@ const mapSrc = ref(null)
 const stopWatch = watchEffect(() => { // watchEffect нужен при обновлении страницы, т.к. selectedCity не успевает загрузится
    if (selectedCity.value?.map_iframe) {
       mapSrc.value = extractSrcFromIframe(selectedCity.value.map_iframe)
-      // Останавливаем после следующего цикла обновления, чтобы не было ошибки инициализации stopWatch
-      nextTick(() => stopWatch())
+      nextTick(() => stopWatch()) // Останавливаем после nextTick, чтобы не было ошибки инициализации stopWatch
    }
 })
 
