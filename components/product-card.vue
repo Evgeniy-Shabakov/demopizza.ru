@@ -119,7 +119,7 @@ function deleteUserConfig() {
                  class="flex items-center gap-1.5 h-10">
                <BaseButton :isIcon="true"
                            :click="() => minusProductInCartForMenuPage(product, userConfig)">
-                  <IconMinus class="h-6 w-6" />
+                  <IconMinus class="h-7 w-7" />
                </BaseButton>
 
                <div v-if="userConfig">{{ userConfig.countInCart }}</div>
@@ -127,7 +127,7 @@ function deleteUserConfig() {
 
                <BaseButton :isIcon="true"
                            :click="() => plusProductToCart(product, userConfig)">
-                  <IconPlus class="h-6 w-6" />
+                  <IconPlus class="h-7 w-7" />
                </BaseButton>
             </div>
          </template>

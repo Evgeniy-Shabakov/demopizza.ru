@@ -35,18 +35,18 @@ const userConfig = props.productOrUserConfig.userConfigID ? props.productOrUserC
 
       <BaseButton :click="() => removeProductFromCart(product, userConfig)"
                   class="justify-self-end btn-icon-trash">
-         <IconTrash class="h-4 w-4" />
+         <IconTrash class="h-5 w-5" />
       </BaseButton>
 
       <div class="flex items-center gap-1.5 whitespace-nowrap">
          <BaseButton :isIcon="true"
                      :click="() => minusProductInCartForCartPanel(product, userConfig)">
-            <IconMinus class="h-5 w-5" />
+            <IconMinus class="h-6 w-6" />
          </BaseButton>
          <div>{{ productOrUserConfig.countInCart }}</div>
          <BaseButton :isIcon="true"
                      :click="() => plusProductToCart(product, userConfig)">
-            <IconPlus class="h-5 w-5" />
+            <IconPlus class="h-6 w-6" />
          </BaseButton>
          <div>x {{ Number(productOrUserConfig.price_default) }}р</div>
       </div>
