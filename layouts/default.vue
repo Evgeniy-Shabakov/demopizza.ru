@@ -262,14 +262,14 @@ function reloadPage() {
 
                         <div v-if="selectedOrderType == ORDER_TYPE.delivery"
                              class="text-xs text-center">
-                           <div v-if="totalProductPrice < selectedCity.min_order_value_for_delivery">
-                              Минимальная сумма товаров для заказа {{ Number(selectedCity.min_order_value_for_delivery)
+                           <div v-if="totalProductPrice < selectedCity.min_order_value_for_delivery_by_default">
+                              Минимальная сумма товаров для заказа {{ Number(selectedCity.min_order_value_for_delivery_by_default)
                               }}р.
                            </div>
-                           <div v-else-if="totalProductPrice < selectedCity.order_value_for_free_delivery">
-                              Бесплатная доставка от {{ Number(selectedCity.order_value_for_free_delivery) }}р.
+                           <div v-else-if="totalProductPrice < selectedCity.order_value_for_free_delivery_by_default">
+                              Бесплатная доставка от {{ Number(selectedCity.order_value_for_free_delivery_by_default) }}р.
                            </div>
-                           <div v-else-if="totalProductPrice >= selectedCity.order_value_for_free_delivery"
+                           <div v-else-if="totalProductPrice >= selectedCity.order_value_for_free_delivery_by_default"
                                 class="text-sm font-bold text-(--text-color-accent)">
                               Бесплатная доставка!!!
                            </div>
@@ -277,7 +277,7 @@ function reloadPage() {
 
                         <BaseButton :active="totalProductPrice > 0 &&
                            (selectedOrderType !== ORDER_TYPE.delivery ||
-                              totalProductPrice > selectedCity.min_order_value_for_delivery)"
+                              totalProductPrice > selectedCity.min_order_value_for_delivery_by_default)"
                                     class="w-1/4"
                                     :click="() => navigateTo('/order-panel')">
                            Далее

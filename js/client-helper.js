@@ -140,10 +140,10 @@ export const deliveryPrice = computed(() => {
    if (selectedOrderType.value != ORDER_TYPE.delivery)
       return 0;
 
-   if (totalProductPrice.value >= selectedCity.value.order_value_for_free_delivery)
+   if (totalProductPrice.value >= selectedCity.value.order_value_for_free_delivery_by_default)
       return 0;
 
-   return Number(selectedCity.value.delivery_price)
+   return Number(selectedCity.value.delivery_price_by_default)
 })
 
 export const totalPrice = computed(() => {
