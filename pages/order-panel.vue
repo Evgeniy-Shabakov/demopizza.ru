@@ -7,11 +7,9 @@ import {
    selectedOrderType, selectedAddressForDelivery, totalCountInCart, removeAllProductsFromCart,
    selectedRestaurant, selectedOrderInRestaurantType
 } from '~/js/client-helper.js'
-import { loginForOrder } from '~/js/login-panel-helper.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type'
 import { ORDER_IN_RESTAURANT_TYPE } from '~/js/data-types/order-in-restaurant-type'
 import { PAYMENT_TYPE } from '~/js/data-types/payment-type'
-import { setAddressForDelivery } from '~/js/order-panel-helper.js'
 import { transformValidateErrorsForUI } from '~/js/validation-helper.js'
 import { userAddresses } from '~/js/address-index.js'
 import { checkOperatingModeAndActivateDialog } from '~/js/open-close-time'
@@ -30,8 +28,6 @@ productsInOrder.value = productsInCart.value
 
 addressesInSelectedCity.value = userAddresses.value
    .filter(address => address.city.id === selectedCity.value.id)
-
-setAddressForDelivery()
 
 orderData.user_id = authUser.value.id
 orderData.city_id = selectedCity.value.id

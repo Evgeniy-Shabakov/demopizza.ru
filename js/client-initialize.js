@@ -1,7 +1,7 @@
 import { company, categories, cities, activeDesign, restaurants } from '~/js/axios-helper.js'
 import {
    selectedCity, selectedRestaurant, selectedOrderType,
-   selectedOrderInRestaurantType, plusProductToCart
+   selectedOrderInRestaurantType, plusProductToCart, selectedAddressForDelivery
 }
    from '~/js/client-helper.js'
 import {
@@ -16,6 +16,7 @@ import { initializeUserConfigsForProducts } from '~/js/save/user-configs-product
 import { checkOperatingModeAndActivateDialog } from '~/js/open-close-time'
 import { findProductById, checkProductAvailabilityForCart, setStatusAllIngredientsIsAvailableForProdacts }
    from '~/js/models/product'
+import { userAddresses } from '~/js/address-index.js'
 
 export async function initialize() {
 
@@ -35,7 +36,7 @@ export async function initialize() {
          checkOperatingModeAndActivateDialog()
       })
 
-      loadCurrentAuthUser()
+      loadCurrentAuthUser().then(() => setAddressForDelivery())
 
       initializeUserConfigsForProducts()
 
@@ -188,6 +189,23 @@ export async function initializeDesign() {
    catch (err) {
       console.log(err)
       throw err
+   }
+}
+
+function setAddressForDelivery() {
+   let id = localStorage.getItem(COOKIE_NAME.ADDRESS_DELIVERY_ID)
+
+   if (id)
+      selectedAddressForDelivery.value = userAddresses.value.find(address => address.id == id)
+
+   // если город выбранного адреса не совпадает с текущим городом или не установлен
+   // то найти первый адрес в текущем городе
+   // иначе selectedAddressForDelivery.value присвоить undefined 
+   if (selectedAddressForDelivery.value == null
+      || selectedAddressForDelivery.value.city.id != selectedCity.value.id) {
+
+      selectedAddressForDelivery.value = userAddresses.value
+         .find(address => address.city.id === selectedCity.value.id)
    }
 }
 

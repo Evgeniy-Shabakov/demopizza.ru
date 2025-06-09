@@ -1,6 +1,6 @@
 <script setup>
 import { sendVerifyCode, login, authUser } from '~/js/axios-helper.js'
-import { inputedPhone, inputedCode, loginForOrder } from '~/js/login-panel-helper.js'
+import { inputedPhone, inputedCode, loginForOrder, loginForAddingAdress } from '~/js/login-panel-helper.js'
 import { timerForSendVerifyCodeAllowed, secBeforeSendVerifyCodeAllowed } from '~/js/login-panel-helper.js'
 
 const openPhoneInput = ref(true)
@@ -77,6 +77,10 @@ async function loginVue() {
       if (loginForOrder.value) {
          loginForOrder.value = false
          navigateTo('/order-panel')
+      }
+      else if (loginForAddingAdress.value) {
+         loginForAddingAdress.value = false
+         navigateTo('/user/adresses/create')
       }
       else
          navigateTo('/user')

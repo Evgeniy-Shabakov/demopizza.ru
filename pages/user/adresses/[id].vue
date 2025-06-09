@@ -39,7 +39,9 @@ async function addAddress() {
       const res = await axios.post(`/users/${addressInputedData.user_id}/addresses`, addressInputedData)
       selectedAddressForDelivery.value = res.data.data
       authUser.value.addresses.push(selectedAddressForDelivery.value)
-      router.back()
+
+      if(previousRoute.name == 'login') navigateTo('/cart')
+      else router.back()
    } catch (error) {
       if (error.response?.status === 422) {
          validationErrors.value = error.response.data.errors

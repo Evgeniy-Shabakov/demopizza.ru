@@ -81,7 +81,7 @@ function scrollToNewProductUserConfig() {
          <div class="text-sm">(редактор ингредиентов)</div>
       </h1>
 
-      <img class="w-26 h-26 m-auto"
+      <img class="w-26 h-26 mx-auto"
            :src="product.image_url">
 
       <p class="text-sm text-center text-(--text-color-main)/60">

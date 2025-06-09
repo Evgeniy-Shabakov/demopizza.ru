@@ -1,5 +1,5 @@
 import { authUser } from '~/js/axios-helper.js'
-import { loginForOrder } from '~/js/login-panel-helper.js'
+import { loginForOrder, loginForAddingAdress } from '~/js/login-panel-helper.js'
 
 const protectedPaths = ['user', 'order-panel', 'order-status'];
 
@@ -8,7 +8,14 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       if (!authUser.value && protectedPaths.some(path => to.path.includes(path))) {
 
          if (!authUser.value) {
-            if (to.name == 'order-panel') loginForOrder.value = true
+            if (to.name == 'order-panel') {
+               loginForOrder.value = true
+               loginForAddingAdress.value = false
+            }
+            if (to.name == 'user-adresses-id') {
+               loginForAddingAdress.value = true
+               loginForOrder.value = false
+            }
             return navigateTo('/login')
          }
 

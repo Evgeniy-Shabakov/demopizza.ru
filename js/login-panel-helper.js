@@ -7,3 +7,4 @@ export const timerForSendVerifyCodeAllowed = ref(null)
 export const secBeforeSendVerifyCodeAllowed = ref(60)
 
 export const loginForOrder = ref(false) 
+export const loginForAddingAdress = ref(false) 
