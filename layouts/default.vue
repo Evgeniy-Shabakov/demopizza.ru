@@ -93,6 +93,7 @@ function reloadPage() {
 
                   </a>
 
+                  <BaseLink to='/delivery-and-payment'>Доставка и оплата</BaseLink>
                </div>
 
             </ContainerX>

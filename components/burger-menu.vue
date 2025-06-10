@@ -70,9 +70,9 @@ function closeBurgerMenu() {
             </div>
 
             <NuxtLink class="text-base underline active:text-black block"
-                      to='/map'
+                      to='/delivery-and-payment'
                       @click="closeBurgerMenu">
-               Зоны доставки
+               Доставка и оплата
             </NuxtLink>
 
             <NuxtLink class="text-base underline active:text-black"
