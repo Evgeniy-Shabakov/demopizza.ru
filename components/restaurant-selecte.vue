@@ -42,9 +42,8 @@ function initialize() {
       <option v-for="restaurant in restaurantsForSelecte"
               :value="restaurant">
 
-         <span>{{ restaurant.street }}</span>
-         <span> - {{ restaurant.house_number }}</span>
-         <span v-if="restaurant.corps_number">/{{ restaurant.corps_number }}</span>
+         {{ restaurant.street }} - {{ restaurant.house_number }}
+         <template v-if="restaurant.corps_number">/{{ restaurant.corps_number }}</template>
 
       </option>
    </select>
