@@ -22,6 +22,10 @@ const addressInputedData = reactive({
          this.entrance_code = address?.entrance_code || null,
          this.title = address?.title || null,
          this.comment = address?.comment || null
+
+      this.latitude = address?.latitude || null
+      this.longitude = address?.longitude || null
+      this.value_string = address?.value_string || null
    }
 })
 
@@ -40,12 +44,13 @@ async function addAddress() {
       selectedAddressForDelivery.value = res.data.data
       authUser.value.addresses.push(selectedAddressForDelivery.value)
 
-      if(previousRoute.name == 'login') navigateTo('/cart')
+      if (previousRoute.name == 'login') navigateTo('/cart')
       else router.back()
    } catch (error) {
       if (error.response?.status === 422) {
          validationErrors.value = error.response.data.errors
          transformValidateErrorsForUI(validationErrors.value)
+         console.log(error)
       }
    }
 }
@@ -64,6 +69,30 @@ async function editAddress() {
    }
 }
 
+const daDataAdress = ref()
+
+// инициализация daDataAdress для редактирования адреса (имитируем json со стороннего API)
+if (addressInputedData.value_string) {
+   daDataAdress.value = {}
+   daDataAdress.value.value = addressInputedData.value_string
+   daDataAdress.value.data = {}
+   daDataAdress.value.data.street = addressInputedData.street
+   daDataAdress.value.data.house = addressInputedData.house_number
+   daDataAdress.value.data.flat = addressInputedData.apartment_number
+   daDataAdress.value.data.geo_lat = addressInputedData.latitude
+   daDataAdress.value.data.geo_lon = addressInputedData.longitude
+}
+
+watchEffect(() => {
+   console.log(daDataAdress.value)
+
+   addressInputedData.street = daDataAdress.value?.data?.street
+   addressInputedData.house_number = daDataAdress.value?.data?.house
+   addressInputedData.apartment_number = daDataAdress.value?.data?.flat
+   addressInputedData.latitude = daDataAdress.value?.data?.geo_lat
+   addressInputedData.longitude = daDataAdress.value?.data?.geo_lon
+   addressInputedData.value_string = daDataAdress.value?.value
+})
 </script>
 
 <template>
@@ -93,6 +122,13 @@ async function editAddress() {
          <CitySelecte v-if="previousRoute.name == 'user-adresses'" />
 
          <div>
+            <DaDataAdressInput v-model="daDataAdress"
+                               @click="validationErrors.street = null; validationErrors.house_number = null" />
+            <BaseInvalidateText>{{ validationErrors.street }}</BaseInvalidateText>
+            <BaseInvalidateText>{{ validationErrors.house_number }}</BaseInvalidateText>
+         </div>
+
+         <!-- <div>
             <BaseFormLabel class="mb-1">Улица/шоссе/проспект</BaseFormLabel>
             <BaseInputText class="w-full"
                            v-model="addressInputedData.street"
@@ -119,20 +155,22 @@ async function editAddress() {
                <BaseInvalidateText>{{ validationErrors.corps_number }}</BaseInvalidateText>
             </div>
 
-         </div>
+         </div> -->
 
          <div class="grid grid-cols-3 gap-5">
 
-            <div>
-               <BaseFormLabel class="mb-1" :required="false">Квартира/офис</BaseFormLabel>
+            <!-- <div>
+               <BaseFormLabel class="mb-1"
+                              :required="false">Квартира/офис</BaseFormLabel>
                <BaseInputText class="w-full"
                               v-model="addressInputedData.apartment_number"
                               @click="validationErrors.apartment_number = ''" />
                <BaseInvalidateText>{{ validationErrors.apartment_number }}</BaseInvalidateText>
-            </div>
+            </div> -->
 
             <div>
-               <BaseFormLabel class="mb-1" :required="false">Подъезд</BaseFormLabel>
+               <BaseFormLabel class="mb-1"
+                              :required="false">Подъезд</BaseFormLabel>
                <BaseInputText class="w-full"
                               v-model="addressInputedData.entrance_number"
                               @click="validationErrors.entrance_number = ''" />
@@ -140,28 +178,40 @@ async function editAddress() {
             </div>
 
             <div>
-               <BaseFormLabel class="mb-1" :required="false">Этаж</BaseFormLabel>
+               <BaseFormLabel class="mb-1"
+                              :required="false">Этаж</BaseFormLabel>
                <BaseInputText class="w-full"
                               v-model="addressInputedData.floor"
                               @click="validationErrors.floor = ''" />
                <BaseInvalidateText>{{ validationErrors.floor }}</BaseInvalidateText>
             </div>
 
-         </div>
-
-         <div class="grid grid-cols-3 gap-5">
             <div>
-               <BaseFormLabel class="mb-1" :required="false">Код от подъезда</BaseFormLabel>
+               <BaseFormLabel class="mb-1"
+                              :required="false">Код от подъезда</BaseFormLabel>
                <BaseInputText class="w-full"
                               v-model="addressInputedData.entrance_code"
                               @click="validationErrors.entrance_code = ''" />
                <BaseInvalidateText>{{ validationErrors.entrance_code }}</BaseInvalidateText>
             </div>
+
          </div>
+
+         <!-- <div class="grid grid-cols-3 gap-5">
+            <div>
+               <BaseFormLabel class="mb-1"
+                              :required="false">Код от подъезда</BaseFormLabel>
+               <BaseInputText class="w-full"
+                              v-model="addressInputedData.entrance_code"
+                              @click="validationErrors.entrance_code = ''" />
+               <BaseInvalidateText>{{ validationErrors.entrance_code }}</BaseInvalidateText>
+            </div>
+         </div> -->
 
 
          <div>
-            <BaseFormLabel class="mb-1" :required="false">Название для адреса (дом, работа)</BaseFormLabel>
+            <BaseFormLabel class="mb-1"
+                           :required="false">Название для адреса (дом, работа)</BaseFormLabel>
             <BaseInputText class="w-full"
                            v-model="addressInputedData.title"
                            @click="validationErrors.title = ''" />
@@ -169,7 +219,8 @@ async function editAddress() {
          </div>
 
          <div>
-            <BaseFormLabel class="mb-1" :required="false">Комментарий к адресу</BaseFormLabel>
+            <BaseFormLabel class="mb-1"
+                           :required="false">Комментарий к адресу</BaseFormLabel>
             <BaseTextarea v-model="addressInputedData.comment"
                           @click.prevent="validationErrors.comment = ''" />
             <BaseInvalidateText>{{ validationErrors.comment }}</BaseInvalidateText>

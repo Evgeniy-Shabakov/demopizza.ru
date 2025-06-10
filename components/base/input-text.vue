@@ -23,6 +23,6 @@ const onInput = (event) => {
    background-color: white;
    padding: 5px 10px;
    border: 1px solid black;
-   border-radius: 5px;
+   border-radius: var(--border-radius-input);
 }
 </style>

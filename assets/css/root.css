@@ -22,4 +22,5 @@
    --danger-color: var(--color-red-600);
 
    --border-radius-main: 14px;
+   --border-radius-input: 5px;
 }
