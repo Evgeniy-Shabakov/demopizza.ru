@@ -1,6 +1,5 @@
 <script setup>
 import { selectedCity } from '~/js/client-helper.js'
-import { DADATA_ADRESS_API_URL, DADATA_API_KEY } from '~/env'
 
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
@@ -29,11 +28,6 @@ watch(inputTextAdress, () => {
       return
    }
 
-   // if (resultsDaData.value.map(item => item.value).includes(inputTextAdress.value)) {
-   //    resultsDaData.value = []
-   //    return
-   // }
-
    if (!inputTextAdress.value) {
       resultsDaData.value = []
       adressData.value = null
@@ -47,26 +41,20 @@ watch(inputTextAdress, () => {
    }, 500)
 })
 
-function getDaDataResult() {
+async function getDaDataResult() {
    if (!inputTextAdress.value) return
 
-   query = `${selectedCity.value.title} ${inputTextAdress.value}`
+   const query = `${selectedCity.value.title} ${inputTextAdress.value}`
 
-   const options = {
-      method: "POST",
-      mode: "cors",
-      headers: {
-         "Content-Type": "application/json",
-         "Accept": "application/json",
-         "Authorization": "Token " + DADATA_API_KEY
-      },
-      body: JSON.stringify({ query: query })
+   try {
+      const data = await $fetch('/api/dadata', {
+         method: 'POST',
+         body: { query }
+      })
+      resultsDaData.value = data.suggestions || []
+   } catch (error) {
+      console.error("Error fetching DaData:", error)
    }
-
-   fetch(DADATA_ADRESS_API_URL, options)
-      .then(response => response.text())
-      .then(result => resultsDaData.value = JSON.parse(result).suggestions)
-      .catch(error => console.log("error", error))
 }
 
 function handleClickResultDaData(adress) {

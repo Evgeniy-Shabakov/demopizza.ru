@@ -84,8 +84,6 @@ if (addressInputedData.value_string) {
 }
 
 watchEffect(() => {
-   console.log(daDataAdress.value)
-
    addressInputedData.street = daDataAdress.value?.data?.street
    addressInputedData.house_number = daDataAdress.value?.data?.house
    addressInputedData.apartment_number = daDataAdress.value?.data?.flat
