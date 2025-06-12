@@ -75,6 +75,7 @@ const daDataAdress = ref()
 if (addressInputedData.value_string) {
    daDataAdress.value = {}
    daDataAdress.value.value = addressInputedData.value_string
+   daDataAdress.value.valueModified = addressInputedData.value_string
    daDataAdress.value.data = {}
    daDataAdress.value.data.street = addressInputedData.street
    daDataAdress.value.data.house = addressInputedData.house_number
