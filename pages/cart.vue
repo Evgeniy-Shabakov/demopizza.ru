@@ -51,7 +51,7 @@ import { addressesInSelectedCity } from '~/js/address-index.js'
             </div>
 
             <div v-else
-                 class="h-[62px] flex items-center justify-center">
+                 class="min-h-[62px] flex items-center justify-center">
                <NuxtLink to="/user/adresses/create">
                   <BaseButton>
                      Добавить адрес доставки

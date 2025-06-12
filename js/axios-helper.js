@@ -343,3 +343,13 @@ export async function deleteModelAxios(urlPrefix, data) {
       throw error
    }
 }
+export async function getDaDataAddresses(query) {
+   try {
+      const res = await axios.post(`/dadata-addresses`, { query })
+      return res
+   }
+   catch (error) {
+      console.log(error)
+      throw error
+   }
+}

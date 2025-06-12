@@ -1,5 +1,6 @@
 <script setup>
 import { selectedCity } from '~/js/client-helper.js'
+import { getDaDataAddresses } from '~/js/axios-helper'
 
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
@@ -47,11 +48,8 @@ async function getDaDataResult() {
    const query = `${selectedCity.value.title} ${inputTextAdress.value}`
 
    try {
-      const data = await $fetch('/api/dadata', {
-         method: 'POST',
-         body: { query }
-      })
-      resultsDaData.value = data.suggestions || []
+      const data = await getDaDataAddresses(query)
+      resultsDaData.value = data.data.suggestions || []
    } catch (error) {
       console.error("Error fetching DaData:", error)
    }
