@@ -2,6 +2,7 @@ import { restaurants, logout, lastOrderForUser } from '~/js/axios-helper.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type.js'
 import { COOKIE_NAME } from '~/js/strings/cookie-name.js'
 import { checkProductAvailabilityForCart } from '~/js/models/product'
+import { currentDeliveryZone } from '~/js/delivery-zone-helper'
 
 export const selectedCity = ref()
 export const selectedRestaurant = ref()
@@ -140,10 +141,10 @@ export const deliveryPrice = computed(() => {
    if (selectedOrderType.value != ORDER_TYPE.delivery)
       return 0;
 
-   if (totalProductPrice.value >= selectedCity.value.order_value_for_free_delivery_by_default)
+   if (totalProductPrice.value >= currentDeliveryZone.value?.deliveryPrices.order_value_for_free_delivery)
       return 0;
 
-   return Number(selectedCity.value.delivery_price_by_default)
+   return Number(currentDeliveryZone.value?.deliveryPrices.delivery_price)
 })
 
 export const totalPrice = computed(() => {

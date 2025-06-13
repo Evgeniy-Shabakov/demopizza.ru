@@ -46,20 +46,11 @@ async function deleteAddress(id) {
                   <div class="border border-(--brand-color) rounded-(--border-radius-main) p-2">
 
                      <div class="mb-2">
-
                         <div v-if="address.title"
                              class="text-center mb-2">
                            {{ address.title }}
                         </div>
-                        {{ address.street }}
-                        {{ address.house_number }}
-                        <template v-if="address.corps_number">
-                           / {{ address.corps_number }}
-                        </template>
-                        <template v-if="address.apartment_number">
-                           - {{ address.apartment_number }}
-                        </template>
-
+                        {{ address.value_string }}
                      </div>
 
                      <div class="flex justify-between">

@@ -4,9 +4,7 @@ import {
 } from '~/js/client-helper.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type'
 import { addressesInSelectedCity } from '~/js/address-index.js'
-
-
-
+import { currentDeliveryZone } from '~/js/delivery-zone-helper'
 
 </script>
 
@@ -22,7 +20,8 @@ import { addressesInSelectedCity } from '~/js/address-index.js'
 
          <template v-if="selectedOrderType == ORDER_TYPE.delivery">
 
-            <div v-if="addressesInSelectedCity.length > 0">
+            <div v-if="addressesInSelectedCity.length > 0"
+                 class="min-h-[62px]">
                <BaseLabel class="mb-2">Выбирите адрес или добавьте новый</BaseLabel>
                <div class="flex items-center gap-3.5">
 
@@ -30,13 +29,7 @@ import { addressesInSelectedCity } from '~/js/address-index.js'
                           class="base-selecte">
                      <option v-for="address in addressesInSelectedCity"
                              :value="address">
-
-                        <span v-if="address.title">{{ address.title }} -</span>
-                        {{ address.street }}
-                        {{ address.house_number }}
-                        <span v-if="address.corps_number">/ {{ address.corps_number }}</span>
-                        <span v-if="address.apartment_number"> - {{ address.apartment_number }}</span>
-
+                             {{ address.value_string }}
                      </option>
                   </select>
 
@@ -47,7 +40,10 @@ import { addressesInSelectedCity } from '~/js/address-index.js'
                   </NuxtLink>
 
                </div>
-               
+               <BaseInvalidateText v-if="!currentDeliveryZone"
+                                   class="ml-1 absolute">
+                  не входит в зону доставки
+               </BaseInvalidateText>
             </div>
 
             <div v-else
@@ -61,7 +57,8 @@ import { addressesInSelectedCity } from '~/js/address-index.js'
 
          </template>
 
-         <div v-else class="h-[62px]">
+         <div v-else
+              class="min-h-[62px]">
 
             <BaseLabel v-if="selectedOrderType == ORDER_TYPE.pickUp"
                        class="mb-2">
@@ -87,7 +84,12 @@ import { addressesInSelectedCity } from '~/js/address-index.js'
                      gap-1 minxs:gap-3 xs:gap-4 items-center
                      mt-5">
                <IconTrack class="justify-self-center text-(--brand-color-active)" />
-               <div>Доставка</div>
+               <div>
+                  <div>Доставка</div>
+                  <div class="text-xs">
+                     {{ currentDeliveryZone?.properties.description }}
+                  </div>
+               </div>
                <div class=" justify-self-end">{{ deliveryPrice }}р</div>
             </div>
          </div>
@@ -108,14 +110,15 @@ import { addressesInSelectedCity } from '~/js/address-index.js'
 
             <div v-if="selectedOrderType == ORDER_TYPE.delivery"
                  class="text-xs text-center">
-               <div v-if="totalProductPrice < selectedCity.min_order_value_for_delivery_by_default">
-                  Минимальная сумма товаров для заказа {{ Number(selectedCity.min_order_value_for_delivery_by_default)
+               <div v-if="totalProductPrice < currentDeliveryZone?.deliveryPrices.min_order_value_for_delivery">
+                  Минимальная сумма товаров для заказа
+                  {{ Number(currentDeliveryZone?.deliveryPrices.min_order_value_for_delivery) }}р.
+               </div>
+               <div v-else-if="totalProductPrice < currentDeliveryZone?.deliveryPrices.order_value_for_free_delivery">
+                  Бесплатная доставка от {{ Number(currentDeliveryZone?.deliveryPrices.order_value_for_free_delivery)
                   }}р.
                </div>
-               <div v-else-if="totalProductPrice < selectedCity.order_value_for_free_delivery_by_default">
-                  Бесплатная доставка от {{ Number(selectedCity.order_value_for_free_delivery_by_default) }}р.
-               </div>
-               <div v-else-if="totalProductPrice >= selectedCity.order_value_for_free_delivery_by_default"
+               <div v-else-if="totalProductPrice >= currentDeliveryZone?.deliveryPrices.order_value_for_free_delivery"
                     class="text-sm font-bold text-(--text-color-accent)">
                   Бесплатная доставка!!!
                </div>
@@ -123,7 +126,7 @@ import { addressesInSelectedCity } from '~/js/address-index.js'
 
             <BaseButton :active="totalProductPrice > 0 &&
                (selectedOrderType !== ORDER_TYPE.delivery ||
-                  totalProductPrice > selectedCity.min_order_value_for_delivery_by_default)"
+                  totalProductPrice > currentDeliveryZone?.deliveryPrices.min_order_value_for_delivery)"
                         class="w-1/4"
                         :click="() => navigateTo('/order-panel')">
                Далее

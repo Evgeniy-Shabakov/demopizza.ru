@@ -90,7 +90,7 @@ watchEffect(() => {
    addressInputedData.apartment_number = daDataAdress.value?.data?.flat
    addressInputedData.latitude = daDataAdress.value?.data?.geo_lat
    addressInputedData.longitude = daDataAdress.value?.data?.geo_lon
-   addressInputedData.value_string = daDataAdress.value?.value
+   addressInputedData.value_string = daDataAdress.value?.valueModified
 })
 </script>
 

@@ -13,6 +13,7 @@ import { PAYMENT_TYPE } from '~/js/data-types/payment-type'
 import { transformValidateErrorsForUI } from '~/js/validation-helper.js'
 import { userAddresses } from '~/js/address-index.js'
 import { checkOperatingModeAndActivateDialog } from '~/js/open-close-time'
+import { currentDeliveryZone } from '~/js/delivery-zone-helper'
 
 const orderData = reactive({})
 
@@ -109,6 +110,8 @@ async function sendOrder() {
       }
    }
 }
+console.log(selectedAddressForDelivery.value)
+
 </script>
 
 <template>
@@ -117,8 +120,18 @@ async function sendOrder() {
 
       <h1 v-if="selectedCity"
           class="text-xl text-center">
-         <div class="font-semibold">{{ selectedCity.title }}</div>
-         <div class="text-(--text-color-accent)">{{ selectedOrderType }}</div>
+         <div>
+            <div class="font-semibold">{{ selectedCity.title }}</div>
+         </div>
+         <div class="text-(--text-color-accent)">
+            {{ selectedOrderType }}
+
+            <template v-if="selectedOrderType == ORDER_TYPE.delivery">
+               - {{ selectedAddressForDelivery.value_string }}
+            </template>
+
+         </div>
+
          <div class="text-sm font-normal">(оформление заказа)</div>
          <BaseInvalidateText>{{ otherErrors }}</BaseInvalidateText>
       </h1>
@@ -126,7 +139,7 @@ async function sendOrder() {
       <div v-if="selectedCity"
            class="flex flex-col gap-5">
 
-         <template v-if="selectedOrderType == ORDER_TYPE.delivery">
+         <!-- <template v-if="selectedOrderType == ORDER_TYPE.delivery">
 
             <div v-if="addressesInSelectedCity.length > 0">
                <BaseLabel class="mb-2">Выбирите адрес или добавьте новый</BaseLabel>
@@ -168,20 +181,18 @@ async function sendOrder() {
 
          </template>
 
-         <div v-else>
+<div v-else>
 
-            <BaseLabel v-if="selectedOrderType == ORDER_TYPE.pickUp"
-                       class="mb-2">
-               Выберите точку самовывоза
-            </BaseLabel>
-            <BaseLabel v-else-if="selectedOrderType == ORDER_TYPE.inRestaurant"
-                       class="mb-2">
-               Выберите ресторан
-            </BaseLabel>
-            <RestaurantSelecte />
-            <BaseInvalidateText>{{ validationErrors.restaurant_id }}</BaseInvalidateText>
+   <BaseLabel v-if="selectedOrderType == ORDER_TYPE.pickUp" class="mb-2">
+      Выберите точку самовывоза
+   </BaseLabel>
+   <BaseLabel v-else-if="selectedOrderType == ORDER_TYPE.inRestaurant" class="mb-2">
+      Выберите ресторан
+   </BaseLabel>
+   <RestaurantSelecte />
+   <BaseInvalidateText>{{ validationErrors.restaurant_id }}</BaseInvalidateText>
 
-         </div>
+</div> -->
 
          <div v-if="selectedOrderType == ORDER_TYPE.inRestaurant && selectedRestaurant"
               class="flex justify-between gap-3.5">
