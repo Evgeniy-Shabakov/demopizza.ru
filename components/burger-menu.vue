@@ -2,6 +2,7 @@
 import { company } from '~/js/axios-helper'
 import { formatPhone } from '~/js/phone-helper'
 import { installPrompt } from '/plugins/before-install-prompt.client'
+import { isPWA } from '~/js/enviroment-detecting'
 
 const burgerMenuIsOpen = ref(false)
 
@@ -29,6 +30,8 @@ function btnInstallHandler() {
    if (installPrompt.value) installPrompt.value.prompt()
    else navigateTo('/install')
 }
+
+const isPWAdetect = isPWA()
 </script>
 
 <template>
@@ -75,7 +78,8 @@ function btnInstallHandler() {
                </a>
             </div>
 
-            <BaseButton class="btn-install"
+            <BaseButton v-if="!isPWAdetect"
+                        class="btn-install"
                         :click="btnInstallHandler">
                Установить <br> мобильное приложение
             </BaseButton>

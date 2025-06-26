@@ -36,6 +36,11 @@ const Browser = detectBrowser()
 
             <ol class="list-decimal list-inside space-y-2 marker:text-blue-500 marker:font-bold">
 
+               <div v-if="Browser == BROWSER_TYPE.YANDEX"
+                    class="text-sm text-center text-(--danger-color) mb-2">
+                  Яндекс браузер не поддерживает установку PWA приложений
+               </div>
+
                <template v-if="OS == OS_TYPE.IOS">
 
                   <template v-if="Browser == BROWSER_TYPE.CHROME">

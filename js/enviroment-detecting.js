@@ -19,6 +19,11 @@ export function detectBrowser() {
    const userAgent = navigator.userAgent.toLowerCase();
    const vendor = navigator.vendor?.toLowerCase() || "";
 
+   // Яндекс.Браузер (основан на Chromium, но имеет свой userAgent)
+   if (userAgent.includes("yabrowser")) {
+      return BROWSER_TYPE.YANDEX;
+   }
+
    // Chrome (проверяем vendor, чтобы отличить от Safari)
    if (userAgent.includes("chrome") && vendor.includes("google inc")) {
       return BROWSER_TYPE.CHROME;
@@ -29,11 +34,6 @@ export function detectBrowser() {
       return BROWSER_TYPE.SAFARI;
    }
 
-   // Яндекс.Браузер (основан на Chromium, но имеет свой userAgent)
-   if (userAgent.includes("yabrowser")) {
-      return BROWSER_TYPE.YANDEX;
-   }
-   
    // Opera
    if (userAgent.includes("opr") || userAgent.includes("opera")) {
       return "Opera";
@@ -60,4 +60,9 @@ export function detectBrowser() {
    }
 
    return null
+}
+
+export function isPWA() {
+   return window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone;
 }
