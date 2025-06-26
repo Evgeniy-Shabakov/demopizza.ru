@@ -1,6 +1,7 @@
 <script setup>
 import { company } from '~/js/axios-helper'
 import { formatPhone } from '~/js/phone-helper'
+import { installPrompt } from '/plugins/before-install-prompt.client'
 
 const burgerMenuIsOpen = ref(false)
 
@@ -22,6 +23,11 @@ function closeBurgerMenu() {
    burgerMenuIsOpen.value = false
    document.removeEventListener('click', closeBurgerMenu)
    document.removeEventListener('scroll', closeBurgerMenu)
+}
+
+function btnInstallHandler() {
+   if (installPrompt.value) installPrompt.value.prompt()
+   else navigateTo('/install')
 }
 </script>
 
@@ -69,6 +75,11 @@ function closeBurgerMenu() {
                </a>
             </div>
 
+            <BaseButton class="btn-install"
+                        :click="btnInstallHandler">
+               Установить <br> мобильное приложение
+            </BaseButton>
+
             <NuxtLink class="text-base underline active:text-black block"
                       to='/delivery-and-payment'
                       @click="closeBurgerMenu">
@@ -97,3 +108,10 @@ function closeBurgerMenu() {
    </div>
 
 </template>
+
+<style scoped>
+.btn-install {
+   font-size: 16px;
+   background-color: var(--brand-color-hover);
+}
+</style>

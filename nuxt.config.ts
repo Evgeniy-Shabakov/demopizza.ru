@@ -13,6 +13,7 @@ export default defineNuxtConfig({
          title: 'Доставка еды',
          link: [
             { rel: 'icon', type: 'image/x-icon', href: `${serverUrl}/storage/images/favicon.png` },
+            { rel: 'manifest', href: '/manifest.webmanifest' }
          ]
       }
    },

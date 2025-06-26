@@ -264,11 +264,13 @@ function reloadPage() {
                         <div v-if="selectedOrderType == ORDER_TYPE.delivery"
                              class="text-xs text-center">
                            <div v-if="totalProductPrice < selectedCity.min_order_value_for_delivery_by_default">
-                              Минимальная сумма товаров для заказа {{ Number(selectedCity.min_order_value_for_delivery_by_default)
+                              Минимальная сумма товаров для заказа {{
+                                 Number(selectedCity.min_order_value_for_delivery_by_default)
                               }}р.
                            </div>
                            <div v-else-if="totalProductPrice < selectedCity.order_value_for_free_delivery_by_default">
-                              Бесплатная доставка от {{ Number(selectedCity.order_value_for_free_delivery_by_default) }}р.
+                              Бесплатная доставка от {{ Number(selectedCity.order_value_for_free_delivery_by_default)
+                              }}р.
                            </div>
                            <div v-else-if="totalProductPrice >= selectedCity.order_value_for_free_delivery_by_default"
                                 class="text-sm font-bold text-(--text-color-accent)">
