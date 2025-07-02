@@ -1,8 +1,0 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "ru.demopizza.twa",
-        "sha256_cert_fingerprints": ["F6:39:32:FF:EE:87:E0:89:29:49:E4:DB:5D:E0:1C:9D:37:18:D0:31:F4:AA:36:97:37:5C:2A:03:39:AB:7C:BD"]
-      }
-    }]
