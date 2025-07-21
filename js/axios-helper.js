@@ -52,17 +52,59 @@ export const activeDesign = ref()
 
 export const textLoadOrFailForVue = ref('Загрузка данных...')
 
+export async function LoginWithVKID(access_token) {
+   try {
+      const res = await axios.post(`${serverApiUrl}/auth/vkid/login`, { access_token })
+      authUser.value = res.data
+      return res
+   } catch (err) {
+      console.log(err)
+      throw err
+   }
+}
+
+export async function LoginWithTelegramBot(access_token) {
+   try {
+      const res = await axios.post(`${serverApiUrl}/auth/telegram-bot/login`, { access_token })
+      authUser.value = res.data
+      return res
+   } catch (err) {
+      console.log(err)
+      throw err
+   }
+}
+
+export async function getTelegramBotAuthToken() {
+   try {
+      const res = await axios.post(`${serverApiUrl}/auth/telegram-bot/get-token`)
+      return res.data
+   }
+   catch (error) {
+      throw error
+   }
+}
+
+export async function getTelegramBotAuthTokenStatus(token) {
+   try {
+      const res = await axios.get(`${serverApiUrl}/auth/telegram-bot/check-token/${token}`)
+      return res.data
+   }
+   catch (error) {
+      throw error
+   }
+}
+
 export function sendVerifyCode(data) {
    return new Promise(async function (resolve, reject) {
       await axios
-         .get(`${serverUrl}/sanctum/csrf-cookie`)
+         .get(`${serverApiUrl}/sanctum/csrf-cookie`)
          .catch(err => {
             console.log(err);
             reject(err)
          })
 
       await axios
-         .post(`${serverUrl}/send-verify-code`, data)
+         .post(`${serverApiUrl}/send-verify-code`, data)
          .then(res => {
             resolve(res)
          })
@@ -76,7 +118,7 @@ export function sendVerifyCode(data) {
 export function login(data) {
    return new Promise(function (resolve, reject) {
       axios
-         .post(`${serverUrl}/login`, data)
+         .post(`${serverApiUrl}/login`, data)
          .then(res => {
             authUser.value = res.data
             resolve(res)
@@ -91,7 +133,7 @@ export function login(data) {
 
 export async function logout() {
    try {
-      const res = await axios.delete(`${serverUrl}/logout`)
+      const res = await axios.delete(`${serverApiUrl}/logout`)
       inputedPhone.value = ''
       authUser.value = null
 

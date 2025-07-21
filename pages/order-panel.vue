@@ -110,7 +110,6 @@ async function sendOrder() {
       }
    }
 }
-console.log(selectedAddressForDelivery.value)
 
 </script>
 

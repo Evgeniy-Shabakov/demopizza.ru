@@ -6,6 +6,10 @@ import { serverUrl } from "./env"
 export default defineNuxtConfig({
    compatibilityDate: '2024-11-01',
    devtools: { enabled: false },
+   devServer: {   //такие настройки нужны для тестирования vk_id
+      port: 80,
+      host: 'localhost'
+   },
    css: ['~/assets/css/main.css'],
    ssr: false,
    app: {
