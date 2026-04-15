@@ -7,7 +7,7 @@ export default defineNuxtConfig({
    compatibilityDate: '2024-11-01',
    devtools: { enabled: false },
    devServer: {   //такие настройки нужны для тестирования vk_id
-      port: 80,
+      port: 4000,
       host: 'localhost'
    },
    css: ['~/assets/css/main.css'],
@@ -16,7 +16,7 @@ export default defineNuxtConfig({
       head: {
          title: 'Доставка еды',
          link: [
-            { rel: 'icon', type: 'image/x-icon', href: `${serverUrl}/storage/images/favicon.png` },
+            { rel: 'icon', type: 'image/x-icon', href: `${serverUrl}/images/favicon.png` },
             { rel: 'manifest', href: '/manifest.webmanifest' }
          ]
       }
