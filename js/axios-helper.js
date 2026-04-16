@@ -148,14 +148,18 @@ export async function logout() {
 export function getAuthUser() {
    return new Promise(function (resolve, reject) {
       axios
-         .get(`/get-auth-user`)
+         .get(`/auth/jwt-payload/user`)
          .then(res => {
             authUser.value = res.data.data
             resolve(res)
          })
          .catch(err => {
-
-            reject(err)
+            if (err.response && err.response.status === 401) {
+               authUser.value = null;
+               resolve(null);   // разрешаем промис, т.к. 401 — ожидаемое состояние
+            } else {
+               reject(err);     // остальные ошибки пробрасываем дальше
+            }
          })
    })
 }
@@ -226,9 +230,13 @@ export async function editUserName(userID, name) {
 
 export async function getActiveDesign() {
    try {
-      const res = await axios.get(`/get-active-design`)
+      const res = await axios.get(`/designs`)
+      const designs = res.data.data
 
-      activeDesign.value = res.data.data
+      const activeDesignItem = designs.find(design => design.isActive === true)
+
+      activeDesign.value = activeDesignItem.settings
+      
       return res
    } catch (error) {
       console.log(error)
@@ -265,7 +273,9 @@ export async function getModelsAxios(urlPrefix) {
       if (urlPrefix == 'countries') countries.value = res.data.data
       else if (urlPrefix == 'cities') cities.value = res.data.data
       else if (urlPrefix == 'restaurants') restaurants.value = res.data.data
+      else if (urlPrefix == 'restaurants?include=city') restaurants.value = res.data.data
       else if (urlPrefix == 'categories') categories.value = res.data.data
+      else if (urlPrefix == 'categories?include=products') categories.value = res.data.data
       else if (urlPrefix == 'ingredients') ingredients.value = res.data.data
       else if (urlPrefix == 'products') products.value = res.data.data
       else if (urlPrefix == 'employees') employees.value = res.data.data
@@ -296,6 +306,20 @@ export async function getModelAxios(urlPrefix, id) {
       else if (urlPrefix == 'legal-documents') currentLegalDocument.value = res.data.data
       else if (urlPrefix == 'designs') currentDesign.value = res.data.data
 
+      return res
+   } catch (error) {
+      textLoadOrFailForVue.value = 'Ошибка загрузки данных'
+      addLogMessage(formErrorLogMessage(error))
+      throw error
+   }
+}
+
+export async function getCompany() {
+   try {
+      const res = await axios.get(`/company`)
+
+      company.value = res.data.data
+     
       return res
    } catch (error) {
       textLoadOrFailForVue.value = 'Ошибка загрузки данных'

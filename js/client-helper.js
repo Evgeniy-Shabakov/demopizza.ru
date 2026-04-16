@@ -64,7 +64,7 @@ export const pickUpAvailableInSelectedCity = computed(() => {
    if (selectedCity.value == null) return false
 
    for (let i = 0; i < restaurants.value.length; i++) {
-      if (restaurants.value[i].city.title === selectedCity.value.title) {
+      if (restaurants.value[i].city.name === selectedCity.value.name) {
          if (restaurants.value[i].pick_up_at_counter_available ||
             restaurants.value[i].pick_up_at_car_window_available)
             return true

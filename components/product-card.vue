@@ -1,6 +1,7 @@
 <script setup>
 import { minusProductInCartForMenuPage, plusProductToCart, removeProductFromCart } from '~/js/client-helper.js'
 import { rerecordProductWithUserConfigs } from '~/js/save/user-configs-products.js'
+import { serverApiUrl, serverUrl } from '~/env.js'
 
 const props = defineProps(['product', 'userConfig', 'index'])
 
@@ -9,7 +10,7 @@ const baseIngredients = props.userConfig ? props.userConfig.baseIngredients : pr
 const additionalIngredients = props.userConfig ? props.userConfig.additionalIngredients : []
 
 const price = computed(() => {
-   if (!props.userConfig) return props.product.price_default
+   if (!props.userConfig) return props.product.priceDefault
 
    let total = 0
 
@@ -37,6 +38,8 @@ function deleteUserConfig() {
    rerecordProductWithUserConfigs(props.product)
 }
 
+const imagePath = serverUrl + '/' + props.product.imagePath.replace(/^storage\/public\/?/, '')
+
 </script>
 
 <template>
@@ -49,13 +52,13 @@ function deleteUserConfig() {
 
          <img class="w-full aspect-[1/1]"
               :class="product.is_in_stop_list ? 'grayscale-80' : ''"
-              :src="product.image_url">
+              :src="imagePath">
 
          <IngredientsMini class="mt-2"
                           :baseIngredients="baseIngredients"
                           :additionalIngredients="additionalIngredients" />
 
-         <NuxtLink v-if="product.base_ingredients.length > 0 || product.additional_ingredients.length > 0"
+         <NuxtLink v-if="product.base_ingredients?.length > 0 || product.additional_ingredients?.length > 0"
                    class="product-card__btn-edit"
                    :to="`/product/${product.id}/ingredients-editor-${index >= 0 ? index : 'base'}`">
             изменить
@@ -65,7 +68,7 @@ function deleteUserConfig() {
 
       <p class="flex items-center justify-between gap-1">
          <span class="text-[20px] leading-[24px] font-[550] overflow-hidden overflow-ellipsis">
-            {{ product.title }}
+            {{ product.name }}
          </span>
 
          <button class="relative text-(--danger-color)
@@ -82,7 +85,7 @@ function deleteUserConfig() {
          <span v-if="userConfig">
             {{ product.title }} с Вашей конфигурацией. Можно удалить или создать новую
          </span>
-         <span v-else>{{ product.description_short }}</span>
+         <span v-else>{{ product.descriptionShort }}</span>
       </p>
 
       <div class="flex items-center justify-between mt-auto">
@@ -94,7 +97,7 @@ function deleteUserConfig() {
             Будет позже
          </BaseButton>
 
-         <button v-else-if="!product.allIngredientIsAvailable && !userConfig"
+         <!-- <button v-else-if="!product.allIngredientIsAvailable && !userConfig"
                  class="relative text-(--brand-color)
                         hover:text-(--brand-color-hover) active:text-(--brand-color-active)">
             <IconInfoCircle />
@@ -103,7 +106,7 @@ function deleteUserConfig() {
                Не все ингредиенты доступны для заказа.
                Но вы можете изменить ингредиенты и добавить в корзину товары с новыми ингредиентами
             </DialogMiniInfo>
-         </button>
+         </button> -->
 
          <template v-else>
             <BaseButton v-if="

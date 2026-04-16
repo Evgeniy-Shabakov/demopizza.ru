@@ -17,13 +17,14 @@ import { checkOperatingModeAndActivateDialog } from '~/js/open-close-time'
 import { findProductById, checkProductAvailabilityForCart, setStatusAllIngredientsIsAvailableForProdacts }
    from '~/js/models/product'
 import { userAddresses } from '~/js/address-index.js'
+import { serverApiUrl, serverUrl } from '~/env.js'
 
 export async function initialize() {
 
    try {
       await initializeCategories()
 
-      setStatusAllIngredientsIsAvailableForProdacts()
+      // setStatusAllIngredientsIsAvailableForProdacts()
 
       initializeDesign()
 
@@ -31,14 +32,16 @@ export async function initialize() {
 
       loadCompany().then(() => {
          useHead({
-            title: `${company.value?.brand_title}`,
+            title: `${company.value?.brandName}`,
          })
          checkOperatingModeAndActivateDialog()
+
+         company.value.logoPath = serverUrl + '/' + company.value.logoPath.replace(/^storage\/public\/?/, '')
       })
 
       loadCurrentAuthUser().then(() => setAddressForDelivery())
 
-      initializeUserConfigsForProducts()
+      // initializeUserConfigsForProducts()
 
       initializeCart()
       initializeOrderType()
@@ -55,12 +58,13 @@ export async function initialize() {
 async function initializeCategories() {
    try {
       await loadCategories()
+// console.log(categories.value)
 
       //убираем из списка неактивные продукты и пустые категории чтобы не отображались
       categories.value.forEach(category => {
-         category.products = category.products.filter(product => product.is_active == true)
+         category.products = category.products.filter(product => product.isActive == true)
       })
-      categories.value = categories.value.filter(category => category.products.length > 0)
+      categories.value = categories.value.filter(category => category.products?.length > 0)
 
       return LOADING_TYPE.complete
    }
@@ -171,18 +175,18 @@ export async function initializeDesign() {
       const root = document.documentElement
 
       // Устанавливаем новое значение для CSS переменной
-      root.style.setProperty('--background-page-main-color', activeDesign.value.background_page_main_color)
-      root.style.setProperty('--background-page-elements-color', activeDesign.value.background_page_elements_color)
-      root.style.setProperty('--brand-color', activeDesign.value.brand_color)
-      root.style.setProperty('--text-color-main', activeDesign.value.text_color_main)
-      root.style.setProperty('--text-color-on-brand-color', activeDesign.value.text_color_on_brand_color)
-      root.style.setProperty('--text-color-accent', activeDesign.value.text_color_accent)
-      root.style.setProperty('--bottom-nav-color', activeDesign.value.bottom_nav_color)
+      root.style.setProperty('--background-page-main-color', activeDesign.value.backgroundPageMainColor)
+      root.style.setProperty('--background-page-elements-color', activeDesign.value.backgroundPageElementsColor)
+      root.style.setProperty('--brand-color', activeDesign.value.brandColor)
+      root.style.setProperty('--text-color-main', activeDesign.value.textColorMain)
+      root.style.setProperty('--text-color-on-brand-color', activeDesign.value.textColorOnBrandColor)
+      root.style.setProperty('--text-color-accent', activeDesign.value.textColorAccent)
+      root.style.setProperty('--bottom-nav-color', activeDesign.value.bottomNavColor)
 
-      root.style.setProperty('--brand-color-hover', adjustColor(activeDesign.value.brand_color, -20))
-      root.style.setProperty('--brand-color-active', adjustColor(activeDesign.value.brand_color, 20))
-      root.style.setProperty('--background-active-category', adjustColor(activeDesign.value.brand_color, 125))
-      root.style.setProperty('--border-color-order-settings', adjustColor(activeDesign.value.background_page_main_color, -70))
+      root.style.setProperty('--brand-color-hover', adjustColor(activeDesign.value.brandColor, -20))
+      root.style.setProperty('--brand-color-active', adjustColor(activeDesign.value.brandColor, 20))
+      root.style.setProperty('--background-active-category', adjustColor(activeDesign.value.brandColor, 125))
+      root.style.setProperty('--border-color-order-settings', adjustColor(activeDesign.value.backgroundPageMainColor, -70))
 
       return LOADING_TYPE.complete
    }

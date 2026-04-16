@@ -11,6 +11,7 @@ import {
    selectedCity, productsInCart, totalProductPrice, deliveryPrice, totalPrice, selectedOrderType
 } from '~/js/client-helper.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type'
+import { serverApiUrl, serverUrl } from '~/env.js'
 
 const dataForComponentLoadingType = ref(LOADING_TYPE.LOADING)
 const error = ref()
@@ -83,13 +84,13 @@ function reloadPage() {
                      </span>
                   </div>
 
-                  <a v-if="company && company.phone"
-                     :href="`tel:${company.phone}`"
+                  <a v-if="company && company.phoneForOrders"
+                     :href="`tel:${company.phoneForOrders}`"
                      target="_blank"
                      class="flex items-center justify-between gap-1">
 
                      <IconPhone2 />
-                     <span>{{ formatPhone(company.phone) }}</span>
+                     <span>{{ formatPhone(company.phoneForOrders) }}</span>
 
                   </a>
 
@@ -110,9 +111,9 @@ function reloadPage() {
                             class="flex items-center gap-3.5">
                      <img v-if="company"
                           class=" h-10 w-10 lg:h-20 lg:w-20"
-                          :src="company.logo_url">
+                          :src="company.logoPath">
                      <div v-if="company">
-                        <h1 class="text-2xl font-bold lg:text-4xl">{{ company.brand_title }}</h1>
+                        <h1 class="text-2xl font-bold lg:text-4xl">{{ company.brandName }}</h1>
                         <div class="hidden lg:block">{{ company.tagline }}</div>
                      </div>
                   </NuxtLink>
@@ -156,7 +157,7 @@ function reloadPage() {
                     class="px-3 py-0.5 shadow-md text-nowrap cursor-pointer
                            bg-(--background-page-main-color) rounded-(--border-radius-main)
                            hover:text-(--brand-color) active:text-(--brand-color)">
-                  {{ category.title }}
+                  {{ category.name }}
 
                </div>
 
@@ -195,9 +196,9 @@ function reloadPage() {
                            ref="contentSections"
                            class="mb-5">
 
-                     <h2 :id="category.title"
+                     <h2 :id="category.name"
                          class="text-xl md:text-2xl font-bold mb-3 ml-2">
-                        {{ category.title }}
+                        {{ category.name }}
                      </h2>
 
                      <div class="grid grid-cols-1 gap-3.5 
