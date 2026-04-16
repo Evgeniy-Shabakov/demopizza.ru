@@ -10,7 +10,7 @@ import { cities } from '~/js/axios-helper.js'
            class="base-selecte"
            v-model="selectedCity">
       <option v-for="city in cities"
-              :value="city">{{ city.title }}</option>
+              :value="city">{{ city.name }}</option>
    </select>
 
 </template>

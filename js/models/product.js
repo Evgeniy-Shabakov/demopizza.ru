@@ -20,9 +20,9 @@ export function setStatusAllIngredientsIsAvailableForProdacts() {
 
 export function checkProductAvailabilityForCart(product) {
    if (!product) return false
-   if (!product.is_active) return false
-   if (product.is_in_stop_list) return false
-   if (!product.allIngredientIsAvailable) return false
+   if (!product.isActive) return false
+   // if (product.is_in_stop_list) return false
+   // if (!product.allIngredientIsAvailable) return false
 
    return true
 }

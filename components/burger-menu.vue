@@ -67,13 +67,13 @@ const isPWAdetect = isPWA()
             </div>
 
             <div class="bg-(--brand-color-hover) p-2 rounded-(--border-radius-main)">
-               <a v-if="company && company.phone"
-                  :href="`tel:${company.phone}`"
+               <a v-if="company && company.phoneForOrders"
+                  :href="`tel:${company.phoneForOrders}`"
                   target="_blank"
                   class="flex items-center justify-between gap-4">
 
                   <IconPhone class="h-6" />
-                  <span>{{ formatPhone(company.phone) }}</span>
+                  <span>{{ formatPhone(company.phoneForOrders) }}</span>
 
                </a>
             </div>
