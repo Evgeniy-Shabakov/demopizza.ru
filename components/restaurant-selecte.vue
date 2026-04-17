@@ -1,49 +1,45 @@
 <script setup>
 import { ORDER_TYPE } from '~/js/data-types/order-type'
-import { cities } from '~/js/axios-helper.js'
+import { restaurants } from '~/js/axios-helper.js'
 import { selectedCity, selectedOrderType, selectedRestaurant } from '~/js/client-helper.js'
 
-const cityForSelecteRestaurant = ref(null) // selectedCity не использую т.к. в нем нет ресторанов
+const restaurantsForSelecte = computed(() => {
+   if (!restaurants.value) return []
+   if (!selectedCity.value) return []
 
-const restaurantsForSelecte = ref(null)
-
-initialize()
-
-function initialize() {
-   cityForSelecteRestaurant.value = cities.value.find(city => city.id === selectedCity.value.id)
+   let listForSelecte = restaurants.value.filter(rest => rest.city.id === selectedCity.value.id)
 
    if (selectedOrderType.value == ORDER_TYPE.pickUp) {
-      restaurantsForSelecte.value = cityForSelecteRestaurant.value.restaurants
-         .filter(restaurant => restaurant.pick_up_at_counter_available == true)
+      listForSelecte = listForSelecte.filter(rest => rest.pickUpAtCounterAvailable)
    }
 
    if (selectedOrderType.value == ORDER_TYPE.inRestaurant) {
-      restaurantsForSelecte.value = cityForSelecteRestaurant.value.restaurants
-         .filter(restaurant => restaurant.at_restaurant_at_counter_available == true
-            || restaurant.at_restaurant_to_table_available == true)
+      listForSelecte = listForSelecte
+         .filter(rest => rest.atRestaurantAtCounterAvailable || rest.atRestaurantToTableAvailable)
    }
-
-   const idsArray = restaurantsForSelecte.value.map(rest => rest.id)
 
    //при обновлении страницы selectedRestaurant.value не успевает инициализироваться
    // в client-initialize.js и selectedRestaurant.value сбрасывается
-   if (selectedRestaurant.value && idsArray.includes(selectedRestaurant.value.id)) return
+   const idsArray = listForSelecte.map(rest => rest.id)
 
-   selectedRestaurant.value = restaurantsForSelecte.value[0]
-}
+   if (!selectedRestaurant.value || !idsArray.includes(selectedRestaurant.value.id)) {
+      selectedRestaurant.value = listForSelecte[0]
+   }
+
+   return listForSelecte
+})
 
 </script>
 
 <template>
 
-   <select v-if="cityForSelecteRestaurant"
+   <select v-if="selectedCity"
            class="base-selecte"
            v-model="selectedRestaurant">
       <option v-for="restaurant in restaurantsForSelecte"
               :value="restaurant">
 
-         {{ restaurant.street }} - {{ restaurant.house_number }}
-         <template v-if="restaurant.corps_number">/{{ restaurant.corps_number }}</template>
+         {{ restaurant.street }} - {{ restaurant.house }}
 
       </option>
    </select>

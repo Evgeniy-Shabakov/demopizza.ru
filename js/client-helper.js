@@ -51,8 +51,8 @@ export const deliveryAvailableInSelectedCity = computed(() => {
    if (selectedCity.value == null) return false
 
    for (let i = 0; i < restaurants.value.length; i++) {
-      if (restaurants.value[i].city.title === selectedCity.value.title) {
-         if (restaurants.value[i].delivery_available)
+      if (restaurants.value[i].city.id === selectedCity.value.id) {
+         if (restaurants.value[i].deliveryToAddressAvailable)
             return true
       }
    }
@@ -64,9 +64,9 @@ export const pickUpAvailableInSelectedCity = computed(() => {
    if (selectedCity.value == null) return false
 
    for (let i = 0; i < restaurants.value.length; i++) {
-      if (restaurants.value[i].city.name === selectedCity.value.name) {
-         if (restaurants.value[i].pick_up_at_counter_available ||
-            restaurants.value[i].pick_up_at_car_window_available)
+      if (restaurants.value[i].city.id === selectedCity.value.id) {
+         if (restaurants.value[i].pickUpAtCounterAvailable ||
+            restaurants.value[i].pickUpAtCarWindowAvailable)
             return true
       }
    }
@@ -78,10 +78,10 @@ export const restaurantAvailableInSelectedCity = computed(() => {
    if (selectedCity.value == null) return false
 
    for (let i = 0; i < restaurants.value.length; i++) {
-      if (restaurants.value[i].city.title === selectedCity.value.title) {
-         if (restaurants.value[i].at_restaurant_at_counter_available ||
-            restaurants.value[i].at_restaurant_to_table_available ||
-            restaurants.value[i].at_restaurant_to_parking_available
+      if (restaurants.value[i].city.id === selectedCity.value.id) {
+         if (restaurants.value[i].atRestaurantAtCounterAvailable ||
+            restaurants.value[i].atRestaurantToTableAvailable ||
+            restaurants.value[i].deliveryToRestaurantParkingAvailable
          )
             return true
       }

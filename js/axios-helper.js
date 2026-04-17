@@ -272,8 +272,9 @@ export async function getModelsAxios(urlPrefix) {
 
       if (urlPrefix == 'countries') countries.value = res.data.data
       else if (urlPrefix == 'cities') cities.value = res.data.data
+      else if (urlPrefix == 'cities?include=restaurants') cities.value = res.data.data
       else if (urlPrefix == 'restaurants') restaurants.value = res.data.data
-      else if (urlPrefix == 'restaurants?include=city') restaurants.value = res.data.data
+      else if (urlPrefix == 'restaurants?include=city,address') restaurants.value = res.data.data
       else if (urlPrefix == 'categories') categories.value = res.data.data
       else if (urlPrefix == 'categories?include=products') categories.value = res.data.data
       else if (urlPrefix == 'ingredients') ingredients.value = res.data.data

@@ -80,7 +80,7 @@ export async function loadCities() {
 
    while (retryCount < MAX_RETRIES) {
       try {
-         await getModelsAxios('cities')
+         await getModelsAxios('cities?include=restaurants')
          return LOADING_TYPE.complete;
       } catch (err) {
          console.log(`Error loading countries (attempt ${retryCount + 1}/${MAX_RETRIES}):`, err)
@@ -102,7 +102,7 @@ export async function loadRestaurants() {
 
    while (retryCount < MAX_RETRIES) {
       try {
-         await getModelsAxios('restaurants?include=city')
+         await getModelsAxios('restaurants?include=city,address')
          return LOADING_TYPE.complete;
       } catch (err) {
          console.log(`Error loading restaurants (attempt ${retryCount + 1}/${MAX_RETRIES}):`, err)

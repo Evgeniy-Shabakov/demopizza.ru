@@ -4,6 +4,7 @@ import {
    plusProductToCart, removeProductFromCart,
 } from '~/js/client-helper.js'
 import { findProductById } from '~/js/models/product'
+import { serverApiUrl, serverUrl } from '~/env.js'
 
 const props = defineProps(['productOrUserConfig'])
 
@@ -11,6 +12,8 @@ const product = props.productOrUserConfig.userConfigID ?
    findProductById(props.productOrUserConfig.id) : props.productOrUserConfig
 
 const userConfig = props.productOrUserConfig.userConfigID ? props.productOrUserConfig : null
+
+const imagePath = serverUrl + '/' + props.productOrUserConfig.imagePath.replace(/^storage\/public\/?/, '')
 
 </script>
 
@@ -23,7 +26,7 @@ const userConfig = props.productOrUserConfig.userConfigID ? props.productOrUserC
       <section class="row-span-2">
 
          <img class="w-full aspect-square"
-              :src="productOrUserConfig.image_url">
+              :src="imagePath">
 
          <IngredientsMini v-if="productOrUserConfig.userConfigID"
                           :baseIngredients="productOrUserConfig.baseIngredients"
@@ -31,7 +34,7 @@ const userConfig = props.productOrUserConfig.userConfigID ? props.productOrUserC
 
       </section>
 
-      <div>{{ productOrUserConfig.title }}</div>
+      <div>{{ productOrUserConfig.name }}</div>
 
       <BaseButton :click="() => removeProductFromCart(product, userConfig)"
                   class="justify-self-end btn-icon-trash">
@@ -48,11 +51,11 @@ const userConfig = props.productOrUserConfig.userConfigID ? props.productOrUserC
                      :click="() => plusProductToCart(product, userConfig)">
             <IconPlus class="h-6 w-6" />
          </BaseButton>
-         <div>x {{ Number(productOrUserConfig.price_default) }}р</div>
+         <div>x {{ Number(productOrUserConfig.priceDefault) }}р</div>
       </div>
 
       <div class="justify-self-end whitespace-nowrap">
-         {{ Number(productOrUserConfig.countInCart) * Number(productOrUserConfig.price_default) }}р
+         {{ Number(productOrUserConfig.countInCart) * Number(productOrUserConfig.priceDefault) }}р
       </div>
 
    </div>
