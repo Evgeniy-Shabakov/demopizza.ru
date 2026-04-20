@@ -5,10 +5,13 @@ import { selectedCity } from '~/js/client-helper.js'
 <template>
    <PopupPageWrapper>
 
-      <h1 class="text-xl text-center font-semibold">Доставка и оплата</h1>
+      <h1 class="text-xl text-center font-semibold">
+         <div>Доставка и оплата</div>
+         <div class="text-xs">({{ selectedCity?.name }})</div>
+      </h1>
 
       <div>
-         Доставка осуществляется в пределах <BaseLink to="/map">зон доставки</BaseLink>
+         Доставка осуществляется в пределах <BaseLink to="/map">зон доставки (карта)</BaseLink>
       </div>
 
       <div class="grid grid-cols-4 gap-2 text-xs">
@@ -17,16 +20,14 @@ import { selectedCity } from '~/js/client-helper.js'
          <div>Цена доставки:</div>
          <div>Бесплатная доставка от:</div>
 
-         <template v-for="feature in selectedCity?.geojson?.features">
-            <template v-if="feature.geometry.type == 'Polygon'">
-               <div class="text-sm">{{ feature.properties.description }}</div>
-               <div class="text-sm">{{ Number(feature.deliveryPrices.min_order_value_for_delivery) }}</div>
-               <div class="text-sm">{{ Number(feature.deliveryPrices.delivery_price) }}</div>
-               <div class="text-sm">{{ Number(feature.deliveryPrices.order_value_for_free_delivery) }}</div>
-            </template>
+         <template v-for="deliveryZone in selectedCity?.deliveryZones">
+            <div class="text-sm">{{ deliveryZone.name }}</div>
+            <div class="text-sm">{{ deliveryZone.minOrderValueForDelivery }}</div>
+            <div class="text-sm">{{ deliveryZone.deliveryPrice }}</div>
+            <div class="text-sm">{{ deliveryZone.orderValueForFreeDelivery }}</div>
          </template>
 
-         <div v-if="!selectedCity?.geojson"
+         <div v-if="selectedCity?.deliveryZones.length == 0"
               class="text-sm text-red-500">не добавлены зоны доставки</div>
       </div>
 
@@ -41,5 +42,3 @@ import { selectedCity } from '~/js/client-helper.js'
 
    </PopupPageWrapper>
 </template>
-
-<style scoped></style>

@@ -132,7 +132,7 @@ export const totalCountInCart = computed(() => {
 export const totalProductPrice = computed(() => {
    let total = 0
    productsInCart.value.forEach(element => {
-      total += element.countInCart * element.price_default
+      total += element.countInCart * element.priceDefault
    })
    return Number(total)
 })
@@ -141,10 +141,13 @@ export const deliveryPrice = computed(() => {
    if (selectedOrderType.value != ORDER_TYPE.delivery)
       return 0;
 
-   if (totalProductPrice.value >= currentDeliveryZone.value?.deliveryPrices.order_value_for_free_delivery)
+   if (totalProductPrice.value >= currentDeliveryZone.value?.deliveryPrices.orderValueForFreeDelivery)
       return 0;
-
-   return Number(currentDeliveryZone.value?.deliveryPrices.delivery_price)
+  
+   if (currentDeliveryZone.value) {
+      return Number(currentDeliveryZone.value?.deliveryPrices.deliveryPrice)
+   }
+   else return 0 //лучше посчитать минимальную стоимость доставки по городу
 })
 
 export const totalPrice = computed(() => {
@@ -152,8 +155,8 @@ export const totalPrice = computed(() => {
 })
 
 export function plusProductToCart(product, userConfig, quantity = 1) {
-   if(!checkProductAvailabilityForCart(product)) return
- 
+   if (!checkProductAvailabilityForCart(product)) return
+
    if (userConfig) {
       if (productsInCart.value.includes(userConfig)) {
          userConfig.countInCart += quantity
