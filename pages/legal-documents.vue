@@ -1,7 +1,9 @@
 <script setup>
+import { serverUrl } from '~/env.js'
 import { getModelsAxios, legalDocuments } from '~/js/axios-helper.js'
 
 if(!legalDocuments.value) getModelsAxios('legal-documents')
+
 </script>
 
 <template>
@@ -11,8 +13,8 @@ if(!legalDocuments.value) getModelsAxios('legal-documents')
 
       <template v-if="legalDocuments">
          <BaseLink v-for="document in legalDocuments"
-                   :href="document.file_url">
-            {{ document.title }}
+                   :href="serverUrl + '/' + document.filePath.replace(/^storage\/public\/?/, '')">
+            {{ document.name }}
             (скачать)
          </BaseLink>
       </template>
