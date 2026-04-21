@@ -58,9 +58,8 @@ export async function LoginWithVKID(access_token) {
          {
             vkidAccessToken: access_token
          })
-      console.log(res)
 
-      authUser.value = res.data
+      authUser.value = res.data.data.user
       return res
    } catch (err) {
       console.log(err)
@@ -126,6 +125,7 @@ export function login(data) {
          .post(`${serverApiUrl}/login`, data)
          .then(res => {
             authUser.value = res.data
+            
             resolve(res)
          })
          .catch(err => {

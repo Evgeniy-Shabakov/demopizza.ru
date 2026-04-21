@@ -8,7 +8,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
    try {
       //возможно лучше вынести в другое место, чтобы запускать спиннер пока грузится
       //loadCurrentAuthUser() загружает только один раз, потом просто вовращает
-      await loadCurrentAuthUser()
+      // await loadCurrentAuthUser()
 
       if (!authUser.value && protectedPaths.some(path => to.path.includes(path))) {
 
