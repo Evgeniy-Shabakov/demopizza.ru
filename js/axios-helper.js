@@ -138,7 +138,7 @@ export function login(data) {
 
 export async function logout() {
    try {
-      const res = await axios.delete(`${serverApiUrl}/logout`)
+      const res = await axios.delete(`${serverApiUrl}/auth/logout/user`)
       inputedPhone.value = ''
       authUser.value = null
 

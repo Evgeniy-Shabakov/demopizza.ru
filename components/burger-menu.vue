@@ -96,7 +96,7 @@ const isPWAdetect = isPWA()
                Правовая информация
             </NuxtLink>
 
-            <div class="text-sm">
+            <!-- <div class="text-sm">
                <span>Сделано на платформе</span>
                <NuxtLink class="underline active:text-black ml-2"
                          to='https://food-it.ru'
@@ -104,7 +104,7 @@ const isPWAdetect = isPWA()
                          @click="closeBurgerMenu">
                   food-it.ru
                </NuxtLink>
-            </div>
+            </div> -->
 
          </div>
 
