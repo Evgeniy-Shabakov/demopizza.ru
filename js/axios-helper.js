@@ -54,13 +54,12 @@ export const textLoadOrFailForVue = ref('Загрузка данных...')
 
 export async function LoginWithVKID(access_token) {
    try {
-      const res = await axios.post(`${serverApiUrl}/auth/login/user`,
+      await axios.post(`${serverApiUrl}/auth/login/user`,
          {
             vkidAccessToken: access_token
          })
 
-      authUser.value = res.data.data.user
-      return res
+      await getAuthUser() //нужно т.к. `${serverApiUrl}/auth/login/user` не возвращает адреса
    } catch (err) {
       console.log(err)
       throw err
@@ -153,9 +152,10 @@ export async function logout() {
 export function getAuthUser() {
    return new Promise(function (resolve, reject) {
       axios
-         .get(`/auth/jwt-payload/user`)
+         .get(`/auth/data/user`)
          .then(res => {
-            authUser.value = res.data.data
+            authUser.value = res.data.data.user
+            console.log(authUser.value)
             resolve(res)
          })
          .catch(err => {

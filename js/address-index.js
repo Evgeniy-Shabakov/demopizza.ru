@@ -3,7 +3,8 @@ import { selectedCity } from '~/js/client-helper.js'
 
 export const userAddresses = computed(() => {
    if(!authUser.value) return []
-   return authUser.value.addresses.filter(address => address.show_to_user == true)
+   // return authUser.value.addresses.filter(address => address.show_to_user == true)
+   return authUser.value.addresses
 })
 
 export const addressesInSelectedCity = computed(() =>

@@ -1,5 +1,5 @@
 <script setup>
-import { LoginWithVKID, LoginWithTelegramBot } from '~/js/axios-helper'
+import { LoginWithVKID, LoginWithTelegramBot, authUser } from '~/js/axios-helper'
 import { loginForOrder, loginForAddingAdress } from '~/js/login-panel-helper.js'
 
 const errorVKAuth = ref()
@@ -7,6 +7,11 @@ const errorTGBotAuth = ref()
 const errorLoginOnServer = ref()
 
 const authTgBotRef = ref() // Ссылка на компонент AuthTgBot
+
+watch(authUser, (newVal, oldVal) => {
+   if (authUser.value && !loginForOrder.value && !loginForAddingAdress.value)
+      navigateTo('/user')
+})
 
 function clearErrors() {
    errorVKAuth.value = null
@@ -29,7 +34,7 @@ async function handleSuccessVKAuth(access_token) {
 
    try {
       await LoginWithVKID(access_token)
-      ActionAfrerLogin()
+      actionAfrerLogin()
    }
    catch (error) {
       errorLoginOnServer.value = error
@@ -41,14 +46,14 @@ async function handleSuccessTgBotAuth(access_token) {
 
    try {
       await LoginWithTelegramBot(access_token)
-      ActionAfrerLogin()
+      actionAfrerLogin()
    }
    catch (error) {
       errorLoginOnServer.value = error
    }
 }
 
-function ActionAfrerLogin() {
+function actionAfrerLogin() {
    if (loginForOrder.value) {
       loginForOrder.value = false
       navigateTo('/order-panel')

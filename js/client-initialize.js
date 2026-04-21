@@ -206,10 +206,10 @@ function setAddressForDelivery() {
    // то найти первый адрес в текущем городе
    // иначе selectedAddressForDelivery.value присвоить undefined 
    if (selectedAddressForDelivery.value == null
-      || selectedAddressForDelivery.value.city.id != selectedCity.value.id) {
+      || selectedAddressForDelivery.value.cityId != selectedCity.value.id) {
 
       selectedAddressForDelivery.value = userAddresses.value
-         .find(address => address.city.id === selectedCity.value.id)
+         .find(address => address.cityId === selectedCity.value.id)
    }
 }
 

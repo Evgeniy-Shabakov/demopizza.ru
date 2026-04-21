@@ -7,7 +7,7 @@ const userCities = computed(() => {
    const array = []
 
    userAddresses.value.forEach(address => {
-      array.push(address.city.title)
+      array.push(address.city.name)
    })
 
    return [...new Set(array)] //удаляем повторяющиеся города
