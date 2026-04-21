@@ -54,7 +54,12 @@ export const textLoadOrFailForVue = ref('Загрузка данных...')
 
 export async function LoginWithVKID(access_token) {
    try {
-      const res = await axios.post(`${serverApiUrl}/auth/vkid/login`, { access_token })
+      const res = await axios.post(`${serverApiUrl}/auth/login/user`,
+         {
+            vkidAccessToken: access_token
+         })
+      console.log(res)
+
       authUser.value = res.data
       return res
    } catch (err) {
@@ -236,7 +241,7 @@ export async function getActiveDesign() {
       const activeDesignItem = designs.find(design => design.isActive === true)
 
       activeDesign.value = activeDesignItem.settings
-      
+
       return res
    } catch (error) {
       console.log(error)
@@ -321,7 +326,7 @@ export async function getCompany() {
       const res = await axios.get(`/company`)
 
       company.value = res.data.data
-     
+
       return res
    } catch (error) {
       textLoadOrFailForVue.value = 'Ошибка загрузки данных'
