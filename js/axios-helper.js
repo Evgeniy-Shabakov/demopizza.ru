@@ -1,9 +1,7 @@
 import axios from 'axios'
 import { addLogMessage, formErrorLogMessage, formDoneLogMessage } from '~/js/log-messages.js'
-import { serverApiUrl, serverUrl } from '~/env.js'
+import { serverApiUrl } from '~/env.js'
 import { inputedPhone } from '~/js/login-panel-helper.js'
-import { currentTimezone } from '~/js/timezone-helper.js'
-
 
 axios.defaults.baseURL = serverApiUrl
 axios.defaults.withCredentials = true;
