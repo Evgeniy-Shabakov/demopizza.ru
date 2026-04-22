@@ -155,7 +155,6 @@ export function getAuthUser() {
          .get(`/auth/data/user`)
          .then(res => {
             authUser.value = res.data.data.user
-            console.log(authUser.value)
             resolve(res)
          })
          .catch(err => {
@@ -187,7 +186,8 @@ export async function getOrdersToday(restaurantId) {
 
 export async function getActiveOrdersForUser(userID) {
    try {
-      const res = await axios.get(`/users/${userID}/active-orders`)
+      // const res = await axios.get(`/users/${userID}/active-orders`)
+      const res = await axios.get(`/users/active-orders/user`)
 
       activeOrdersForUser.value = res.data.data
       return res
@@ -211,7 +211,8 @@ export async function getAllOrdersForUser(userID) {
 
 export async function getLastOrderForUser(userID) {
    try {
-      const res = await axios.get(`/users/${userID}/last-order`)
+      // const res = await axios.get(`/users/${userID}/last-order`)
+      const res = await axios.get(`/users/last-order/user`)
 
       lastOrderForUser.value = res.data.data
       return res

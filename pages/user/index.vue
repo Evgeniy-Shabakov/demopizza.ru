@@ -7,6 +7,7 @@ import { intervalLoadActiveOrders, loadActiveOrdersForUserAndRestartInterval }
 import { LOADING_TYPE } from '~/js/data-types/loading-type'
 import { repeatOrder } from '~/js/user-panel'
 import { formatPhone } from '~/js/phone-helper'
+import { serverUrl } from '~/env.js'
 
 const lastOrderLoadingType = ref(LOADING_TYPE.LOADING)
 
@@ -88,7 +89,7 @@ function openOrderStatusPanel(order) {
                   </span>
                   <div class="">
                      <div class="text-center text-(--text-color-accent) font-semibold">
-                        {{ order.order_status }}
+                        {{ order.orderStatus }}
                      </div>
                      <BaseLineLoader />
                   </div>
@@ -118,21 +119,21 @@ function openOrderStatusPanel(order) {
                     class="grid grid-cols-[1fr_max-content_max-content] items-center gap-3
                     border border-(--brand-color) rounded-(--border-radius-main) p-2">
 
-                  <template v-for="product in lastOrderForUser.products">
+                  <template v-for="orderProduct in lastOrderForUser.orderProducts">
 
                      <div>
                         <div class="flex items-center gap-3">
                            <img class="w-9 h-9"
-                                :src="product.image_url">
-                           <span>{{ product.title }}</span>
+                                :src="serverUrl + '/' + orderProduct.product.imagePath.replace(/^storage\/public\/?/, '')">
+                           <span>{{ orderProduct.product.name }}</span>
                         </div>
 
-                        <IngredientsMini v-if="product.user_config_id"
+                        <!-- <IngredientsMini v-if="product.user_config_id"
                                          :baseIngredients="product.user_config_base_ingredients"
-                                         :additionalIngredients="product.user_config_additional_ingredients" />
+                                         :additionalIngredients="product.user_config_additional_ingredients" /> -->
                      </div>
 
-                     <span class="justify-self-center"> {{ product.quantity }} </span>
+                     <span class="justify-self-center"> {{ orderProduct.quantity }} </span>
                      <span> шт. </span>
 
                   </template>
