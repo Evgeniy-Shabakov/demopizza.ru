@@ -52,6 +52,10 @@ function openOrderStatusPanel(order) {
               class="text-base">
             {{ formatPhone(authUser.phone) }}
          </div>
+         <div v-if="authUser"
+              class="text-base text-yellow-500 font-semibold">
+            Баллы - {{ authUser.bonusCoins }}
+         </div>
       </h1>
 
       <template v-if="authUser">

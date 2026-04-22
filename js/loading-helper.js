@@ -1,7 +1,7 @@
 import { LOADING_TYPE } from '~/js/data-types/loading-type.js'
 import {
    company, countries, cities, categories, restaurants, ingredients, authUser, getAuthUser,
-   getModelsAxios, getModelAxios, currentRestaurant, currentProduct, getOrdersToday,
+   getModelsAxios, getModelAxios, currentRestaurant, currentProduct,
    activeDesign, getActiveDesign, getCompany
 } from '~/js/axios-helper.js'
 

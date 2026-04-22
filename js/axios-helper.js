@@ -4,8 +4,8 @@ import { serverApiUrl } from '~/env.js'
 import { inputedPhone } from '~/js/login-panel-helper.js'
 
 axios.defaults.baseURL = serverApiUrl
-axios.defaults.withCredentials = true;
-axios.defaults.withXSRFToken = true;
+axios.defaults.withCredentials = true
+axios.defaults.withXSRFToken = true
 
 export const authUser = ref()
 

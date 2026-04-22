@@ -22,11 +22,13 @@ export async function loadActiveOrdersForUserAndRestartInterval(userID) {
 //загрузка статусов активных заказов через запрос в бэк - END
 
 export function repeatOrder(order) {
+   console.log(order)
+   
    if (order == null) return
 
    removeAllProductsFromCart()
 
-   for (const productInOrder of order.products) {
+   for (const productInOrder of order.orderProducts) {
 
       const product = findProductById(productInOrder.id)
 
@@ -47,7 +49,7 @@ export function repeatOrder(order) {
 
    }
 
-   if (productsInCart.value.length == order.products.length) {
+   if (productsInCart.value.length == order.orderProducts.length) {
       navigateTo('/cart')
    }
 
