@@ -168,22 +168,6 @@ export function getAuthUser() {
    })
 }
 
-export async function getOrdersToday(restaurantId) {
-   try {
-      const res = await axios.get(`/orders/today/${restaurantId}`, {
-         params: {
-            timezone: currentTimezone.value
-         }
-      })
-
-      ordersToday.value = res.data.data
-      return res
-   } catch (error) {
-      console.log(error)
-      throw error
-   }
-}
-
 export async function getActiveOrdersForUser(userID) {
    try {
       // const res = await axios.get(`/users/${userID}/active-orders`)
@@ -242,28 +226,6 @@ export async function getActiveDesign() {
       const activeDesignItem = designs.find(design => design.isActive === true)
 
       activeDesign.value = activeDesignItem.settings
-
-      return res
-   } catch (error) {
-      console.log(error)
-      throw error
-   }
-}
-
-export async function toggleStopListForProduct(productID) {
-   try {
-      const res = await axios.patch(`/products/${productID}/toggle-is-in-stop-list`)
-
-      return res
-   } catch (error) {
-      console.log(error)
-      throw error
-   }
-}
-
-export async function toggleStopListForIngredient(ingredientID) {
-   try {
-      const res = await axios.patch(`/ingredients/${ingredientID}/toggle-is-in-stop-list`)
 
       return res
    } catch (error) {
