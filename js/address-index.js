@@ -8,7 +8,7 @@ export const userAddresses = computed(() => {
 })
 
 export const addressesInSelectedCity = computed(() =>
-   userAddresses.value.filter(address => address.city.id === selectedCity.value.id)
+   userAddresses.value.filter(address => address.cityId === selectedCity.value.id)
 )
 
 export function findAdresseAuthUserByID(id) {
