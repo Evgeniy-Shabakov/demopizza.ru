@@ -14,6 +14,7 @@ import { transformValidateErrorsForUI } from '~/js/validation-helper.js'
 import { userAddresses } from '~/js/address-index.js'
 import { checkOperatingModeAndActivateDialog } from '~/js/open-close-time'
 import { currentDeliveryZone } from '~/js/delivery-zone-helper'
+import { serverUrl } from '~/env.js'
 
 const orderData = reactive({})
 
@@ -28,28 +29,27 @@ productsInOrder.value = productsInCart.value
    .filter(product => product.countInCart > 0)
 
 addressesInSelectedCity.value = userAddresses.value
-   .filter(address => address.city.id === selectedCity.value.id)
+   .filter(address => address.cityId === selectedCity.value.id)
 
-orderData.user_id = authUser.value.id
-orderData.city_id = selectedCity.value.id
-orderData.restaurant_id = selectedRestaurant.value ? selectedRestaurant.value.id : null
-orderData.user_address_id = selectedAddressForDelivery.value ? selectedAddressForDelivery.value.id : null
-orderData.order_type = selectedOrderType.value
+orderData.userId = authUser.value.id
+orderData.cityId = selectedCity.value.id
+orderData.restaurantId = selectedRestaurant.value ? selectedRestaurant.value.id : null
+orderData.userAddressId = selectedAddressForDelivery.value ? selectedAddressForDelivery.value.id : null
+orderData.orderType = selectedOrderType.value
 orderData.order_in_restaurant_type = selectedOrderInRestaurantType.value
-orderData.table_number = null
-orderData.car_number = null
-orderData.pack_takeaway = true
-orderData.total_products_price = totalProductPrice.value
-orderData.delivery_price = deliveryPrice.value
-orderData.total_price = totalPrice.value
-orderData.payment_type = PAYMENT_TYPE.CARD_OFFLINE
-orderData.banknote_for_change = null
-orderData.is_payment = false
-orderData.comment = null
+orderData.tableNumber = null
+orderData.carNumber = null
+orderData.packTakeaway = true
+orderData.totalProductsPrice = totalProductPrice.value
+orderData.deliveryPrice = deliveryPrice.value
+orderData.totalPrice = totalPrice.value
+orderData.paymentType = PAYMENT_TYPE.CARD_OFFLINE
+orderData.banknoteForChange = null
+orderData.userComment = null
 orderData.products_in_order = productsInOrder.value
 
 watch(selectedAddressForDelivery, () => { //v-model это selectedAddressForDelivery, чтобы сохранить изменения
-   orderData.user_address_id = selectedAddressForDelivery.value.id
+   orderData.userAddressId = selectedAddressForDelivery.value.id
 })
 
 watch(selectedOrderInRestaurantType, () => { //v-model это selectedOrderInRestaurantType, чтобы сохранить изменения
@@ -57,7 +57,7 @@ watch(selectedOrderInRestaurantType, () => { //v-model это selectedOrderInRes
 })
 
 watch(selectedRestaurant, () => {
-   orderData.restaurant_id = selectedRestaurant.value.id
+   orderData.restaurantId = selectedRestaurant.value.id
    setOrderInRestaurantType()
 })
 
@@ -92,7 +92,7 @@ async function sendOrder() {
    otherErrors.value = null
 
    try {
-      const res = await axios.post(`/orders`, orderData)
+      const res = await axios.post(`/orders/user`, orderData)
       currentOrder.value = res.data.data
 
       lastOrderForUser.value = res.data.data
@@ -100,11 +100,15 @@ async function sendOrder() {
       removeAllProductsFromCart()
       navigateTo('/order-status')
    } catch (error) {
-      console.log(error)
+      console.log(error.response)
 
-      if (error.response.status === 422) {
-         validationErrors.value = error.response.data.errors
-         transformValidateErrorsForUI(validationErrors.value)
+      if (error.response.status === 401) {
+         otherErrors.value = 'сначала нужно войти в профиль';
+      } 
+      else if (error.response.status === 422) {
+         // validationErrors.value = error.response.details.issues
+         // transformValidateErrorsForUI(validationErrors.value)
+         otherErrors.value = 'ошибка при проверке данных';
       } else {
          otherErrors.value = 'что то пошло не так, попробуйте еще раз';
       }
@@ -120,7 +124,7 @@ async function sendOrder() {
       <h1 v-if="selectedCity"
           class="text-xl text-center">
          <div>
-            <div class="font-semibold">{{ selectedCity.title }}</div>
+            <div class="font-semibold">{{ selectedCity.name }}</div>
          </div>
          <div class="text-(--text-color-accent)">
             {{ selectedOrderType }}
@@ -137,61 +141,6 @@ async function sendOrder() {
 
       <div v-if="selectedCity"
            class="flex flex-col gap-5">
-
-         <!-- <template v-if="selectedOrderType == ORDER_TYPE.delivery">
-
-            <div v-if="addressesInSelectedCity.length > 0">
-               <BaseLabel class="mb-2">Выбирите адрес или добавьте новый</BaseLabel>
-               <div class="flex items-center gap-3.5">
-
-                  <select v-model="selectedAddressForDelivery"
-                          class="base-selecte">
-                     <option v-for="address in addressesInSelectedCity"
-                             :value="address">
-
-                        <span v-if="address.title">{{ address.title }} -</span>
-                        {{ address.street }}
-                        {{ address.house_number }}
-                        <span v-if="address.corps_number">/ {{ address.corps_number }}</span>
-                        <span v-if="address.apartment_number"> - {{ address.apartment_number }}</span>
-
-                     </option>
-                  </select>
-
-                  <NuxtLink to="/user/adresses/create">
-                     <BaseButton :isIcon="true">
-                        <IconPlus />
-                     </BaseButton>
-                  </NuxtLink>
-
-               </div>
-               <BaseInvalidateText>{{ validationErrors.user_address_id }}</BaseInvalidateText>
-            </div>
-
-            <div v-else
-                 class="text-center">
-               <NuxtLink to="/user/adresses/create">
-                  <BaseButton>
-                     Добавить адрес доставки
-                  </BaseButton>
-               </NuxtLink>
-               <BaseInvalidateText>{{ validationErrors.user_address_id }}</BaseInvalidateText>
-            </div>
-
-         </template>
-
-<div v-else>
-
-   <BaseLabel v-if="selectedOrderType == ORDER_TYPE.pickUp" class="mb-2">
-      Выберите точку самовывоза
-   </BaseLabel>
-   <BaseLabel v-else-if="selectedOrderType == ORDER_TYPE.inRestaurant" class="mb-2">
-      Выберите ресторан
-   </BaseLabel>
-   <RestaurantSelecte />
-   <BaseInvalidateText>{{ validationErrors.restaurant_id }}</BaseInvalidateText>
-
-</div> -->
 
          <div v-if="selectedOrderType == ORDER_TYPE.inRestaurant && selectedRestaurant"
               class="flex justify-between gap-3.5">
@@ -253,13 +202,13 @@ async function sendOrder() {
 
                      <div class="flex items-center gap-1.5">
                         <img class="w-8"
-                             :src="product.image_url">
-                        <span>{{ product.title }}</span>
+                             :src="serverUrl + '/' + product.imagePath.replace(/^storage\/public\/?/, '')">
+                        <span>{{ product.name }}</span>
                      </div>
 
-                     <IngredientsMini v-if="product.userConfigID"
+                     <!-- <IngredientsMini v-if="product.userConfigID"
                                       :baseIngredients="product.baseIngredients"
-                                      :additionalIngredients="product.additionalIngredients" />
+                                      :additionalIngredients="product.additionalIngredients" /> -->
 
                      <BaseInvalidateText>
                         {{ validationErrors[`products_in_order.${index}.id`] }}
@@ -268,10 +217,10 @@ async function sendOrder() {
                   </div>
 
                   <div class="justify-self-center whitespace-nowrap">
-                     {{ product.countInCart }} x {{ Number(product.price_default) }}р
+                     {{ product.countInCart }} x {{ Number(product.priceDefault) }}р
                   </div>
                   <div class="justify-self-end">
-                     {{ Number(product.countInCart) * Number(product.price_default) }}р
+                     {{ Number(product.countInCart) * Number(product.priceDefault) }}р
                   </div>
 
                </template>

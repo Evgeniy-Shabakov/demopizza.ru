@@ -8,6 +8,8 @@ const errorLoginOnServer = ref()
 
 const authTgBotRef = ref() // Ссылка на компонент AuthTgBot
 
+if(authUser.value) navigateTo('/user')
+
 watch(authUser, (newVal, oldVal) => {
    if (authUser.value && !loginForOrder.value && !loginForAddingAdress.value)
       navigateTo('/user')
@@ -76,7 +78,7 @@ function handleTelegramButtonClick() {
 const authRef = ref(null)
 
 const simulateVkClick = () => {
-  authRef.value?.loginVK()
+   authRef.value?.loginVK()
 }
 
 </script>
