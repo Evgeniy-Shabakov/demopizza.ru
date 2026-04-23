@@ -3,6 +3,7 @@ import * as VKID from '@vkid/sdk'
 import { VK_APP_ID, VK_REDIRECT_URL } from '~/env'
 
 const emit = defineEmits(['success', 'error'])
+defineExpose({ loginVK })
 
 async function loginVK() {
    VKID.Config.init({

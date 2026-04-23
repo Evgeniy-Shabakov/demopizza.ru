@@ -73,6 +73,12 @@ function handleTelegramButtonClick() {
    }
 }
 
+const authRef = ref(null)
+
+const simulateVkClick = () => {
+  authRef.value?.loginVK()
+}
+
 </script>
 
 <template>
@@ -120,7 +126,8 @@ function handleTelegramButtonClick() {
             </div>
 
             <div>
-               <AuthVkid @success="handleSuccessVKAuth"
+               <AuthVkid ref="authRef"
+                         @success="handleSuccessVKAuth"
                          @error="handleErrorVKAuth" />
                <div class="text-xs text-center text-gray-700 mt-2">
                   Если осуществляете вход с чужого устройства
@@ -167,7 +174,7 @@ function handleTelegramButtonClick() {
       <template #actions>
 
          <BaseButton class="w-full"
-                     :click="handleSuccessVKAuth">
+                     @click="simulateVkClick">
             Продолжить с VK ID
          </BaseButton>
 
