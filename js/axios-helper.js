@@ -5,7 +5,29 @@ import { inputedPhone } from '~/js/login-panel-helper.js'
 
 axios.defaults.baseURL = serverApiUrl
 axios.defaults.withCredentials = true
-axios.defaults.withXSRFToken = true
+// axios.defaults.withXSRFToken = true
+
+axios.interceptors.response.use(
+   response => response,
+   async (error) => {
+      const originalRequest = error.config
+
+      if (error.response?.status === 401) {
+         const errorCode = error.response?.data?.code
+
+         if (errorCode === 'JWT_ACCESS_TOKEN_VERIFY_INVALID') {
+            try {
+               await axios.post('/auth/refresh/user')
+               return axios(originalRequest)
+            } catch (refreshError) {
+               logout()
+            }
+         }
+      }
+
+      return Promise.reject(error)
+   }
+)
 
 export const authUser = ref()
 
@@ -122,7 +144,7 @@ export function login(data) {
          .post(`${serverApiUrl}/login`, data)
          .then(res => {
             authUser.value = res.data
-            
+
             resolve(res)
          })
          .catch(err => {
