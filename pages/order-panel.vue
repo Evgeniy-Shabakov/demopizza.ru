@@ -31,8 +31,17 @@ addressesInSelectedCity.value = userAddresses.value
 
 orderData.userId = authUser.value.id
 orderData.cityId = selectedCity.value.id
-orderData.restaurantId = selectedRestaurant.value ? selectedRestaurant.value.id : null
-orderData.userAddressId = selectedAddressForDelivery.value ? selectedAddressForDelivery.value.id : null
+
+orderData.restaurantId =
+   selectedOrderType.value.ID != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID && selectedRestaurant.value ?
+      selectedRestaurant.value.id :
+      null
+
+orderData.userAddressId =
+   selectedOrderType.value.ID == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID && selectedAddressForDelivery.value ?
+      selectedAddressForDelivery.value.id :
+      null
+
 orderData.orderTypeId = selectedOrderType.value.ID
 orderData.tableNumber = null
 orderData.carNumber = null
@@ -43,6 +52,7 @@ orderData.totalPrice = totalPrice.value
 orderData.paymentType = PAYMENT_TYPE.CARD_OFFLINE
 orderData.banknoteForChange = null
 orderData.userComment = null
+
 orderData.orderProducts = productsInOrder.value.map(el => {
    return {
       productId: el.id,
@@ -61,14 +71,6 @@ watch(selectedRestaurant, () => {
 
 async function sendOrder() {
    if (!checkOperatingModeAndActivateDialog()) return
-
-   if (selectedOrderType.value.ID == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
-      orderData.restaurantId = null
-   }
-
-   if (selectedOrderType.value.ID != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
-      orderData.userAddressId = null
-   }
 
    validationErrors.value = {}
    otherErrors.value = null
