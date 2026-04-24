@@ -1,14 +1,12 @@
 <script setup>
 import axios from 'axios'
-
 import { authUser, lastOrderForUser } from '~/js/axios-helper.js'
 import {
    selectedCity, productsInCart, totalProductPrice, deliveryPrice, totalPrice, currentOrder,
    selectedOrderType, selectedAddressForDelivery, totalCountInCart, removeAllProductsFromCart,
-   selectedRestaurant, selectedOrderInRestaurantType
+   selectedRestaurant
 } from '~/js/client-helper.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type'
-import { ORDER_IN_RESTAURANT_TYPE } from '~/js/data-types/order-in-restaurant-type'
 import { PAYMENT_TYPE } from '~/js/data-types/payment-type'
 import { transformValidateErrorsForUI } from '~/js/validation-helper.js'
 import { userAddresses } from '~/js/address-index.js'
@@ -35,8 +33,7 @@ orderData.userId = authUser.value.id
 orderData.cityId = selectedCity.value.id
 orderData.restaurantId = selectedRestaurant.value ? selectedRestaurant.value.id : null
 orderData.userAddressId = selectedAddressForDelivery.value ? selectedAddressForDelivery.value.id : null
-orderData.orderType = selectedOrderType.value
-orderData.order_in_restaurant_type = selectedOrderInRestaurantType.value
+orderData.orderTypeId = selectedOrderType.value.ID
 orderData.tableNumber = null
 orderData.carNumber = null
 orderData.packTakeaway = true
@@ -46,52 +43,39 @@ orderData.totalPrice = totalPrice.value
 orderData.paymentType = PAYMENT_TYPE.CARD_OFFLINE
 orderData.banknoteForChange = null
 orderData.userComment = null
-orderData.products_in_order = productsInOrder.value
+orderData.orderProducts = productsInOrder.value.map(el => {
+   return {
+      productId: el.id,
+      quantity: el.countInCart,
+      price: el.priceDefault
+   }
+})
 
 watch(selectedAddressForDelivery, () => { //v-model это selectedAddressForDelivery, чтобы сохранить изменения
    orderData.userAddressId = selectedAddressForDelivery.value.id
 })
 
-watch(selectedOrderInRestaurantType, () => { //v-model это selectedOrderInRestaurantType, чтобы сохранить изменения
-   orderData.order_in_restaurant_type = selectedOrderInRestaurantType.value
-})
-
 watch(selectedRestaurant, () => {
    orderData.restaurantId = selectedRestaurant.value.id
-   setOrderInRestaurantType()
 })
-
-function setOrderInRestaurantType() {
-   if (selectedOrderInRestaurantType.value == ORDER_IN_RESTAURANT_TYPE.COUNTER) {
-      if (selectedRestaurant.value.pick_up_at_counter_available)
-         return
-      else
-         selectedOrderInRestaurantType.value = ORDER_IN_RESTAURANT_TYPE.TABLE
-   }
-
-   if (selectedOrderInRestaurantType.value == ORDER_IN_RESTAURANT_TYPE.TABLE) {
-      if (selectedRestaurant.value.at_restaurant_to_table_available)
-         return
-      else
-         selectedOrderInRestaurantType.value = ORDER_IN_RESTAURANT_TYPE.COUNTER
-   }
-}
 
 async function sendOrder() {
    if (!checkOperatingModeAndActivateDialog()) return
 
-   if (selectedOrderType.value == ORDER_TYPE.delivery) {
-      orderData.restaurant_id = null
+   if (selectedOrderType.value.ID == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
+      orderData.restaurantId = null
    }
 
-   if (selectedOrderType.value != ORDER_TYPE.inRestaurant) {
-      orderData.order_in_restaurant_type = null
+   if (selectedOrderType.value.ID != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
+      orderData.userAddressId = null
    }
 
    validationErrors.value = {}
    otherErrors.value = null
 
    try {
+      console.log(orderData)
+
       const res = await axios.post(`/orders/user`, orderData)
       currentOrder.value = res.data.data
 
@@ -104,7 +88,7 @@ async function sendOrder() {
 
       if (error.response.status === 401) {
          otherErrors.value = 'сначала нужно войти в профиль';
-      } 
+      }
       else if (error.response.status === 422) {
          // validationErrors.value = error.response.details.issues
          // transformValidateErrorsForUI(validationErrors.value)
@@ -127,7 +111,7 @@ async function sendOrder() {
             <div class="font-semibold">{{ selectedCity.name }}</div>
          </div>
          <div class="text-(--text-color-accent)">
-            {{ selectedOrderType }}
+            {{ selectedOrderType.SHORT_NAME_FOR_ORDER_PANEL }}
 
             <template v-if="selectedOrderType == ORDER_TYPE.delivery">
                - {{ selectedAddressForDelivery.value_string }}
@@ -142,51 +126,53 @@ async function sendOrder() {
       <div v-if="selectedCity"
            class="flex flex-col gap-5">
 
-         <div v-if="selectedOrderType == ORDER_TYPE.inRestaurant && selectedRestaurant"
+         <div v-if="selectedRestaurant &&
+            (selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
+               selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID)"
               class="flex justify-between gap-3.5">
 
             <button class="btn-selecte"
-                    :class="{ 'btn-selecte--active': selectedOrderInRestaurantType == ORDER_IN_RESTAURANT_TYPE.COUNTER }"
-                    @click="selectedOrderInRestaurantType = ORDER_IN_RESTAURANT_TYPE.COUNTER"
-                    :disabled="!selectedRestaurant.pick_up_at_counter_available">
+                    :class="{ 'btn-selecte--active': selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID }"
+                    @click="selectedOrderType = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER"
+                    :disabled="!selectedRestaurant.atRestaurantAtCounterAvailable">
                Заберу у бара
-               <template v-if="!selectedRestaurant.pick_up_at_counter_available">
+               <template v-if="!selectedRestaurant.atRestaurantAtCounterAvailable">
                   <br>(не доступно)
                </template>
             </button>
 
             <button class="btn-selecte"
-                    :class="{ 'btn-selecte--active': selectedOrderInRestaurantType == ORDER_IN_RESTAURANT_TYPE.TABLE }"
-                    @click="selectedOrderInRestaurantType = ORDER_IN_RESTAURANT_TYPE.TABLE"
-                    :disabled="!selectedRestaurant.at_restaurant_to_table_available">
+                    :class="{ 'btn-selecte--active': selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID }"
+                    @click="selectedOrderType = ORDER_TYPE.AT_RESTAURANT_TO_TABLE"
+                    :disabled="!selectedRestaurant.atRestaurantToTableAvailable">
                Принести к столику
-               <template v-if="!selectedRestaurant.at_restaurant_to_table_available">
+               <template v-if="!selectedRestaurant.atRestaurantToTableAvailable">
                   <br>(не доступно)
                </template>
             </button>
 
          </div>
 
-         <div v-if="selectedOrderType == ORDER_TYPE.inRestaurant &&
-            selectedOrderInRestaurantType == ORDER_IN_RESTAURANT_TYPE.TABLE"
+         <div v-if="selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID"
               class="flex flex-col items-center">
 
             <BaseLabel class="mb-2">Введите номер столика</BaseLabel>
             <input type="text"
                    class="text-center text-2xl p-2.5 rounded-lg w-32 border border-(--brand-color)"
-                   v-model="orderData.table_number"
-                   @click.prevent="validationErrors.table_number = ''">
-            <BaseInvalidateText>{{ validationErrors.table_number }}</BaseInvalidateText>
+                   v-model="orderData.tableNumber"
+                   @click.prevent="validationErrors.tableNumber = ''">
+            <!-- <BaseInvalidateText>{{ validationErrors.table_number }}</BaseInvalidateText> -->
          </div>
 
          <div>
             <BaseLabel class="mb-2">Способ оплаты</BaseLabel>
-            <select v-model="orderData.payment_type"
+            <select v-model="orderData.paymentType"
                     class="base-selecte">
+               <option :value="PAYMENT_TYPE.ONLINE"> {{ PAYMENT_TYPE.ONLINE }}</option>
                <option :value="PAYMENT_TYPE.CARD_OFFLINE"> {{ PAYMENT_TYPE.CARD_OFFLINE }}</option>
                <option :value="PAYMENT_TYPE.CASH"> {{ PAYMENT_TYPE.CASH }}</option>
             </select>
-            <BaseInvalidateText>{{ validationErrors.payment_type }}</BaseInvalidateText>
+            <!-- <BaseInvalidateText>{{ validationErrors.paymentType }}</BaseInvalidateText> -->
          </div>
 
          <div>
@@ -210,9 +196,9 @@ async function sendOrder() {
                                       :baseIngredients="product.baseIngredients"
                                       :additionalIngredients="product.additionalIngredients" /> -->
 
-                     <BaseInvalidateText>
+                     <!-- <BaseInvalidateText>
                         {{ validationErrors[`products_in_order.${index}.id`] }}
-                     </BaseInvalidateText>
+                     </BaseInvalidateText> -->
 
                   </div>
 
@@ -226,7 +212,7 @@ async function sendOrder() {
                </template>
 
             </div>
-            <BaseInvalidateText>{{ validationErrors.products_in_order }}</BaseInvalidateText>
+            <!-- <BaseInvalidateText>{{ validationErrors.products_in_order }}</BaseInvalidateText> -->
 
             <TotalBlock class="justify-end" />
 
@@ -235,7 +221,7 @@ async function sendOrder() {
          <div>
             <BaseLabel class="mb-2">Комментарий к заказу</BaseLabel>
             <BaseTextarea v-model="orderData.comment" />
-            <BaseInvalidateText>{{ validationErrors.comment }}</BaseInvalidateText>
+            <!-- <BaseInvalidateText>{{ validationErrors.comment }}</BaseInvalidateText> -->
          </div>
 
       </div>

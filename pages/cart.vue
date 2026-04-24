@@ -18,7 +18,7 @@ import { currentDeliveryZone } from '~/js/delivery-zone-helper'
 
          <OrderTypeSettings></OrderTypeSettings>
 
-         <template v-if="selectedOrderType == ORDER_TYPE.delivery">
+         <template v-if="selectedOrderType.ID == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID">
 
             <div v-if="addressesInSelectedCity.length > 0"
                  class="min-h-[62px]">
@@ -29,7 +29,7 @@ import { currentDeliveryZone } from '~/js/delivery-zone-helper'
                           class="base-selecte">
                      <option v-for="address in addressesInSelectedCity"
                              :value="address">
-                             {{ address.value_string }}
+                        {{ address.addressAsString }}
                      </option>
                   </select>
 
@@ -60,11 +60,12 @@ import { currentDeliveryZone } from '~/js/delivery-zone-helper'
          <div v-else
               class="min-h-[62px]">
 
-            <BaseLabel v-if="selectedOrderType == ORDER_TYPE.pickUp"
+            <BaseLabel v-if="selectedOrderType.ID == ORDER_TYPE.PICK_UP_AT_COUNTER.ID"
                        class="mb-2">
                Выберите точку самовывоза
             </BaseLabel>
-            <BaseLabel v-else-if="selectedOrderType == ORDER_TYPE.inRestaurant"
+            <BaseLabel v-else-if="selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
+               selectedOrderType == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID"
                        class="mb-2">
                Выберите ресторан
             </BaseLabel>

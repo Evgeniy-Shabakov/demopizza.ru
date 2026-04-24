@@ -1,15 +1,10 @@
 import { company, categories, cities, activeDesign, restaurants } from '~/js/axios-helper.js'
-import {
-   selectedCity, selectedRestaurant, selectedOrderType,
-   selectedOrderInRestaurantType, plusProductToCart, selectedAddressForDelivery
-}
+import { selectedCity, selectedRestaurant, selectedOrderType, plusProductToCart, selectedAddressForDelivery }
    from '~/js/client-helper.js'
-import {
-   loadCompany, loadCurrentAuthUser, loadCities, loadCategories, loadRestaurants, loadActiveDesign
-} from '~/js/loading-helper.js'
+import { loadCompany, loadCurrentAuthUser, loadCities, loadCategories, loadRestaurants, loadActiveDesign }
+   from '~/js/loading-helper.js'
 import { LOADING_TYPE } from '~/js/data-types/loading-type.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type.js'
-import { ORDER_IN_RESTAURANT_TYPE } from '~/js/data-types/order-in-restaurant-type'
 import { COOKIE_NAME } from '~/js/strings/cookie-name.js'
 import { adjustColor } from '~/js/color'
 import { initializeUserConfigsForProducts } from '~/js/save/user-configs-products'
@@ -45,7 +40,6 @@ export async function initialize() {
 
       initializeCart()
       initializeOrderType()
-      initializeOrderInRestaurantType()
 
       return LOADING_TYPE.complete
    }
@@ -58,7 +52,7 @@ export async function initialize() {
 async function initializeCategories() {
    try {
       await loadCategories()
-// console.log(categories.value)
+      // console.log(categories.value)
 
       //убираем из списка неактивные продукты и пустые категории чтобы не отображались
       categories.value.forEach(category => {
@@ -154,17 +148,12 @@ function initializeCart() {
 }
 
 function initializeOrderType() {
-   selectedOrderType.value = localStorage.getItem(COOKIE_NAME.ORDER_TYPE)
+   const storedId = localStorage.getItem(COOKIE_NAME.ORDER_TYPE_ID)
 
-   if (selectedOrderType.value == null)
-      selectedOrderType.value = ORDER_TYPE.delivery
-}
+   const orderTypeId = storedId !== null ? Number(storedId) : null
 
-function initializeOrderInRestaurantType() {
-   selectedOrderInRestaurantType.value = localStorage.getItem(COOKIE_NAME.ORDER_IN_RESTAURANT_TYPE)
-
-   if (selectedOrderInRestaurantType.value == null)
-      selectedOrderInRestaurantType.value = ORDER_IN_RESTAURANT_TYPE.COUNTER
+   const found = Object.values(ORDER_TYPE).find(el => el.ID === orderTypeId)
+   selectedOrderType.value = found !== undefined ? found : ORDER_TYPE.DELIVERY_TO_ADDRESS
 }
 
 export async function initializeDesign() {

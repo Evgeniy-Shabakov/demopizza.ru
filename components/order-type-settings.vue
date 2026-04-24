@@ -13,22 +13,25 @@ import { ORDER_TYPE } from '~/js/data-types/order-type'
 
       <button v-if="deliveryAvailableInSelectedCity"
               class="btn-selecte"
-              :class="{ 'btn-selecte--active': selectedOrderType == ORDER_TYPE.delivery }"
-              @click="selectedOrderType = ORDER_TYPE.delivery">
+              :class="{ 'btn-selecte--active': selectedOrderType.ID == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID }"
+              @click="selectedOrderType = ORDER_TYPE.DELIVERY_TO_ADDRESS">
          Доставка
       </button>
 
       <button v-if="pickUpAvailableInSelectedCity"
               class="btn-selecte"
-              :class="{ 'btn-selecte--active': selectedOrderType == ORDER_TYPE.pickUp }"
-              @click="selectedOrderType = ORDER_TYPE.pickUp">
+              :class="{ 'btn-selecte--active': selectedOrderType.ID == ORDER_TYPE.PICK_UP_AT_COUNTER.ID }"
+              @click="selectedOrderType = ORDER_TYPE.PICK_UP_AT_COUNTER">
          Самовывоз
       </button>
 
       <button v-if="restaurantAvailableInSelectedCity"
               class="btn-selecte"
-              :class="{ 'btn-selecte--active': selectedOrderType == ORDER_TYPE.inRestaurant }"
-              @click="selectedOrderType = ORDER_TYPE.inRestaurant">
+              :class="{
+               'btn-selecte--active': selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
+                  selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID
+            }"
+              @click="selectedOrderType = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER">
          В ресторане
       </button>
 

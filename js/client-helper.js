@@ -7,7 +7,6 @@ import { currentDeliveryZone } from '~/js/delivery-zone-helper'
 export const selectedCity = ref()
 export const selectedRestaurant = ref()
 export const selectedOrderType = ref()
-export const selectedOrderInRestaurantType = ref()
 export const selectedAddressForDelivery = ref(null)
 export const productsInCart = ref([])
 export const currentOrder = ref()
@@ -21,11 +20,7 @@ watch(selectedRestaurant, () => {
 })
 
 watch(selectedOrderType, () => {
-   localStorage.setItem(COOKIE_NAME.ORDER_TYPE, selectedOrderType.value)
-})
-
-watch(selectedOrderInRestaurantType, () => {
-   localStorage.setItem(COOKIE_NAME.ORDER_IN_RESTAURANT_TYPE, selectedOrderInRestaurantType.value)
+   localStorage.setItem(COOKIE_NAME.ORDER_TYPE_ID, selectedOrderType.value.ID)
 })
 
 watch(selectedAddressForDelivery, () => {
@@ -93,30 +88,31 @@ export const restaurantAvailableInSelectedCity = computed(() => {
 watch([selectedCity, pickUpAvailableInSelectedCity, deliveryAvailableInSelectedCity, restaurantAvailableInSelectedCity], () => {
    if (selectedOrderType.value) {
       //если способ доставки выбран и не поддерживается в новом городе, то сменить на первый доступный
-      if (selectedOrderType.value == ORDER_TYPE.delivery && deliveryAvailableInSelectedCity.value == false ||
-         selectedOrderType.value == ORDER_TYPE.pickUp && pickUpAvailableInSelectedCity.value == false ||
-         selectedOrderType.value == ORDER_TYPE.inRestaurant && restaurantAvailableInSelectedCity.value == false
+      if (selectedOrderType.value == ORDER_TYPE.DELIVERY_TO_ADDRESS && deliveryAvailableInSelectedCity.value == false ||
+         selectedOrderType.value == ORDER_TYPE.PICK_UP_AT_COUNTER && pickUpAvailableInSelectedCity.value == false ||
+         selectedOrderType.value == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER && restaurantAvailableInSelectedCity.value == false || 
+         selectedOrderType.value == ORDER_TYPE.AT_RESTAURANT_TO_TABLE && restaurantAvailableInSelectedCity.value == false
       ) {
          if (deliveryAvailableInSelectedCity.value) {
-            selectedOrderType.value = ORDER_TYPE.delivery
+            selectedOrderType.value = ORDER_TYPE.DELIVERY_TO_ADDRESS.ID
          }
          else if (pickUpAvailableInSelectedCity.value) {
-            selectedOrderType.value = ORDER_TYPE.pickUp
+            selectedOrderType.value = ORDER_TYPE.PICK_UP_AT_COUNTER.ID
          }
          else if (restaurantAvailableInSelectedCity.value) {
-            selectedOrderType.value = ORDER_TYPE.inRestaurant
+            selectedOrderType.value = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID
          }
       }
    }
    else {
       if (deliveryAvailableInSelectedCity.value) {
-         selectedOrderType.value = ORDER_TYPE.delivery
+         selectedOrderType.value = ORDER_TYPE.DELIVERY_TO_ADDRESS.ID
       }
       else if (pickUpAvailableInSelectedCity.value) {
-         selectedOrderType.value = ORDER_TYPE.pickUp
+         selectedOrderType.value = ORDER_TYPE.PICK_UP_AT_COUNTER.ID
       }
       else if (restaurantAvailableInSelectedCity.value) {
-         selectedOrderType.value = ORDER_TYPE.inRestaurant
+         selectedOrderType.value = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID
       }
    }
 })
