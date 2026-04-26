@@ -2,6 +2,8 @@
 import { BaseButton } from '#components';
 import { currentOrder } from '~/js/client-helper.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type'
+import { serverUrl } from '~/env.js'
+console.log(currentOrder.value)
 
 if (currentOrder.value == null) {
    navigateTo('/')
@@ -14,8 +16,8 @@ if (currentOrder.value == null) {
 
       <h1 v-if="currentOrder"
           class="text-xl text-center">
-         <div class="font-semibold">{{ currentOrder.city.title }}</div>
-         <div class="text-(--text-color-accent)">({{ currentOrder.order_type }})</div>
+         <div class="font-semibold">{{ currentOrder.city.name }}</div>
+         <div class="text-(--text-color-accent)">{{ currentOrder.orderTypeName }}</div>
       </h1>
 
       <template v-if="currentOrder">
@@ -36,7 +38,7 @@ if (currentOrder.value == null) {
          <div class="text-center">
             <div class="text-(--text-color-main)/60">статус заказа</div>
             <div class="text-3xl text-(--text-color-accent) px-8">
-               {{ currentOrder.order_status }}
+               {{ currentOrder.orderStatus }}
             </div>
          </div>
 
@@ -46,36 +48,34 @@ if (currentOrder.value == null) {
 
             <div>
 
-               <div v-if="currentOrder.order_type == ORDER_TYPE.delivery">
+               <div v-if="currentOrder.orderTypeId == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID">
                   <span>Адрес: </span>
-                  <span v-if="currentOrder.user_address.title">
-                     {{ currentOrder.user_address.title }} -
+                  <span v-if="currentOrder.userAddress.name">
+                     {{ currentOrder.userAddress.name }} -
                   </span>
-                  {{ currentOrder.user_address.street }}
-                  {{ currentOrder.user_address.house_number }}
-                  <span v-if="currentOrder.user_address.corps_number">
-                     / {{ currentOrder.user_address.corps_number }}
+                  {{ currentOrder.userAddress.street }}
+                  {{ currentOrder.userAddress.house }}
+                  <span v-if="currentOrder.userAddress.corps">
+                     / {{ currentOrder.userAddress.corps }}
                   </span>
-                  <span v-if="currentOrder.user_address.apartment_number">
+                  <span v-if="currentOrder.userAddress.flat">
                      - {{
-                        currentOrder.user_address.apartment_number }}
+                        currentOrder.userAddress.flat }}
                   </span>
                </div>
 
                <div v-else>
 
                   <span>
-                     Ресторан: {{ currentOrder.restaurant.title }}
-                     ({{ currentOrder.restaurant.street }}
-                     -
-                     {{ currentOrder.restaurant.house_number }})
-                     <!-- добавить корпус при условии -->
+                     Ресторан: {{ currentOrder.restaurant.name }}
+                     ({{ currentOrder.restaurant.addressAsString }})
                   </span>
 
-                  <div v-if="currentOrder.order_type == ORDER_TYPE.inRestaurant">
+                  <div v-if="currentOrder.orderTypeId == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
+                     currentOrder.orderTypeId == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID">
                      Тип подачи:
-                     <template v-if="currentOrder.table_number">
-                        Принести к столику № {{ currentOrder.table_number }}
+                     <template v-if="currentOrder.tableNumber">
+                        Принести к столику № {{ currentOrder.tableNumber }}
                      </template>
                      <template v-else>
                         Заберу сам
@@ -86,12 +86,12 @@ if (currentOrder.value == null) {
 
                <div>
                   <span> Итого: </span>
-                  <span>{{ Number(currentOrder.total_price) }}р.</span>
+                  <span>{{ Number(currentOrder.totalPrice) }}р.</span>
                </div>
 
                <div>
-                  <span v-if="currentOrder.is_payment"> Заказа оплачен. </span>
-                  <span v-else> Заказ не оплачен. </span>
+                  <span> Статус оплаты: </span>
+                  <span> {{ currentOrder.paymentStatus }} </span>
                </div>
 
                <div v-if="currentOrder.comment">
@@ -105,27 +105,27 @@ if (currentOrder.value == null) {
          <div class="grid grid-cols-[1fr_max-content_max-content] gap-2 gap-x-4 items-center p-1
                      text-sm border border-(--brand-color) rounded-(--border-radius-main)">
 
-            <template v-for="product in currentOrder.products">
+            <template v-for="orderProduct in currentOrder.orderProducts">
 
                <div>
 
                   <div class="flex items-center gap-1.5">
                      <img class="w-8"
-                          :src="product.image_url">
-                     <span>{{ product.title }}</span>
+                          :src="serverUrl + '/' + orderProduct.product.imagePath.replace(/^storage\/public\/?/, '')">
+                     <span>{{ orderProduct.product.name }}</span>
                   </div>
 
-                  <IngredientsMini v-if="product.user_config_id"
+                  <!-- <IngredientsMini v-if="product.user_config_id"
                                    :baseIngredients="product.user_config_base_ingredients"
-                                   :additionalIngredients="product.user_config_additional_ingredients" />
+                                   :additionalIngredients="product.user_config_additional_ingredients" /> -->
 
                </div>
 
                <div class="justify-self-center whitespace-nowrap">
-                  {{ product.quantity }} x {{ Number(product.price) }}р
+                  {{ orderProduct.quantity }} x {{ Number(orderProduct.product.priceDefault) }}р
                </div>
                <div class="justify-self-end">
-                  {{ Number(product.quantity) * Number(product.price) }}р
+                  {{ Number(orderProduct.quantity) * Number(orderProduct.product.priceDefault) }}р
                </div>
 
             </template>
