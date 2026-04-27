@@ -14,7 +14,7 @@ async function loginVK() {
    })
 
    try {
-      const payload = await VKID.Auth.login()
+      const payload = await VKID.Auth.login({ forceOAuth: true })
       getVKtokens(payload)
    }
    catch (error) {
