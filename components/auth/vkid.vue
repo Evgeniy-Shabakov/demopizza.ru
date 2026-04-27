@@ -5,30 +5,16 @@ import { VK_APP_ID, VK_REDIRECT_URL } from '~/env'
 const emit = defineEmits(['success', 'error'])
 defineExpose({ loginVK })
 
-function generateCodeVerifier() {
-    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
-    const length = 64; // Рекомендуемая длина 64 символа
-    let verifier = '';
-    const randomValues = new Uint8Array(length);
-    crypto.getRandomValues(randomValues);
-    for (let i = 0; i < length; i++) {
-        verifier += charset[randomValues[i] % charset.length];
-    }
-    return verifier;
-}
-
 async function loginVK() {
    VKID.Config.init({
       app: VK_APP_ID,
       redirectUrl: VK_REDIRECT_URL,
-      responseMode: VKID.ConfigResponseMode.Callback,
+      responseMode: VKID.ConfigResponseMode.Fragment,
       scope: 'phone',
    })
 
    try {
-      const payload = await VKID.Auth.login( {
-         codeVerifier: generateCodeVerifier()
-      })
+      const payload = await VKID.Auth.login()
       getVKtokens(payload)
    }
    catch (error) {
