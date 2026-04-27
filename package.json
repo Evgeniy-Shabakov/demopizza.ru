@@ -12,7 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.4",
     "@turf/turf": "^7.2.0",
-    "@vkid/sdk": "^2.6.0",
+    "@vkid/sdk": "^2.6.5",
     "axios": "^1.9.0",
     "imask": "^7.6.1",
     "nuxt": "^3.16.2",
