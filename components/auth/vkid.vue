@@ -9,7 +9,7 @@ async function loginVK() {
    VKID.Config.init({
       app: VK_APP_ID,
       redirectUrl: VK_REDIRECT_URL,
-      responseMode: VKID.ConfigResponseMode.Fragment,
+      responseMode: VKID.ConfigResponseMode.Callback,
       scope: 'phone',
    })
 
