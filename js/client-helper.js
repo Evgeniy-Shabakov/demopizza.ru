@@ -13,6 +13,29 @@ export const currentOrder = ref()
 
 watch(selectedCity, () => {
    localStorage.setItem(COOKIE_NAME.CITY_ID, selectedCity.value.id)
+
+   if (restaurants.value) {
+      let listForSelecte = restaurants.value.filter(rest => rest.city.id === selectedCity.value.id)
+
+      if (selectedOrderType.value.ID == ORDER_TYPE.PICK_UP_AT_COUNTER.ID) {
+         listForSelecte = listForSelecte.filter(rest => rest.pickUpAtCounterAvailable)
+      }
+
+      if (selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
+         selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID) {
+         listForSelecte = listForSelecte
+            .filter(rest => rest.atRestaurantAtCounterAvailable || rest.atRestaurantToTableAvailable)
+      }
+
+      //при обновлении страницы selectedRestaurant.value не успевает инициализироваться
+      // в client-initialize.js и selectedRestaurant.value сбрасывается
+      const idsArray = listForSelecte.map(rest => rest.id)
+
+      if (!selectedRestaurant.value || !idsArray.includes(selectedRestaurant.value.id)) {
+         selectedRestaurant.value = listForSelecte[0]
+      }
+
+   }
 })
 
 watch(selectedRestaurant, () => {
@@ -90,7 +113,7 @@ watch([selectedCity, pickUpAvailableInSelectedCity, deliveryAvailableInSelectedC
       //если способ доставки выбран и не поддерживается в новом городе, то сменить на первый доступный
       if (selectedOrderType.value == ORDER_TYPE.DELIVERY_TO_ADDRESS && deliveryAvailableInSelectedCity.value == false ||
          selectedOrderType.value == ORDER_TYPE.PICK_UP_AT_COUNTER && pickUpAvailableInSelectedCity.value == false ||
-         selectedOrderType.value == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER && restaurantAvailableInSelectedCity.value == false || 
+         selectedOrderType.value == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER && restaurantAvailableInSelectedCity.value == false ||
          selectedOrderType.value == ORDER_TYPE.AT_RESTAURANT_TO_TABLE && restaurantAvailableInSelectedCity.value == false
       ) {
          if (deliveryAvailableInSelectedCity.value) {
@@ -139,7 +162,7 @@ export const deliveryPrice = computed(() => {
 
    if (totalProductPrice.value >= currentDeliveryZone.value?.deliveryPrices.orderValueForFreeDelivery)
       return 0;
-  
+
    if (currentDeliveryZone.value) {
       return Number(currentDeliveryZone.value?.deliveryPrices.deliveryPrice)
    }

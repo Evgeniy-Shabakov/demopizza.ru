@@ -7,6 +7,11 @@ export const currentDeliveryZone = computed(() => {
    const latitude = selectedAddressForDelivery.value.latitude
    const longitude = selectedAddressForDelivery.value.longitude
 
+   if (!latitude || !longitude) {
+      console.log('В адресе отсутствует широта и долгота, невозможно определить зону доставки')
+      return
+   }
+
    const point = turf.point([longitude, latitude])
 
    const geoJson = selectedCity.value.geojson
@@ -22,6 +27,6 @@ export const currentDeliveryZone = computed(() => {
       }
       return false
    })
-   
+
    return deliveryZone
 })

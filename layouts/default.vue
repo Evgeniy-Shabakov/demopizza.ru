@@ -72,17 +72,6 @@ function reloadPage() {
                <BaseLink to='/legal-documents'>Правовая информация</BaseLink>
 
                <div class="flex items-center gap-6">
-                  <div class="flex items-center gap-2">
-                     <IconClock />
-                     <span v-if="company">
-                        <template v-if="company.open_time && company.close_time">
-                           {{ company.open_time }} - {{ company.close_time }}
-                        </template>
-                        <template v-else>
-                           Круглосуточно
-                        </template>
-                     </span>
-                  </div>
 
                   <a v-if="company && company.phoneForOrders"
                      :href="`tel:${company.phoneForOrders}`"
@@ -94,6 +83,7 @@ function reloadPage() {
 
                   </a>
 
+                  <BaseLink to='/work-schedules'>График работы</BaseLink>
                   <BaseLink to='/delivery-and-payment'>Доставка и оплата</BaseLink>
                </div>
 

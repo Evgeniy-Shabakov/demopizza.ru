@@ -1,5 +1,6 @@
 <script setup>
 import { company } from '~/js/axios-helper'
+import { selectedRestaurant } from '~/js/client-helper'
 import { formatPhone } from '~/js/phone-helper'
 import { installPrompt } from '/plugins/before-install-prompt.client'
 import { isPWA } from '~/js/enviroment-detecting'
@@ -54,18 +55,6 @@ const isPWAdetect = isPWA()
 
             <CitySelecte />
 
-            <div class="flex items-center justify-between">
-               <IconClock />
-               <span>
-                  <template v-if="company.open_time && company.close_time">
-                     {{ company.open_time }} - {{ company.close_time }}
-                  </template>
-                  <template v-else>
-                     Круглосуточно
-                  </template>
-               </span>
-            </div>
-
             <div class="bg-(--brand-color-hover) p-2 rounded-(--border-radius-main)">
                <a v-if="company && company.phoneForOrders"
                   :href="`tel:${company.phoneForOrders}`"
@@ -83,6 +72,83 @@ const isPWAdetect = isPWA()
                         :click="btnInstallHandler">
                Установить <br> мобильное приложение
             </BaseButton>
+
+            <div v-if="selectedRestaurant && selectedRestaurant.restaurantSchedule"
+                 class="text-sm bg-(--brand-color-hover) p-2 rounded-(--border-radius-main)">
+               <!-- <IconClock /> -->
+               <div>График работы</div>
+               <div class="text-sm mt-2">
+                  <!-- Понедельник -->
+                  <div>
+                     <span>пн: </span>
+                     <span v-if="selectedRestaurant.restaurantSchedule.mondayIsOpen">
+                        {{ selectedRestaurant.restaurantSchedule.mondayOpenTime }} -
+                        {{ selectedRestaurant.restaurantSchedule.mondayCloseTime }}
+                     </span>
+                     <span v-else>выходной</span>
+                  </div>
+
+                  <!-- Вторник -->
+                  <div>
+                     <span>вт: </span>
+                     <span v-if="selectedRestaurant.restaurantSchedule.tuesdayIsOpen">
+                        {{ selectedRestaurant.restaurantSchedule.tuesdayOpenTime }} -
+                        {{ selectedRestaurant.restaurantSchedule.tuesdayCloseTime }}
+                     </span>
+                     <span v-else>выходной</span>
+                  </div>
+
+                  <!-- Среда -->
+                  <div>
+                     <span>ср: </span>
+                     <span v-if="selectedRestaurant.restaurantSchedule.wednesdayIsOpen">
+                        {{ selectedRestaurant.restaurantSchedule.wednesdayOpenTime }} -
+                        {{ selectedRestaurant.restaurantSchedule.wednesdayCloseTime }}
+                     </span>
+                     <span v-else>выходной</span>
+                  </div>
+
+                  <!-- Четверг -->
+                  <div>
+                     <span>чт: </span>
+                     <span v-if="selectedRestaurant.restaurantSchedule.thursdayIsOpen">
+                        {{ selectedRestaurant.restaurantSchedule.thursdayOpenTime }} -
+                        {{ selectedRestaurant.restaurantSchedule.thursdayCloseTime }}
+                     </span>
+                     <span v-else>выходной</span>
+                  </div>
+
+                  <!-- Пятница -->
+                  <div>
+                     <span>пт: </span>
+                     <span v-if="selectedRestaurant.restaurantSchedule.fridayIsOpen">
+                        {{ selectedRestaurant.restaurantSchedule.fridayOpenTime }} -
+                        {{ selectedRestaurant.restaurantSchedule.fridayCloseTime }}
+                     </span>
+                     <span v-else>выходной</span>
+                  </div>
+
+                  <!-- Суббота -->
+                  <div>
+                     <span>сб: </span>
+                     <span v-if="selectedRestaurant.restaurantSchedule.saturdayIsOpen">
+                        {{ selectedRestaurant.restaurantSchedule.saturdayOpenTime }} -
+                        {{ selectedRestaurant.restaurantSchedule.saturdayCloseTime }}
+                     </span>
+                     <span v-else>выходной</span>
+                  </div>
+
+                  <!-- Воскресенье -->
+                  <div>
+                     <span>вс: </span>
+                     <span v-if="selectedRestaurant.restaurantSchedule.sundayIsOpen">
+                        {{ selectedRestaurant.restaurantSchedule.sundayOpenTime }} -
+                        {{ selectedRestaurant.restaurantSchedule.sundayCloseTime }}
+                     </span>
+                     <span v-else>выходной</span>
+                  </div>
+               </div>
+            </div>
 
             <NuxtLink class="text-base underline active:text-black block"
                       to='/delivery-and-payment'
