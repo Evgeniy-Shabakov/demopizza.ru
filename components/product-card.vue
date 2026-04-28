@@ -83,7 +83,7 @@ const imagePath = serverUrl + '/' + props.product.imagePath.replace(/^storage\/p
       <p class="text-sm text-(--text-color-main)/60"
          :class="{ 'text-(--text-color-accent)': userConfig }">
          <span v-if="userConfig">
-            {{ product.title }} с Вашей конфигурацией. Можно удалить или создать новую
+            {{ product.name }} с Вашей конфигурацией. Можно удалить или создать новую
          </span>
          <span v-else>{{ product.descriptionShort }}</span>
       </p>
