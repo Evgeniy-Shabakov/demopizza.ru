@@ -76,8 +76,6 @@ async function sendOrder() {
    otherErrors.value = null
 
    try {
-      console.log(orderData)
-
       const res = await axios.post(`/orders/user`, orderData)
       currentOrder.value = res.data.data
 

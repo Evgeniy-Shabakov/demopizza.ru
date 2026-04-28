@@ -3,7 +3,6 @@ import { BaseButton } from '#components';
 import { currentOrder } from '~/js/client-helper.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type'
 import { serverUrl } from '~/env.js'
-console.log(currentOrder.value)
 
 if (currentOrder.value == null) {
    navigateTo('/')

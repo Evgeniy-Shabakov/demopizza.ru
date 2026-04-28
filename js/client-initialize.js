@@ -12,7 +12,7 @@ import { checkOperatingModeAndActivateDialog } from '~/js/open-close-time'
 import { findProductById, checkProductAvailabilityForCart, setStatusAllIngredientsIsAvailableForProdacts }
    from '~/js/models/product'
 import { userAddresses } from '~/js/address-index.js'
-import { serverApiUrl, serverUrl } from '~/env.js'
+import { serverUrl } from '~/env.js'
 
 export async function initialize() {
 
@@ -101,6 +101,8 @@ export async function initializeRestaurant() {
       if (selectedRestaurant.value == null)
          selectedRestaurant.value = restaurants.value[0]
 
+      console.log(selectedRestaurant.value)
+      
       return LOADING_TYPE.complete
    }
    catch (err) {

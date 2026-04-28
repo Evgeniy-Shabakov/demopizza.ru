@@ -1,8 +1,7 @@
 import { LOADING_TYPE } from '~/js/data-types/loading-type.js'
 import {
    company, countries, cities, categories, restaurants, ingredients, authUser, getAuthUser,
-   getModelsAxios, getModelAxios, currentRestaurant, currentProduct,
-   activeDesign, getActiveDesign, getCompany
+   getModelsAxios, activeDesign, getActiveDesign, getCompany
 } from '~/js/axios-helper.js'
 
 const MAX_RETRIES = 3; // Максимальное количество попыток загрузки
@@ -102,7 +101,7 @@ export async function loadRestaurants() {
 
    while (retryCount < MAX_RETRIES) {
       try {
-         await getModelsAxios('restaurants?include=city,address')
+         await getModelsAxios('restaurants?include=city,address,restaurantSchedule')
          return LOADING_TYPE.complete;
       } catch (err) {
          console.log(`Error loading restaurants (attempt ${retryCount + 1}/${MAX_RETRIES}):`, err)
@@ -141,50 +140,6 @@ export async function loadIngredients() {
    }
 
 
-}
-
-export async function loadCurrentRestaurant(id) {
-   if (currentRestaurant.value) return LOADING_TYPE.complete;
-
-   let retryCount = 0
-
-   while (retryCount < MAX_RETRIES) {
-      try {
-         await getModelAxios('restaurants', id)
-         return LOADING_TYPE.complete;
-      } catch (err) {
-         console.log(`Error loading restaurant (attempt ${retryCount + 1}/${MAX_RETRIES}):`, err)
-
-         retryCount++
-         if (retryCount === MAX_RETRIES) {
-            throw err
-         }
-
-         await new Promise(resolve => setTimeout(resolve, 1000)) // Задержка перед следующей попыткой
-      }
-   }
-}
-
-export async function loadCurrentProduct(id) {
-   if (currentProduct.value) return LOADING_TYPE.complete;
-
-   let retryCount = 0
-
-   while (retryCount < MAX_RETRIES) {
-      try {
-         await getModelAxios('products', id)
-         return LOADING_TYPE.complete;
-      } catch (err) {
-         console.log(`Error loading restaurant (attempt ${retryCount + 1}/${MAX_RETRIES}):`, err)
-
-         retryCount++
-         if (retryCount === MAX_RETRIES) {
-            throw err
-         }
-
-         await new Promise(resolve => setTimeout(resolve, 1000)) // Задержка перед следующей попыткой
-      }
-   }
 }
 
 export async function loadCurrentAuthUser() {

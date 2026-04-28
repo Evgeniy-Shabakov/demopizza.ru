@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { addLogMessage, formErrorLogMessage, formDoneLogMessage } from '~/js/log-messages.js'
 import { serverApiUrl } from '~/env.js'
 import { inputedPhone } from '~/js/login-panel-helper.js'
 
@@ -32,45 +31,20 @@ axios.interceptors.response.use(
 export const authUser = ref()
 
 export const company = ref()
-
-export const roles = ref()
-
 export const countries = ref()
-export const currentCountry = ref()
-
 export const cities = ref()
-export const currentCity = ref()
-
 export const restaurants = ref()
-export const currentRestaurant = ref()
-
 export const categories = ref()
-export const currentCategory = ref()
-
 export const ingredients = ref()
-export const currentIngredient = ref()
-
 export const products = ref()
-export const currentProduct = ref()
-
-export const employees = ref()
-export const currentEmployee = ref()
-
 export const legalDocuments = ref()
-export const currentLegalDocument = ref()
-
 export const designs = ref()
-export const currentDesign = ref()
-
-export const ordersToday = ref()
 
 export const activeOrdersForUser = ref([])
 export const allOrdersForUser = ref([])
 export const lastOrderForUser = ref()
 
 export const activeDesign = ref()
-
-export const textLoadOrFailForVue = ref('Загрузка данных...')
 
 export async function LoginWithVKID(access_token) {
    try {
@@ -264,42 +238,17 @@ export async function getModelsAxios(urlPrefix) {
       else if (urlPrefix == 'cities?include=restaurants,deliveryZones') cities.value = res.data.data
       else if (urlPrefix == 'restaurants') restaurants.value = res.data.data
       else if (urlPrefix == 'restaurants?include=city,address') restaurants.value = res.data.data
+      else if (urlPrefix == 'restaurants?include=city,address,restaurantSchedule') restaurants.value = res.data.data
       else if (urlPrefix == 'categories') categories.value = res.data.data
       else if (urlPrefix == 'categories?include=products') categories.value = res.data.data
       else if (urlPrefix == 'ingredients') ingredients.value = res.data.data
       else if (urlPrefix == 'products') products.value = res.data.data
-      else if (urlPrefix == 'employees') employees.value = res.data.data
-      else if (urlPrefix == 'roles') roles.value = res.data.data
       else if (urlPrefix == 'legal-documents') legalDocuments.value = res.data.data
       else if (urlPrefix == 'designs') designs.value = res.data.data
 
       return res
    } catch (error) {
       textLoadOrFailForVue.value = 'Ошибка загрузки данных'
-      addLogMessage(formErrorLogMessage(error))
-      throw error
-   }
-}
-
-export async function getModelAxios(urlPrefix, id) {
-   try {
-      const res = await axios.get(`/${urlPrefix}/${id}`)
-
-      if (urlPrefix == 'countries') currentCountry.value = res.data.data
-      else if (urlPrefix == 'cities') currentCity.value = res.data.data
-      else if (urlPrefix == 'restaurants') currentRestaurant.value = res.data.data
-      else if (urlPrefix == 'categories') currentCategory.value = res.data.data
-      else if (urlPrefix == 'ingredients') currentIngredient.value = res.data.data
-      else if (urlPrefix == 'products') currentProduct.value = res.data.data
-      else if (urlPrefix == 'companies') company.value = res.data.data
-      else if (urlPrefix == 'employees') currentEmployee.value = res.data.data
-      else if (urlPrefix == 'legal-documents') currentLegalDocument.value = res.data.data
-      else if (urlPrefix == 'designs') currentDesign.value = res.data.data
-
-      return res
-   } catch (error) {
-      textLoadOrFailForVue.value = 'Ошибка загрузки данных'
-      addLogMessage(formErrorLogMessage(error))
       throw error
    }
 }
@@ -312,93 +261,10 @@ export async function getCompany() {
 
       return res
    } catch (error) {
-      textLoadOrFailForVue.value = 'Ошибка загрузки данных'
-      addLogMessage(formErrorLogMessage(error))
       throw error
    }
 }
 
-export async function storeModelAxios(urlPrefix, data) {
-   try {
-      const res = await axios.post(`/${urlPrefix}`, data)
-
-      res.messageForVue = formDoneLogMessage(urlPrefix, res, data)
-      addLogMessage(res.messageForVue)
-
-      return res
-   } catch (error) {
-      addLogMessage(formErrorLogMessage(error))
-      throw error
-   }
-}
-
-export async function updateModelAxios(urlPrefix, data) {
-   //если нужно передавать файлы метод post
-   if (urlPrefix == 'companies' || urlPrefix == 'ingredients'
-      || urlPrefix == 'products' || urlPrefix == 'legal-documents') {
-      data.append("_method", "PATCH");
-
-      try {
-         const res = await axios.post(`/${urlPrefix}/${data.get('id')}`, data)
-
-         if (urlPrefix == 'companies') company.value = res.data.data
-         if (urlPrefix == 'ingredients') currentIngredient.value = res.data.data
-         if (urlPrefix == 'products') currentProduct.value = res.data.data
-         if (urlPrefix == 'legal-documents') currentLegalDocument.value = res.data.data
-
-         res.messageForVue = formDoneLogMessage(urlPrefix, res, data)
-         addLogMessage(res.messageForVue)
-
-         return res
-      } catch (error) {
-         addLogMessage(formErrorLogMessage(error))
-         throw error
-      }
-   }
-
-   //если передавать файлы не нужно метод patch
-   try {
-      const res = await axios.patch(`/${urlPrefix}/${data.id}`, data)
-
-      if (urlPrefix == 'countries') currentCountry.value = res.data.data
-      else if (urlPrefix == 'cities') currentCity.value = res.data.data
-      else if (urlPrefix == 'restaurants') currentRestaurant.value = res.data.data
-      else if (urlPrefix == 'categories') currentCategory.value = res.data.data
-      else if (urlPrefix == 'employees') currentEmployee.value = res.data.data
-      else if (urlPrefix == 'designs') currentDesign.value = res.data.data
-      res.messageForVue = formDoneLogMessage(urlPrefix, res, data)
-      addLogMessage(res.messageForVue)
-
-      return res
-   } catch (error) {
-      addLogMessage(formErrorLogMessage(error))
-      throw error
-   }
-}
-
-export async function deleteModelAxios(urlPrefix, data) {
-   try {
-      const res = await axios.delete(`/${urlPrefix}/${data.id}`)
-
-      if (urlPrefix == 'countries') currentCountry.value = null
-      else if (urlPrefix == 'cities') currentCity.value = null
-      else if (urlPrefix == 'restaurants') currentRestaurant.value = null
-      else if (urlPrefix == 'categories') currentCategory.value = null
-      else if (urlPrefix == 'ingredients') currentIngredient.value = null
-      else if (urlPrefix == 'products') currentProduct.value = null
-      else if (urlPrefix == 'employees') currentEmployee.value = null
-      else if (urlPrefix == 'legal-documents') currentLegalDocument.value = null
-      else if (urlPrefix == 'designs') currentDesign.value = null
-
-      res.messageForVue = formDoneLogMessage(urlPrefix, res, data)
-      addLogMessage(res.messageForVue)
-
-      return res
-   } catch (error) {
-      addLogMessage(formErrorLogMessage(error))
-      throw error
-   }
-}
 export async function getDaDataAddresses(query) {
    try {
       const res = await axios.post(`/dadata-addresses`, { query })
