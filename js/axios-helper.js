@@ -248,7 +248,6 @@ export async function getModelsAxios(urlPrefix) {
 
       return res
    } catch (error) {
-      textLoadOrFailForVue.value = 'Ошибка загрузки данных'
       throw error
    }
 }

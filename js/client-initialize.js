@@ -52,7 +52,7 @@ export async function initialize() {
 async function initializeCategories() {
    try {
       await loadCategories()
-      // console.log(categories.value)
+      console.log(categories.value)
 
       //убираем из списка неактивные продукты и пустые категории чтобы не отображались
       categories.value.forEach(category => {
@@ -100,8 +100,6 @@ export async function initializeRestaurant() {
       //добавить проверку на соотвествие ресторана городу
       if (selectedRestaurant.value == null)
          selectedRestaurant.value = restaurants.value[0]
-
-      console.log(selectedRestaurant.value)
       
       return LOADING_TYPE.complete
    }
