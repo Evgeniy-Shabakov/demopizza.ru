@@ -9,11 +9,12 @@ const restaurantsForSelecte = computed(() => {
 
    let listForSelecte = restaurants.value.filter(rest => rest.city.id === selectedCity.value.id)
 
-   if (selectedOrderType.value == ORDER_TYPE.pickUp) {
+   if (selectedOrderType.value.ID == ORDER_TYPE.PICK_UP_AT_COUNTER.ID) {
       listForSelecte = listForSelecte.filter(rest => rest.pickUpAtCounterAvailable)
    }
 
-   if (selectedOrderType.value == ORDER_TYPE.inRestaurant) {
+   if (selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
+      selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID) {
       listForSelecte = listForSelecte
          .filter(rest => rest.atRestaurantAtCounterAvailable || rest.atRestaurantToTableAvailable)
    }
