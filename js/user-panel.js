@@ -22,28 +22,30 @@ export async function loadActiveOrdersForUserAndRestartInterval(userID) {
 //загрузка статусов активных заказов через запрос в бэк - END
 
 export function repeatOrder(order) {
+   console.log(order)
+   
    if (order == null) return
 
    removeAllProductsFromCart()
 
-   for (const productInOrder of order.orderProducts) {
+   for (const orderProduct of order.orderProducts) {
 
-      const product = findProductById(productInOrder.id)
+      const product = findProductById(orderProduct.productId)
 
       if (!product) continue
       if (!checkProductAvailabilityForCart(product)) continue
 
-      if (!productInOrder.user_config_id) {
-         plusProductToCart(product, null, productInOrder.quantity)
+      if (!orderProduct.user_config_id) {
+         plusProductToCart(product, null, orderProduct.quantity)
       }
 
-      if (productInOrder.user_config_id && product.userConfigs) {
-         let userConfig = product.userConfigs.find(el => el.userConfigID == productInOrder.user_config_id)
+      // if (orderProduct.user_config_id && product.userConfigs) {
+      //    let userConfig = product.userConfigs.find(el => el.userConfigID == orderProduct.user_config_id)
 
-         if (userConfig) {
-            plusProductToCart(product, userConfig, productInOrder.quantity)
-         }
-      }
+      //    if (userConfig) {
+      //       plusProductToCart(product, userConfig, orderProduct.quantity)
+      //    }
+      // }
 
    }
 
