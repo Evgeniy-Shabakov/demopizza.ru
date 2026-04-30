@@ -1,5 +1,9 @@
 import { company, categories, cities, activeDesign, restaurants } from '~/js/axios-helper.js'
-import { selectedCity, selectedRestaurant, selectedOrderType, plusProductToCart, selectedAddressForDelivery }
+import {
+   selectedCity, selectedRestaurant, selectedOrderType, plusProductToCart,
+   selectedAddressForDelivery, defineRestaurantsInSelectedCity, setStopListForProducts,
+   restaurantsInSelectedCity
+}
    from '~/js/client-helper.js'
 import { loadCompany, loadCurrentAuthUser, loadCities, loadCategories, loadRestaurants, loadActiveDesign }
    from '~/js/loading-helper.js'
@@ -23,7 +27,10 @@ export async function initialize() {
 
       initializeDesign()
 
-      initializeCity().then(() => initializeRestaurant())
+      initializeCity().then(async () => {
+         await initializeRestaurant()
+      })
+
 
       loadCompany().then(() => {
          useHead({
@@ -52,7 +59,6 @@ export async function initialize() {
 async function initializeCategories() {
    try {
       await loadCategories()
-      console.log(categories.value)
 
       //убираем из списка неактивные продукты и пустые категории чтобы не отображались
       categories.value.forEach(category => {
@@ -92,6 +98,8 @@ export async function initializeRestaurant() {
    try {
       await loadRestaurants()
 
+      defineRestaurantsInSelectedCity()
+
       let id = localStorage.getItem(COOKIE_NAME.RESTAURANT_ID)
 
       if (id)
@@ -101,6 +109,8 @@ export async function initializeRestaurant() {
       if (selectedRestaurant.value == null)
          selectedRestaurant.value = restaurants.value[0]
       
+      setStopListForProducts()
+
       return LOADING_TYPE.complete
    }
    catch (err) {

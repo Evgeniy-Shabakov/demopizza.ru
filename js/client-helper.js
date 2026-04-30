@@ -1,8 +1,9 @@
-import { restaurants, logout, lastOrderForUser } from '~/js/axios-helper.js'
+import { categories, restaurants, logout, lastOrderForUser } from '~/js/axios-helper.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type.js'
 import { COOKIE_NAME } from '~/js/strings/cookie-name.js'
 import { checkProductAvailabilityForCart } from '~/js/models/product'
 import { currentDeliveryZone } from '~/js/delivery-zone-helper'
+import { isProductInStopListForSelectedCity, isProductInStopListForSelectedRestaurant } from '~/js/models/product'
 
 export const selectedCity = ref()
 export const selectedRestaurant = ref()
@@ -11,10 +12,43 @@ export const selectedAddressForDelivery = ref(null)
 export const productsInCart = ref([])
 export const currentOrder = ref()
 
+export let restaurantsInSelectedCity = []
+
+export function defineRestaurantsInSelectedCity() {
+   if (!restaurants.value) {
+      console.log('Невозможно определить рестораны для выбранного города')
+      return
+   }
+
+   restaurantsInSelectedCity = restaurants.value.filter(el =>
+      el.city.id === selectedCity.value.id && el.isActive)
+}
+
+export function setStopListForProducts() {
+   categories.value.forEach(category => {
+      category.products.forEach(product => {
+         product.isInStopListForSelectedCity = isProductInStopListForSelectedCity(product)
+         product.isInStopListForSelectedRestaurant = isProductInStopListForSelectedRestaurant(product)
+      })
+   })
+
+   productsInCart.value.forEach(product => {
+      if (product.isInStopListForSelectedCity) product.countInCart = 0
+      if (product.isInStopListForSelectedRestaurant &&
+         selectedOrderType.value.ID != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
+         product.countInCart = 0
+      }
+   })
+
+   localStorage.setItem(COOKIE_NAME.CART, JSON.stringify(productsInCart.value))
+}
+
 watch(selectedCity, () => {
    localStorage.setItem(COOKIE_NAME.CITY_ID, selectedCity.value.id)
 
    if (restaurants.value) {
+      defineRestaurantsInSelectedCity()
+
       let listForSelecte = restaurants.value.filter(rest => rest.city.id === selectedCity.value.id)
 
       if (selectedOrderType.value.ID == ORDER_TYPE.PICK_UP_AT_COUNTER.ID) {
@@ -35,11 +69,15 @@ watch(selectedCity, () => {
          selectedRestaurant.value = listForSelecte[0]
       }
 
+      setStopListForProducts()
    }
 })
 
 watch(selectedRestaurant, () => {
    localStorage.setItem(COOKIE_NAME.RESTAURANT_ID, selectedRestaurant.value.id)
+
+   if (restaurantsInSelectedCity.length > 0)
+      setStopListForProducts()
 })
 
 watch(selectedOrderType, () => {

@@ -1,7 +1,7 @@
 <script setup>
 import { minusProductInCartForMenuPage, plusProductToCart, removeProductFromCart } from '~/js/client-helper.js'
 import { rerecordProductWithUserConfigs } from '~/js/save/user-configs-products.js'
-import { serverApiUrl, serverUrl } from '~/env.js'
+import { serverUrl } from '~/env.js'
 
 const props = defineProps(['product', 'userConfig', 'index'])
 
@@ -40,6 +40,7 @@ function deleteUserConfig() {
 
 const imagePath = serverUrl + '/' + props.product.imagePath.replace(/^storage\/public\/?/, '')
 
+
 </script>
 
 <template>
@@ -51,7 +52,7 @@ const imagePath = serverUrl + '/' + props.product.imagePath.replace(/^storage\/p
       <div class="row-span-3">
 
          <img class="w-full aspect-[1/1]"
-              :class="product.is_in_stop_list ? 'grayscale-80' : ''"
+              :class="product.isInStopListForSelectedCity ? 'grayscale-80' : ''"
               :src="imagePath">
 
          <IngredientsMini class="mt-2"
@@ -92,7 +93,7 @@ const imagePath = serverUrl + '/' + props.product.imagePath.replace(/^storage\/p
 
          <p> {{ Number(price) }}р.</p>
 
-         <BaseButton v-if="product.is_in_stop_list"
+         <BaseButton v-if="product.isInStopListForSelectedCity"
                      :active=false>
             Будет позже
          </BaseButton>

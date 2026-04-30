@@ -1,10 +1,11 @@
 <script setup>
 import {
-   minusProductInCartForCartPanel,
+   minusProductInCartForCartPanel, selectedOrderType,
    plusProductToCart, removeProductFromCart,
 } from '~/js/client-helper.js'
 import { findProductById } from '~/js/models/product'
 import { serverApiUrl, serverUrl } from '~/env.js'
+import { ORDER_TYPE } from '~/js/data-types/order-type'
 
 const props = defineProps(['productOrUserConfig'])
 
@@ -26,7 +27,17 @@ const imagePath = serverUrl + '/' + props.productOrUserConfig.imagePath.replace(
       <section class="row-span-2">
 
          <img class="w-full aspect-square"
+              :class="product.isInStopListForSelectedCity ? 'grayscale-80' : ''"
               :src="imagePath">
+         <div v-if="productOrUserConfig.isInStopListForSelectedCity"
+              class="text-xs text-red-500">
+            Недоступен в этом городе
+         </div>
+         <div v-else-if="productOrUserConfig.isInStopListForSelectedRestaurant &&
+            selectedOrderType.ID != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID"
+              class="text-xs text-red-500">
+            Недоступен в этом ресторане
+         </div>
 
          <IngredientsMini v-if="productOrUserConfig.userConfigID"
                           :baseIngredients="productOrUserConfig.baseIngredients"
