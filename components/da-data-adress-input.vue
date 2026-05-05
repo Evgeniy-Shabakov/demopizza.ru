@@ -5,8 +5,8 @@ import { getDaDataAddresses } from '~/js/axios-helper'
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
 
-const adressData = ref()
-const inputTextAdress = ref('')
+const addressData = ref()
+const inputTextAddress = ref('')
 const resultsDaData = ref([])
 
 let timeoutId = null
@@ -14,24 +14,24 @@ onUnmounted(() => clearTimeout(timeoutId))
 
 // Обработка начального значения
 watch(() => props.modelValue, (newVal) => {
-   if (newVal) inputTextAdress.value = newVal.valueModified
+   if (newVal) inputTextAddress.value = newVal.valueModified
 }, { immediate: true })
 
-watch(inputTextAdress, () => {
-   const foundItem = resultsDaData.value.find(item => item.valueModified === inputTextAdress.value)
+watch(inputTextAddress, () => {
+   const foundItem = resultsDaData.value.find(item => item.valueModified === inputTextAddress.value)
 
    if (foundItem) {
-      adressData.value = foundItem
-      emit('update:modelValue', adressData.value)
+      addressData.value = foundItem
+      emit('update:modelValue', addressData.value)
 
       resultsDaData.value = []
       return
    }
 
-   if (!inputTextAdress.value) {
+   if (!inputTextAddress.value) {
       resultsDaData.value = []
-      adressData.value = null
-      emit('update:modelValue', adressData.value)
+      addressData.value = null
+      emit('update:modelValue', addressData.value)
       return
    }
 
@@ -42,33 +42,31 @@ watch(inputTextAdress, () => {
 })
 
 async function getDaDataResult() {
-   if (!inputTextAdress.value) return
+   if (!inputTextAddress.value) return
 
-   const query = `${selectedCity.value.title} ${inputTextAdress.value}`
+   const query = `${selectedCity.value.name} ${inputTextAddress.value}`
 
    try {
       const data = await getDaDataAddresses(query)
 
-      resultsDaData.value = data.data.suggestions || []
+      resultsDaData.value = data.data || []
       modifyResultsDaData()
    } catch (error) {
-      console.error("Error fetching DaData:", error)
+      console.error("Error fetching DaData: ", error)
    }
 }
 
-function handleClickResultDaData(adress) {
-   console.log(adress)
+function handleClickResultDaData(address) {
+   if (inputTextAddress.value == address.valueModified) resultsDaData.value = []
 
-   if (inputTextAdress.value == adress.valueModified) resultsDaData.value = []
-
-   inputTextAdress.value = adress.valueModified
-   adressData.value = adress
-   emit('update:modelValue', adressData.value)
+   inputTextAddress.value = address.valueModified
+   addressData.value = address
+   emit('update:modelValue', addressData.value)
 }
 
 function modifyResultsDaData() {
    resultsDaData.value.forEach((item) => {
-      const cityWithType = item.data.city_with_type; // "г Нижний Новгород"
+      const cityWithType = item.cityWithType; // "г Нижний Новгород"
       const value = item.value; // "г Нижний Новгород, ул Бекетова, д 1"
 
       // Находим позицию города в строке
@@ -92,7 +90,7 @@ function modifyResultsDaData() {
       <div class="relative">
          <BaseFormLabel class="mb-1">Улица, дом, квартира</BaseFormLabel>
          <BaseInputText class="w-full"
-                        v-model="inputTextAdress" />
+                        v-model="inputTextAddress" />
          <div class="absolute z-10 w-full "
               v-if="resultsDaData.length > 0">
             <div v-for="address in resultsDaData"

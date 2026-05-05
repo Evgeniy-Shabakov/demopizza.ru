@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { authUser } from '~/js/axios-helper.js'
+import { authUser, getAuthUser } from '~/js/axios-helper.js'
 import { selectedCity, selectedAddressForDelivery } from '~/js/client-helper.js'
 import { transformValidateErrorsForUI } from '~/js/validation-helper.js'
 import { previousRoute } from '~/middleware/previous-route.global'
@@ -11,24 +11,24 @@ const id = useRoute().params.id
 
 const addressInputedData = reactive({
    initialize(address) {
-      this.user_id = authUser.value.id,
-         this.city_id = selectedCity.value.id,
-         this.street = address?.street || null,
-         this.house_number = address?.house_number || null,
-         this.corps_number = address?.corps_number || null,
-         this.apartment_number = address?.apartment_number || null,
-         this.entrance_number = address?.entrance_number || null,
-         this.floor = address?.floor || null,
-         this.entrance_code = address?.entrance_code || null,
-         this.title = address?.title || null,
-         this.comment = address?.comment || null
+      this.userId = authUser.value.id,
 
-      this.latitude = address?.latitude || null
-      this.longitude = address?.longitude || null
-      this.value_string = address?.value_string || null
+         this.cityId = selectedCity.value.id,
+         this.street = address?.street || null,
+         this.house = address?.house || null,
+         this.corps = address?.corps || null,
+         this.flat = address?.flat || null,
+         this.entrance = address?.entrance || null,
+         this.floor = address?.floor || null,
+         this.entranceCode = address?.entranceCode || null,
+         this.name = address?.name || null,
+         this.comment = address?.comment || null,
+
+         this.latitude = address?.latitude || null,
+         this.longitude = address?.longitude || null,
+         this.addressAsString = address?.addressAsString || null
    }
 })
-
 
 watchEffect(() => {
    if (authUser.value) {
@@ -37,10 +37,15 @@ watchEffect(() => {
 })
 
 const validationErrors = ref({})
+const validationError = ref()  //общая ошибка - временное решение
 
 async function addAddress() {
    try {
-      const res = await axios.post(`/users/${addressInputedData.user_id}/addresses`, addressInputedData)
+      addressInputedData.entrance = Number(addressInputedData.entrance)
+      addressInputedData.floor = Number(addressInputedData.floor)
+
+      const res = await axios.post(`/users/${addressInputedData.userId}/addresses`, addressInputedData)
+
       selectedAddressForDelivery.value = res.data.data
       authUser.value.addresses.push(selectedAddressForDelivery.value)
 
@@ -48,8 +53,9 @@ async function addAddress() {
       else router.back()
    } catch (error) {
       if (error.response?.status === 422) {
-         validationErrors.value = error.response.data.errors
-         transformValidateErrorsForUI(validationErrors.value)
+
+         validationError.value = error.response.data.message
+         // transformValidateErrorsForUI(validationErrors.value)
          console.log(error)
       }
    }
@@ -57,40 +63,45 @@ async function addAddress() {
 
 async function editAddress() {
    try {
-      const res = await axios.patch(`/users/${authUser.value.id}/addresses/${id}`, addressInputedData)
-      authUser.value = res.data.data
+      addressInputedData.entrance = Number(addressInputedData.entrance)
+      addressInputedData.floor = Number(addressInputedData.floor)
+      
+      await axios.put(`/users/${authUser.value.id}/addresses/${id}`, addressInputedData)
+      await getAuthUser()
+
       router.back()
    }
    catch (error) {
       if (error.response?.status === 422) {
-         validationErrors.value = error.response.data.errors
-         transformValidateErrorsForUI(validationErrors.value)
+         // validationErrors.value = error.response.data.errors
+         // transformValidateErrorsForUI(validationErrors.value)
+         validationError.value = error.response.data.message
+         console.log(error)
       }
    }
 }
 
-const daDataAdress = ref()
+const daDataAddress = ref()
 
-// инициализация daDataAdress для редактирования адреса (имитируем json со стороннего API)
-if (addressInputedData.value_string) {
-   daDataAdress.value = {}
-   daDataAdress.value.value = addressInputedData.value_string
-   daDataAdress.value.valueModified = addressInputedData.value_string
-   daDataAdress.value.data = {}
-   daDataAdress.value.data.street = addressInputedData.street
-   daDataAdress.value.data.house = addressInputedData.house_number
-   daDataAdress.value.data.flat = addressInputedData.apartment_number
-   daDataAdress.value.data.geo_lat = addressInputedData.latitude
-   daDataAdress.value.data.geo_lon = addressInputedData.longitude
+// инициализация daDataAdress для редактирования адреса (имитируем json с бекенда)
+if (addressInputedData.addressAsString) {
+   daDataAddress.value = {}
+   daDataAddress.value.value = addressInputedData.addressAsString
+   daDataAddress.value.valueModified = addressInputedData.addressAsString
+   daDataAddress.value.street = addressInputedData.street
+   daDataAddress.value.house = addressInputedData.house
+   daDataAddress.value.flat = addressInputedData.flat
+   daDataAddress.value.latitude = addressInputedData.latitude
+   daDataAddress.value.longitude = addressInputedData.longitude
 }
 
 watchEffect(() => {
-   addressInputedData.street = daDataAdress.value?.data?.street
-   addressInputedData.house_number = daDataAdress.value?.data?.house
-   addressInputedData.apartment_number = daDataAdress.value?.data?.flat
-   addressInputedData.latitude = daDataAdress.value?.data?.geo_lat
-   addressInputedData.longitude = daDataAdress.value?.data?.geo_lon
-   addressInputedData.value_string = daDataAdress.value?.valueModified
+   addressInputedData.street = daDataAddress.value?.street
+   addressInputedData.house = daDataAddress.value?.house
+   addressInputedData.flat = daDataAddress.value?.flat
+   addressInputedData.latitude = daDataAddress.value?.latitude
+   addressInputedData.longitude = daDataAddress.value?.longitude
+   addressInputedData.addressAsString = daDataAddress.value?.valueModified
 })
 </script>
 
@@ -106,7 +117,7 @@ watchEffect(() => {
          </template>
 
          <template v-else>
-            <div>{{ selectedCity.title }}</div>
+            <div>{{ selectedCity.name }}</div>
             <div class="font-normal text-base">
                (добавление адреса)
             </div>
@@ -121,100 +132,52 @@ watchEffect(() => {
          <CitySelecte v-if="previousRoute.name == 'user-adresses'" />
 
          <div>
-            <DaDataAdressInput v-model="daDataAdress"
-                               @click="validationErrors.street = null; validationErrors.house_number = null" />
-            <BaseInvalidateText>{{ validationErrors.street }}</BaseInvalidateText>
-            <BaseInvalidateText>{{ validationErrors.house_number }}</BaseInvalidateText>
+            <DaDataAdressInput v-model="daDataAddress"
+                               @click="validationErrors.street = null; validationErrors.house = null" />
+            <!-- <BaseInvalidateText>{{ validationErrors.street }}</BaseInvalidateText>
+            <BaseInvalidateText>{{ validationErrors.house_number }}</BaseInvalidateText> -->
+            <BaseInvalidateText>{{ validationError }}</BaseInvalidateText>
          </div>
 
-         <!-- <div>
-            <BaseFormLabel class="mb-1">Улица/шоссе/проспект</BaseFormLabel>
-            <BaseInputText class="w-full"
-                           v-model="addressInputedData.street"
-                           @click="validationErrors.street = ''" />
-            <BaseInvalidateText>{{ validationErrors.street }}</BaseInvalidateText>
-         </div>
 
          <div class="grid grid-cols-3 gap-5">
-
-            <div>
-               <BaseFormLabel class="mb-1">Номер дома</BaseFormLabel>
-               <BaseInputText class="w-full"
-                              v-model="addressInputedData.house_number"
-                              @click="validationErrors.house_number = ''" />
-               <BaseInvalidateText>{{ validationErrors.house_number }}</BaseInvalidateText>
-            </div>
-
-            <div>
-               <BaseFormLabel class="mb-1"
-                              :required="false">Корпус</BaseFormLabel>
-               <BaseInputText class="w-full"
-                              v-model="addressInputedData.corps_number"
-                              @click="validationErrors.corps_number = ''" />
-               <BaseInvalidateText>{{ validationErrors.corps_number }}</BaseInvalidateText>
-            </div>
-
-         </div> -->
-
-         <div class="grid grid-cols-3 gap-5">
-
-            <!-- <div>
-               <BaseFormLabel class="mb-1"
-                              :required="false">Квартира/офис</BaseFormLabel>
-               <BaseInputText class="w-full"
-                              v-model="addressInputedData.apartment_number"
-                              @click="validationErrors.apartment_number = ''" />
-               <BaseInvalidateText>{{ validationErrors.apartment_number }}</BaseInvalidateText>
-            </div> -->
 
             <div>
                <BaseFormLabel class="mb-1"
                               :required="false">Подъезд</BaseFormLabel>
-               <BaseInputText class="w-full"
-                              v-model="addressInputedData.entrance_number"
-                              @click="validationErrors.entrance_number = ''" />
-               <BaseInvalidateText>{{ validationErrors.entrance_number }}</BaseInvalidateText>
+               <BaseInputNumber class="w-full"
+                                v-model="addressInputedData.entrance"
+                                @click="validationErrors.entrance = ''" />
+               <!-- <BaseInvalidateText>{{ validationErrors.entrance_number }}</BaseInvalidateText> -->
             </div>
 
             <div>
                <BaseFormLabel class="mb-1"
                               :required="false">Этаж</BaseFormLabel>
-               <BaseInputText class="w-full"
-                              v-model="addressInputedData.floor"
-                              @click="validationErrors.floor = ''" />
-               <BaseInvalidateText>{{ validationErrors.floor }}</BaseInvalidateText>
+               <BaseInputNumber class="w-full"
+                                v-model="addressInputedData.floor"
+                                @click="validationErrors.floor = ''" />
+               <!-- <BaseInvalidateText>{{ validationErrors.floor }}</BaseInvalidateText> -->
             </div>
 
             <div>
                <BaseFormLabel class="mb-1"
                               :required="false">Код от подъезда</BaseFormLabel>
                <BaseInputText class="w-full"
-                              v-model="addressInputedData.entrance_code"
-                              @click="validationErrors.entrance_code = ''" />
-               <BaseInvalidateText>{{ validationErrors.entrance_code }}</BaseInvalidateText>
+                              v-model="addressInputedData.entranceCode"
+                              @click="validationErrors.entranceCode = ''" />
+               <!-- <BaseInvalidateText>{{ validationErrors.entranceCode }}</BaseInvalidateText> -->
             </div>
 
          </div>
-
-         <!-- <div class="grid grid-cols-3 gap-5">
-            <div>
-               <BaseFormLabel class="mb-1"
-                              :required="false">Код от подъезда</BaseFormLabel>
-               <BaseInputText class="w-full"
-                              v-model="addressInputedData.entrance_code"
-                              @click="validationErrors.entrance_code = ''" />
-               <BaseInvalidateText>{{ validationErrors.entrance_code }}</BaseInvalidateText>
-            </div>
-         </div> -->
-
 
          <div>
             <BaseFormLabel class="mb-1"
                            :required="false">Название для адреса (дом, работа)</BaseFormLabel>
             <BaseInputText class="w-full"
-                           v-model="addressInputedData.title"
-                           @click="validationErrors.title = ''" />
-            <BaseInvalidateText>{{ validationErrors.title }}</BaseInvalidateText>
+                           v-model="addressInputedData.name"
+                           @click="validationErrors.name = ''" />
+            <!-- <BaseInvalidateText>{{ validationErrors.name }}</BaseInvalidateText> -->
          </div>
 
          <div>
@@ -222,7 +185,7 @@ watchEffect(() => {
                            :required="false">Комментарий к адресу</BaseFormLabel>
             <BaseTextarea v-model="addressInputedData.comment"
                           @click.prevent="validationErrors.comment = ''" />
-            <BaseInvalidateText>{{ validationErrors.comment }}</BaseInvalidateText>
+            <!-- <BaseInvalidateText>{{ validationErrors.comment }}</BaseInvalidateText> -->
          </div>
 
       </template>

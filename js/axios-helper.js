@@ -148,7 +148,8 @@ export function getAuthUser() {
       axios
          .get(`/auth/data/user`)
          .then(res => {
-            authUser.value = res.data.data.user
+            authUser.value = res.data.data
+            
             resolve(res)
          })
          .catch(err => {
@@ -164,8 +165,7 @@ export function getAuthUser() {
 
 export async function getActiveOrdersForUser(userID) {
    try {
-      // const res = await axios.get(`/users/${userID}/active-orders`)
-      const res = await axios.get(`/users/active-orders/user`)
+      const res = await axios.get(`/users/${userID}/active-orders`)
 
       activeOrdersForUser.value = res.data.data
       return res
@@ -189,8 +189,7 @@ export async function getAllOrdersForUser(userID) {
 
 export async function getLastOrderForUser(userID) {
    try {
-      // const res = await axios.get(`/users/${userID}/last-order`)
-      const res = await axios.get(`/users/last-order/user`)
+      const res = await axios.get(`/users/${userID}/last-order`)
 
       lastOrderForUser.value = res.data.data
       return res
@@ -266,7 +265,7 @@ export async function getCompany() {
 
 export async function getDaDataAddresses(query) {
    try {
-      const res = await axios.post(`/dadata-addresses`, { query })
+      const res = await axios.post(`/dadata/addresses`, { query })
       return res
    }
    catch (error) {

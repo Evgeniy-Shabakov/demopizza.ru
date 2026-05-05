@@ -1,5 +1,5 @@
 <script setup>
-import { authUser, activeOrdersForUser, lastOrderForUser, getLastOrderForUser }
+import { company, authUser, activeOrdersForUser, lastOrderForUser, getLastOrderForUser }
    from '~/js/axios-helper.js'
 import { currentOrder } from '~/js/client-helper.js'
 import { intervalLoadActiveOrders, loadActiveOrdersForUserAndRestartInterval }
@@ -52,7 +52,7 @@ function openOrderStatusPanel(order) {
               class="text-base">
             {{ formatPhone(authUser.phone) }}
          </div>
-         <div v-if="authUser"
+         <div v-if="authUser && company.isBonusCoinsEnabled"
               class="text-base text-yellow-500 font-semibold">
             Баллы - {{ authUser.bonusCoins }}
          </div>
@@ -60,13 +60,13 @@ function openOrderStatusPanel(order) {
 
       <template v-if="authUser">
 
-         <section class="flex items-center justify-between gap-1">
+         <!-- <section class="flex items-center justify-between gap-1">
             <span>{{ authUser.name || 'Гость' }}</span>
             <BaseButton :isIcon="true"
                         :click="() => navigateTo('/user/edit')">
                <IconPenсil class="h-6 w-6 scale-85 -scale-x-85" />
             </BaseButton>
-         </section>
+         </section> -->
 
          <BaseButton :isIcon="true"
                      :click="() => navigateTo('/user/adresses')">

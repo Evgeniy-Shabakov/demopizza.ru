@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { authUser } from '~/js/axios-helper.js'
+import { authUser, getAuthUser } from '~/js/axios-helper.js'
 import { userAddresses } from '~/js/address-index.js'
 
 const userCities = computed(() => {
@@ -15,10 +15,12 @@ const userCities = computed(() => {
 
 async function deleteAddress(id) {
    try {
-      const res = await axios.delete(`/users/${authUser.value.id}/addresses/${id}`);
-      authUser.value = res.data.data;
+      await axios.delete(`/users/${authUser.value.id}/addresses/${id}`)
+
+      await getAuthUser()
+      // authUser.value = res.data.data;
    } catch (err) {
-      console.log(err);
+      console.log(err)
    }
 }
 </script>
@@ -41,16 +43,21 @@ async function deleteAddress(id) {
             <div class="text-center font-semibold">{{ city }}</div>
 
             <template v-for="address in userAddresses">
-               <template v-if="city === address.city.title">
+               <template v-if="city === address.city.name">
 
                   <div class="border border-(--brand-color) rounded-(--border-radius-main) p-2">
 
                      <div class="mb-2">
-                        <div v-if="address.title"
+                        <div v-if="address.name"
                              class="text-center mb-2">
-                           {{ address.title }}
+                           {{ address.name }}
                         </div>
-                        {{ address.value_string }}
+                        <div v-if="address.addressAsString">
+                           {{ address.addressAsString }}
+                        </div>
+                        <div v-else>
+                           {{ address.street }} д.{{ address.house }}  кв.{{ address.flat }}
+                        </div>
                      </div>
 
                      <div class="flex justify-between">
