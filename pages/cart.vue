@@ -65,7 +65,7 @@ import { currentDeliveryZone } from '~/js/delivery-zone-helper'
                Выберите точку самовывоза
             </BaseLabel>
             <BaseLabel v-else-if="selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
-               selectedOrderType == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID"
+               selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID"
                        class="mb-2">
                Выберите ресторан
             </BaseLabel>

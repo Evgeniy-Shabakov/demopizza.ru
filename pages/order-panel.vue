@@ -52,14 +52,16 @@ orderData.totalPrice = totalPrice.value
 orderData.paymentType = PAYMENT_TYPE.CARD_OFFLINE
 orderData.banknoteForChange = null
 orderData.userComment = null
+orderData.deliveryZoneId = selectedOrderType.value.ID == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID ?
+   currentDeliveryZone.value.id : null
 
 orderData.orderProducts = productsInOrder.value.map(el => {
-   return {
-      productId: el.id,
-      quantity: el.countInCart,
-      price: el.priceDefault
-   }
-})
+      return {
+         productId: el.id,
+         quantity: el.countInCart,
+         price: el.priceDefault
+      }
+   })
 
 watch(selectedAddressForDelivery, () => { //v-model это selectedAddressForDelivery, чтобы сохранить изменения
    orderData.userAddressId = selectedAddressForDelivery.value.id
@@ -74,6 +76,11 @@ async function sendOrder() {
 
    validationErrors.value = {}
    otherErrors.value = null
+
+   if(orderData.orderTypeId == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID && !orderData.tableNumber) {
+      validationErrors.value.tableNumber = 'Введите номер столика'
+      return
+   }
 
    try {
       const res = await axios.post(`/orders/user`, orderData)
@@ -99,6 +106,14 @@ async function sendOrder() {
    }
 }
 
+function handlePickupAtCounter(){
+   selectedOrderType.value = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER
+   orderData.orderTypeId = selectedOrderType.value.ID
+}
+function handleDeliveryToTable(){
+   selectedOrderType.value = ORDER_TYPE.AT_RESTAURANT_TO_TABLE
+   orderData.orderTypeId = selectedOrderType.value.ID
+}
 </script>
 
 <template>
@@ -108,15 +123,17 @@ async function sendOrder() {
       <h1 v-if="selectedCity"
           class="text-xl text-center">
          <div>
-            <div class="font-semibold">{{ selectedCity.name }}</div>
+            <div class="font-semibold">
+               {{ selectedCity.name }} - {{ selectedOrderType.SHORT_NAME_FOR_ORDER_PANEL }}
+            </div>
          </div>
-         <div class="text-(--text-color-accent)">
-            {{ selectedOrderType.SHORT_NAME_FOR_ORDER_PANEL }}
-
-            <template v-if="selectedOrderType == ORDER_TYPE.delivery">
-               - {{ selectedAddressForDelivery.value_string }}
-            </template>
-
+         <div v-if="selectedOrderType.ID != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID"
+              class="text-sm text-(--text-color-accent)">
+            {{ selectedRestaurant.street }} д. {{ selectedRestaurant.house }}
+         </div>
+         <div v-else
+              class="text-sm text-(--text-color-accent)">
+            {{ selectedAddressForDelivery.addressAsString }}
          </div>
 
          <div class="text-sm font-normal">(оформление заказа)</div>
@@ -133,7 +150,7 @@ async function sendOrder() {
 
             <button class="btn-selecte"
                     :class="{ 'btn-selecte--active': selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID }"
-                    @click="selectedOrderType = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER"
+                    @click="handlePickupAtCounter"
                     :disabled="!selectedRestaurant.atRestaurantAtCounterAvailable">
                Заберу у бара
                <template v-if="!selectedRestaurant.atRestaurantAtCounterAvailable">
@@ -143,7 +160,7 @@ async function sendOrder() {
 
             <button class="btn-selecte"
                     :class="{ 'btn-selecte--active': selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID }"
-                    @click="selectedOrderType = ORDER_TYPE.AT_RESTAURANT_TO_TABLE"
+                    @click="handleDeliveryToTable"
                     :disabled="!selectedRestaurant.atRestaurantToTableAvailable">
                Принести к столику
                <template v-if="!selectedRestaurant.atRestaurantToTableAvailable">
@@ -161,6 +178,7 @@ async function sendOrder() {
                    class="text-center text-2xl p-2.5 rounded-lg w-32 border border-(--brand-color)"
                    v-model="orderData.tableNumber"
                    @click.prevent="validationErrors.tableNumber = ''">
+            <BaseInvalidateText>{{ validationErrors.tableNumber }}</BaseInvalidateText>
             <!-- <BaseInvalidateText>{{ validationErrors.table_number }}</BaseInvalidateText> -->
          </div>
 

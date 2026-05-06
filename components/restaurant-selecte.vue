@@ -40,7 +40,7 @@ const restaurantsForSelecte = computed(() => {
       <option v-for="restaurant in restaurantsForSelecte"
               :value="restaurant">
 
-         {{ restaurant.street }} - {{ restaurant.house }}
+         {{ restaurant.street }} д. {{ restaurant.house }}
 
       </option>
    </select>

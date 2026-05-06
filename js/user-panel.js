@@ -22,8 +22,6 @@ export async function loadActiveOrdersForUserAndRestartInterval(userID) {
 //загрузка статусов активных заказов через запрос в бэк - END
 
 export function repeatOrder(order) {
-   console.log(order)
-   
    if (order == null) return
 
    removeAllProductsFromCart()
