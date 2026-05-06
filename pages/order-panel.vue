@@ -45,7 +45,9 @@ orderData.userAddressId =
 orderData.orderTypeId = selectedOrderType.value.ID
 orderData.tableNumber = null
 orderData.carNumber = null
-orderData.packTakeaway = true
+orderData.packTakeaway = selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
+   selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE ?
+   false : true
 orderData.totalProductsPrice = totalProductPrice.value
 orderData.deliveryPrice = deliveryPrice.value
 orderData.totalPrice = totalPrice.value
@@ -56,12 +58,12 @@ orderData.deliveryZoneId = selectedOrderType.value.ID == ORDER_TYPE.DELIVERY_TO_
    currentDeliveryZone.value.id : null
 
 orderData.orderProducts = productsInOrder.value.map(el => {
-      return {
-         productId: el.id,
-         quantity: el.countInCart,
-         price: el.priceDefault
-      }
-   })
+   return {
+      productId: el.id,
+      quantity: el.countInCart,
+      price: el.priceDefault
+   }
+})
 
 watch(selectedAddressForDelivery, () => { //v-model это selectedAddressForDelivery, чтобы сохранить изменения
    orderData.userAddressId = selectedAddressForDelivery.value.id
@@ -77,7 +79,7 @@ async function sendOrder() {
    validationErrors.value = {}
    otherErrors.value = null
 
-   if(orderData.orderTypeId == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID && !orderData.tableNumber) {
+   if (orderData.orderTypeId == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID && !orderData.tableNumber) {
       validationErrors.value.tableNumber = 'Введите номер столика'
       return
    }
@@ -106,11 +108,11 @@ async function sendOrder() {
    }
 }
 
-function handlePickupAtCounter(){
+function handlePickupAtCounter() {
    selectedOrderType.value = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER
    orderData.orderTypeId = selectedOrderType.value.ID
 }
-function handleDeliveryToTable(){
+function handleDeliveryToTable() {
    selectedOrderType.value = ORDER_TYPE.AT_RESTAURANT_TO_TABLE
    orderData.orderTypeId = selectedOrderType.value.ID
 }
@@ -128,7 +130,7 @@ function handleDeliveryToTable(){
             </div>
          </div>
          <div class="text-sm font-normal">(оформление заказа)</div>
-         
+
          <div v-if="selectedOrderType.ID != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID"
               class="text-sm text-(--text-color-accent)">
             {{ selectedRestaurant.street }} д. {{ selectedRestaurant.house }}
@@ -181,6 +183,11 @@ function handleDeliveryToTable(){
                    @click.prevent="validationErrors.tableNumber = ''">
             <BaseInvalidateText>{{ validationErrors.tableNumber }}</BaseInvalidateText>
             <!-- <BaseInvalidateText>{{ validationErrors.table_number }}</BaseInvalidateText> -->
+         </div>
+
+         <div v-if="selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
+            selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID">
+            Упаковать с собой: {{ orderData.packTakeaway }}
          </div>
 
          <div>
