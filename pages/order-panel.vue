@@ -127,6 +127,8 @@ function handleDeliveryToTable(){
                {{ selectedCity.name }} - {{ selectedOrderType.SHORT_NAME_FOR_ORDER_PANEL }}
             </div>
          </div>
+         <div class="text-sm font-normal">(оформление заказа)</div>
+         
          <div v-if="selectedOrderType.ID != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID"
               class="text-sm text-(--text-color-accent)">
             {{ selectedRestaurant.street }} д. {{ selectedRestaurant.house }}
@@ -136,7 +138,6 @@ function handleDeliveryToTable(){
             {{ selectedAddressForDelivery.addressAsString }}
          </div>
 
-         <div class="text-sm font-normal">(оформление заказа)</div>
          <BaseInvalidateText>{{ otherErrors }}</BaseInvalidateText>
       </h1>
 
