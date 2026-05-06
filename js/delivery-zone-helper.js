@@ -2,31 +2,27 @@ import { selectedCity, selectedAddressForDelivery } from '~/js/client-helper.js'
 import * as turf from '@turf/turf'
 
 export const currentDeliveryZone = computed(() => {
-   if (!selectedCity.value || !selectedAddressForDelivery.value) return
+   if (!selectedCity.value || !selectedAddressForDelivery.value) return null
 
-   const latitude = selectedAddressForDelivery.value.latitude
-   const longitude = selectedAddressForDelivery.value.longitude
+   const { latitude, longitude } = selectedAddressForDelivery.value
 
-   if (!latitude || !longitude) {
+   if (latitude == null || longitude == null) {
       console.log('В адресе отсутствует широта и долгота, невозможно определить зону доставки')
-      return
+      return null
    }
 
    const point = turf.point([longitude, latitude])
 
-   const geoJson = selectedCity.value.geojson
-
-   if (geoJson.type !== 'FeatureCollection') {
-      console.error('GeoJson.type is not FeatureCollection')
-      return
+   for (const dz of selectedCity.value.deliveryZones) {
+      try {
+         if (turf.booleanPointInPolygon(point, JSON.parse(dz.geojsonFeature))) {
+            return dz
+         }
+      } catch (e) {
+         console.error('Ошибка парсинга geojsonFeature зоны', dz.id, e)
+         // пропускаем проблемную зону
+      }
    }
 
-   const deliveryZone = geoJson.features.find(feature => {
-      if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
-         return turf.booleanPointInPolygon(point, feature)
-      }
-      return false
-   })
-
-   return deliveryZone
+   return null
 })

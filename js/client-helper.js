@@ -149,31 +149,31 @@ export const restaurantAvailableInSelectedCity = computed(() => {
 watch([selectedCity, pickUpAvailableInSelectedCity, deliveryAvailableInSelectedCity, restaurantAvailableInSelectedCity], () => {
    if (selectedOrderType.value) {
       //если способ доставки выбран и не поддерживается в новом городе, то сменить на первый доступный
-      if (selectedOrderType.value == ORDER_TYPE.DELIVERY_TO_ADDRESS && deliveryAvailableInSelectedCity.value == false ||
-         selectedOrderType.value == ORDER_TYPE.PICK_UP_AT_COUNTER && pickUpAvailableInSelectedCity.value == false ||
-         selectedOrderType.value == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER && restaurantAvailableInSelectedCity.value == false ||
-         selectedOrderType.value == ORDER_TYPE.AT_RESTAURANT_TO_TABLE && restaurantAvailableInSelectedCity.value == false
+      if (selectedOrderType.value.ID == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID && deliveryAvailableInSelectedCity.value == false ||
+         selectedOrderType.value.ID == ORDER_TYPE.PICK_UP_AT_COUNTER.ID && pickUpAvailableInSelectedCity.value == false ||
+         selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID && restaurantAvailableInSelectedCity.value == false ||
+         selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID && restaurantAvailableInSelectedCity.value == false
       ) {
          if (deliveryAvailableInSelectedCity.value) {
-            selectedOrderType.value = ORDER_TYPE.DELIVERY_TO_ADDRESS.ID
+            selectedOrderType.value.ID = ORDER_TYPE.DELIVERY_TO_ADDRESS.ID
          }
          else if (pickUpAvailableInSelectedCity.value) {
-            selectedOrderType.value = ORDER_TYPE.PICK_UP_AT_COUNTER.ID
+            selectedOrderType.value.ID = ORDER_TYPE.PICK_UP_AT_COUNTER.ID
          }
          else if (restaurantAvailableInSelectedCity.value) {
-            selectedOrderType.value = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID
+            selectedOrderType.value.ID = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID
          }
       }
    }
    else {
       if (deliveryAvailableInSelectedCity.value) {
-         selectedOrderType.value = ORDER_TYPE.DELIVERY_TO_ADDRESS.ID
+         selectedOrderType.value.ID = ORDER_TYPE.DELIVERY_TO_ADDRESS.ID
       }
       else if (pickUpAvailableInSelectedCity.value) {
-         selectedOrderType.value = ORDER_TYPE.PICK_UP_AT_COUNTER.ID
+         selectedOrderType.value.ID = ORDER_TYPE.PICK_UP_AT_COUNTER.ID
       }
       else if (restaurantAvailableInSelectedCity.value) {
-         selectedOrderType.value = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID
+         selectedOrderType.value.ID = ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID
       }
    }
 })
@@ -195,14 +195,14 @@ export const totalProductPrice = computed(() => {
 })
 
 export const deliveryPrice = computed(() => {
-   if (selectedOrderType.value != ORDER_TYPE.delivery)
-      return 0;
+   if (selectedOrderType.value.ID != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID)
+      return 0
 
-   if (totalProductPrice.value >= currentDeliveryZone.value?.deliveryPrices.orderValueForFreeDelivery)
-      return 0;
+   if (totalProductPrice.value >= currentDeliveryZone.value?.orderValueForFreeDelivery)
+      return 0
 
    if (currentDeliveryZone.value) {
-      return Number(currentDeliveryZone.value?.deliveryPrices.deliveryPrice)
+      return Number(currentDeliveryZone.value?.deliveryPrice)
    }
    else return 0 //лучше посчитать минимальную стоимость доставки по городу
 })

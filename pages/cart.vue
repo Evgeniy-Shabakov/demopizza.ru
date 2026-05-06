@@ -79,7 +79,7 @@ import { currentDeliveryZone } from '~/js/delivery-zone-helper'
                       :key="product.userConfigID || product.id"
                       :productOrUserConfig="product" />
 
-            <div v-if="selectedOrderType == ORDER_TYPE.delivery"
+            <div v-if="selectedOrderType.ID == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID"
                  class="grid grid-cols-[100px_1fr_1fr] 
                      text-sm minxs:text-base
                      gap-1 minxs:gap-3 xs:gap-4 items-center
@@ -88,7 +88,7 @@ import { currentDeliveryZone } from '~/js/delivery-zone-helper'
                <div>
                   <div>Доставка</div>
                   <div class="text-xs">
-                     {{ currentDeliveryZone?.properties.description }}
+                     {{ currentDeliveryZone?.name }}
                   </div>
                </div>
                <div class=" justify-self-end">{{ deliveryPrice }}р</div>
@@ -109,25 +109,25 @@ import { currentDeliveryZone } from '~/js/delivery-zone-helper'
 
             <TotalBlock />
 
-            <div v-if="selectedOrderType == ORDER_TYPE.delivery"
+            <div v-if="selectedOrderType.ID == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID"
                  class="text-xs text-center">
-               <div v-if="totalProductPrice < currentDeliveryZone?.deliveryPrices.min_order_value_for_delivery">
+               <div v-if="totalProductPrice < currentDeliveryZone?.minOrderValueForDelivery">
                   Минимальная сумма товаров для заказа
-                  {{ Number(currentDeliveryZone?.deliveryPrices.min_order_value_for_delivery) }}р.
+                  {{ Number(currentDeliveryZone?.minOrderValueForDelivery) }}р.
                </div>
-               <div v-else-if="totalProductPrice < currentDeliveryZone?.deliveryPrices.order_value_for_free_delivery">
-                  Бесплатная доставка от {{ Number(currentDeliveryZone?.deliveryPrices.order_value_for_free_delivery)
+               <div v-else-if="totalProductPrice < currentDeliveryZone?.orderValueForFreeDelivery">
+                  Бесплатная доставка от {{ Number(currentDeliveryZone?.orderValueForFreeDelivery)
                   }}р.
                </div>
-               <div v-else-if="totalProductPrice >= currentDeliveryZone?.deliveryPrices.order_value_for_free_delivery"
+               <div v-else-if="totalProductPrice >= currentDeliveryZone?.orderValueForFreeDelivery"
                     class="text-sm font-bold text-(--text-color-accent)">
                   Бесплатная доставка!!!
                </div>
             </div>
 
             <BaseButton :active="totalProductPrice > 0 &&
-               (selectedOrderType !== ORDER_TYPE.delivery ||
-                  totalProductPrice > currentDeliveryZone?.deliveryPrices.min_order_value_for_delivery)"
+               (selectedOrderType.ID !== ORDER_TYPE.DELIVERY_TO_ADDRESS.ID ||
+                  totalProductPrice > currentDeliveryZone?.minOrderValueForDelivery)"
                         class="w-1/4"
                         :click="() => navigateTo('/order-panel')">
                Далее
