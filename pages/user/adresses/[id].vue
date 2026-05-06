@@ -41,9 +41,9 @@ const validationError = ref()  //общая ошибка - временное р
 
 async function addAddress() {
    try {
-      addressInputedData.entrance = Number(addressInputedData.entrance)
-      addressInputedData.floor = Number(addressInputedData.floor)
-
+      if (addressInputedData.entrance) addressInputedData.entrance = Number(addressInputedData.entrance)
+      if (addressInputedData.floor) addressInputedData.floor = Number(addressInputedData.floor)
+      
       const res = await axios.post(`/users/${addressInputedData.userId}/addresses`, addressInputedData)
 
       selectedAddressForDelivery.value = res.data.data
@@ -65,7 +65,7 @@ async function editAddress() {
    try {
       addressInputedData.entrance = Number(addressInputedData.entrance)
       addressInputedData.floor = Number(addressInputedData.floor)
-      
+
       await axios.put(`/users/${authUser.value.id}/addresses/${id}`, addressInputedData)
       await getAuthUser()
 
