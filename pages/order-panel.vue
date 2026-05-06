@@ -185,10 +185,22 @@ function handleDeliveryToTable() {
             <!-- <BaseInvalidateText>{{ validationErrors.table_number }}</BaseInvalidateText> -->
          </div>
 
-         <div v-if="selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
-            selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID">
-            Упаковать с собой: {{ orderData.packTakeaway }}
-         </div>
+          <div v-if="selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
+             selectedOrderType.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID"
+             class="flex items-center justify-between">
+             <span class="text-sm font-medium">Упаковать с собой</span>
+             <button
+                @click="orderData.packTakeaway = !orderData.packTakeaway"
+                type="button"
+                role="switch"
+                :aria-checked="orderData.packTakeaway"
+                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-(--brand-color) focus:ring-offset-2"
+                :class="orderData.packTakeaway ? 'bg-(--brand-color)' : 'bg-gray-300'">
+                <span
+                   class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200"
+                   :class="orderData.packTakeaway ? 'translate-x-6' : 'translate-x-1'" />
+             </button>
+          </div>
 
          <div>
             <BaseLabel class="mb-2">Способ оплаты</BaseLabel>
