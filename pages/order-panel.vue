@@ -46,7 +46,7 @@ orderData.orderTypeId = selectedOrderType.value.ID
 orderData.tableNumber = null
 orderData.carNumber = null
 orderData.packTakeaway = selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID ||
-   selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE ?
+   selectedOrderType.value.ID == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID ?
    false : true
 orderData.totalProductsPrice = totalProductPrice.value
 orderData.deliveryPrice = deliveryPrice.value
