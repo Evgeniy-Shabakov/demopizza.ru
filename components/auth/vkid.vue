@@ -6,6 +6,8 @@ const emit = defineEmits(['success', 'error'])
 defineExpose({ loginVK })
 
 async function loginVK() {
+   if(!VK_APP_ID) return           //чтобы работало на проде пока не получен VK_APP_ID 
+
    VKID.Config.init({
       app: VK_APP_ID,
       redirectUrl: VK_REDIRECT_URL,
