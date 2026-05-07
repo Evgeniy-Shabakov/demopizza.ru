@@ -2,11 +2,19 @@
 import { BaseButton } from '#components';
 import { currentOrder } from '~/js/client-helper.js'
 import { ORDER_TYPE } from '~/js/data-types/order-type'
+import { PAYMENT_STATUS_TYPE } from '~/js/data-types/paymentStatusType.js'
 import { serverUrl } from '~/env.js'
 
 if (currentOrder.value == null) {
    navigateTo('/')
 }
+
+const paymentStatusClass = computed(() => {
+   const status = currentOrder.value?.paymentStatus
+   if (status === PAYMENT_STATUS_TYPE.PAID) return 'text-green-600 font-semibold'
+   if (status === PAYMENT_STATUS_TYPE.NO_PAID) return 'text-red-600 font-semibold'
+   return 'text-yellow-600 font-semibold'
+})
 </script>
 
 <template>
@@ -91,7 +99,7 @@ if (currentOrder.value == null) {
                 <div class="flex justify-between items-center">
                    <span>
                       <span> Статус оплаты: </span>
-                      <span> {{ currentOrder.paymentStatus }} </span>
+                      <span :class="paymentStatusClass"> {{ currentOrder.paymentStatus }} </span>
                    </span>
                    <a v-if="currentOrder.payment?.paymentUrl"
                       :href="currentOrder.payment.paymentUrl"
