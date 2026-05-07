@@ -1,6 +1,10 @@
 env.js
 .vscode
 
+public/manifest.webmanifest
+public/icons/android-chrome-192x192.png
+public/icons/android-chrome-512x512.png
+
 # Nuxt dev/build outputs
 .output
 .data
