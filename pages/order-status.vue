@@ -103,7 +103,6 @@ const paymentStatusClass = computed(() => {
                    </span>
                    <a v-if="currentOrder.payment?.paymentUrl"
                       :href="currentOrder.payment.paymentUrl"
-                      target="_blank"
                       class="text-blue-600 hover:underline">
                       Ссылка на оплату
                    </a>
