@@ -88,10 +88,18 @@ if (currentOrder.value == null) {
                   <span>{{ Number(currentOrder.totalPrice) }}р.</span>
                </div>
 
-               <div>
-                  <span> Статус оплаты: </span>
-                  <span> {{ currentOrder.paymentStatus }} </span>
-               </div>
+                <div class="flex justify-between items-center">
+                   <span>
+                      <span> Статус оплаты: </span>
+                      <span> {{ currentOrder.paymentStatus }} </span>
+                   </span>
+                   <a v-if="currentOrder.payment?.paymentUrl"
+                      :href="currentOrder.payment.paymentUrl"
+                      target="_blank"
+                      class="text-blue-600 hover:underline">
+                      Ссылка на оплату
+                   </a>
+                </div>
 
                <div v-if="currentOrder.comment">
                   <span>Ваш комментарий к заказу: </span>
