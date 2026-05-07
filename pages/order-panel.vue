@@ -87,11 +87,18 @@ async function sendOrder() {
    try {
       const res = await axios.post(`/orders/user`, orderData)
       currentOrder.value = res.data.data
+      console.log(currentOrder.value)
+      
 
       lastOrderForUser.value = res.data.data
 
       removeAllProductsFromCart()
-      navigateTo('/order-status')
+
+      if(currentOrder.value.payment?.paymentUrl) {
+         window.location.href = currentOrder.value.payment.paymentUrl
+      }
+
+      else navigateTo('/order-status')
    } catch (error) {
       console.log(error.response)
 
