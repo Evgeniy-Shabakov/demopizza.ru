@@ -51,7 +51,7 @@ const imagePath = serverUrl + '/' + props.product.imagePath.replace(/^storage\/p
 
       <div class="row-span-3">
 
-         <img class="w-full aspect-[1/1]"
+         <img class="w-full aspect-[1/1] rounded-(--border-radius-main)"
               :class="product.isInStopListForSelectedCity ? 'grayscale-80' : ''"
               :src="imagePath">
 

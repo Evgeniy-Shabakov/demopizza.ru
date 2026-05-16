@@ -26,7 +26,7 @@ const imagePath = serverUrl + '/' + props.productOrUserConfig.imagePath.replace(
 
       <section class="row-span-2">
 
-         <img class="w-full aspect-square"
+         <img class="w-full aspect-square rounded-(--border-radius-main)"
               :class="product.isInStopListForSelectedCity ? 'grayscale-80' : ''"
               :src="imagePath">
          <div v-if="productOrUserConfig.isInStopListForSelectedCity"
