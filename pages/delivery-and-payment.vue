@@ -21,10 +21,10 @@ import { selectedCity } from '~/js/client-helper.js'
          <div>Бесплатная доставка от:</div>
 
          <template v-for="deliveryZone in selectedCity?.deliveryZones">
-            <div class="text-sm">{{ deliveryZone.name }}</div>
-            <div class="text-sm">{{ deliveryZone.minOrderValueForDelivery }}</div>
-            <div class="text-sm">{{ deliveryZone.deliveryPrice }}</div>
-            <div class="text-sm">{{ deliveryZone.orderValueForFreeDelivery }}</div>
+            <div class="text-xs sm:text-sm break-words">{{ deliveryZone.name }}</div>
+            <div class="text-xs sm:text-sm">{{ deliveryZone.minOrderValueForDelivery }}</div>
+            <div class="text-xs sm:text-sm">{{ deliveryZone.deliveryPrice }}</div>
+            <div class="text-xs sm:text-sm">{{ deliveryZone.orderValueForFreeDelivery }}</div>
          </template>
 
          <div v-if="selectedCity?.deliveryZones.length == 0"
