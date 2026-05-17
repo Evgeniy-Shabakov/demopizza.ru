@@ -6,7 +6,7 @@ const props = defineProps({
 
 const expanded = ref(false)
 
-const isLong = computed(() => props.description.length > props.limit)
+const isLong = computed(() => props.description?.length > props.limit)
 
 const truncated = computed(() => {
    if (!isLong.value) return props.description;
