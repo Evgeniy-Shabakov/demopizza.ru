@@ -27,7 +27,7 @@ const displayText = computed(() => {
       <span class="mr-2">{{ displayText }}</span>
       <button v-if="isLong"
               @click="expanded = !expanded"
-              class="text-(--text-color-main)/60 hover:text-(--text-color-main)">
+              class="text-(--brand-color) hover:text-(--brand-color-hover)">
          {{ expanded ? 'Свернуть' : 'Подробнее' }}
       </button>
    </div>
