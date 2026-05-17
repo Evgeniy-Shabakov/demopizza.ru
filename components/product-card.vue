@@ -86,7 +86,7 @@ const imagePath = serverUrl + '/' + props.product.imagePath.replace(/^storage\/p
          <span v-if="userConfig">
             {{ product.name }} с Вашей конфигурацией. Можно удалить или создать новую
          </span>
-         <span v-else>{{ product.descriptionShort }}</span>
+         <ExpandableDescription v-else :description="product.descriptionShort" />
       </p>
 
       <div class="flex items-center justify-between mt-auto">
