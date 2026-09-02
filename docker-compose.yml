@@ -1,0 +1,14 @@
+name: ${PROJECT_NAME}-client
+
+services:
+  client-service:
+    build: .
+    image: ${PROJECT_NAME}-client-image:latest
+    container_name: ${PROJECT_NAME}-client-container
+    restart: unless-stopped
+    networks:
+      - docker-network
+
+networks:
+  docker-network:
+    external: true
