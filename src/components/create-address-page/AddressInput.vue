@@ -28,11 +28,11 @@ async function getAddressesFromDaDataApi(searchQuery) {
    loadingError.value = null
 
    try {
-      const res = await api.post(`/dadata/addresses`, {
+      const res = await api.post(`/dadata/suggestions`, {
          query: `${currentCity.value.name} ${trimmedQuery}`
       })
 
-      suggestions.value = res.data
+      suggestions.value = res.data.data
       formAddressAsStringForDaDataSuggestions()
    } catch (error) {
       console.error("Ошибка при запросе в DaData: ", error)

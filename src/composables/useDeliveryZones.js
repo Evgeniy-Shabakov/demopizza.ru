@@ -4,7 +4,7 @@ import { currentUserAddress } from './useUserAddresses'
 
 export const currentDeliveryZone = computed(() => {
    if (!currentCity.value || !currentUserAddress.value) return null
-
+console.log(currentCity.value)
    const { latitude, longitude } = currentUserAddress.value
 
    if (latitude == null || longitude == null) {
