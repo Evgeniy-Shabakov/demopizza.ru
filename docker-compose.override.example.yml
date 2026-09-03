@@ -1,7 +1,0 @@
-name: ${PROJECT_NAME}-client
-
-services:
-  client-service:
-    ports:
-      - "80:80"
-    restart: "no"
