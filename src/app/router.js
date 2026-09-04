@@ -60,8 +60,16 @@ router.beforeEach((to, from) => {
    }
 })
 
-router.beforeEach((to, from) => {
-   if (to.name == 'profile' && !authUser.value) return { name: 'login' }
+const PROTECTED_ROUTES = ['profile']
+
+router.beforeEach((to) => {
+   if (PROTECTED_ROUTES.includes(to.name) && !authUser.value) {
+      return { name: 'login' }
+   }
+
+   if (to.name == 'login' && authUser.value) {
+      return { name: 'profile' }
+   }
 })
 
 export default router
