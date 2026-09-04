@@ -12,6 +12,7 @@
     "@lucide/vue": "^1.28.0",
     "@tailwindcss/vite": "^4.3.0",
     "@turf/turf": "^7.3.5",
+    "@vkid/sdk": "^2.6.8",
     "@vueuse/core": "^14.4.0",
     "axios": "^1.17.0",
     "class-variance-authority": "^0.7.1",
