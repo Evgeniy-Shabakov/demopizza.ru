@@ -1,5 +1,10 @@
 .env
 
+docker-compose.override.yml
+
+favicon.*
+logo.*
+
 # Logs
 logs
 *.log
@@ -24,6 +29,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-docker-compose.override.yml
-favicon.*
