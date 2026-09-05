@@ -106,7 +106,7 @@ async function handleButton() {
       </div>
 
       <Soglasie v-model="isCheckedSoglasie"
-                class="mx-2" />
+                class="mx-2 mt-3" />
 
    </div>
 
