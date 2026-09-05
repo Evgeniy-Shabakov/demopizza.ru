@@ -1,30 +1,49 @@
 <script setup>
-import { authUser } from '@/composables/useAuthUser'
+import * as VKID from '@vkid/sdk'
 import { api } from '@/api/api'
+import { authUser } from '@/composables/useAuthUser'
 
 const router = useRouter()
 
+const isCheckedSoglasie = ref(false)
+const isLoading = ref(false)
 const errorVKAuth = ref()
 const errorLoginOnServer = ref()
-const isCheckedSoglasie = ref(false)
 
-function clearErrors() {
-   errorVKAuth.value = null
-   errorLoginOnServer.value = null
-}
+async function loginVK() {
+   if (!import.meta.env.VITE_VK_APP_ID) return //чтобы работало на проде пока нет VK_APP_ID 
 
-function handleErrorVKAuth(err) {
-   clearErrors()
-   errorVKAuth.value = err
-}
-
-async function handleSuccessVKAuth(access_token) {
-   clearErrors()
+   VKID.Config.init({
+      app: import.meta.env.VITE_VK_APP_ID,
+      redirectUrl: import.meta.env.VITE_VK_REDIRECT_URL,
+      responseMode: VKID.ConfigResponseMode.Callback,
+      scope: 'phone',
+   })
 
    try {
+      const payload = await VKID.Auth.login()
+      const authData = await VKID.Auth.exchangeCode(payload.code, payload.device_id)
+
+      return authData.access_token
+   }
+   catch (error) {
+      errorVKAuth.value = error
+      throw error
+   }
+}
+
+async function handleButton() {
+   errorVKAuth.value = null
+   errorLoginOnServer.value = null
+
+   isLoading.value = true
+
+   try {
+      const vkToken = await loginVK()
+
       const res = await api.post('/auth/login',
          {
-            vkidAccessToken: access_token
+            vkidAccessToken: vkToken
          })
 
       authUser.value = res.data.data
@@ -35,13 +54,9 @@ async function handleSuccessVKAuth(access_token) {
    catch (error) {
       errorLoginOnServer.value = error
    }
-}
-
-const authRef = ref(null)
-
-function simulateVkClick() {
-   if (!isCheckedSoglasie.value) return
-   authRef.value?.loginVK()
+   finally {
+      isLoading.value = false
+   }
 }
 
 </script>
@@ -54,11 +69,6 @@ function simulateVkClick() {
       </PageHeader>
 
       <div>
-         <div :class="{ 'pointer-events-none cursor-not-allowed': !isCheckedSoglasie }">
-            <Vkid ref="authRef"
-                  @success="handleSuccessVKAuth"
-                  @error="handleErrorVKAuth" />
-         </div>
 
          <div v-if="errorVKAuth"
               class="text-center">
@@ -67,7 +77,7 @@ function simulateVkClick() {
             <div>Ошибка: {{ errorVKAuth.error }}</div>
          </div>
 
-         <div v-if="errorLoginOnServer"
+         <div v-else-if="errorLoginOnServer"
               class="text-center">
             <div class="text-destructive">
                Ошибка входа на сервере
@@ -75,6 +85,7 @@ function simulateVkClick() {
             <div>{{ errorLoginOnServer }}</div>
             <div>{{ errorLoginOnServer?.response?.data?.message }}</div>
          </div>
+
       </div>
 
       <Soglasie v-model="isCheckedSoglasie"
@@ -82,9 +93,11 @@ function simulateVkClick() {
 
    </div>
 
+   <SpinnerCenter v-if="isLoading" />
+
    <BottomBar>
-      <ButtonLgWfull :disabled="!isCheckedSoglasie"
-                     @click="simulateVkClick">
+      <ButtonLgWfull :disabled="!isCheckedSoglasie || isLoading"
+                     @click="handleButton">
          Продолжить с VK ID
       </ButtonLgWfull>
    </BottomBar>
