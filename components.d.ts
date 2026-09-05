@@ -85,7 +85,6 @@ declare module 'vue' {
     Textarea: typeof import('./src/shadcn/ui/textarea/Textarea.vue')['default']
     ThemeToggle: typeof import('./src/components/theme/ThemeToggle.vue')['default']
     TotalBlock: typeof import('./src/components/shared/TotalBlock.vue')['default']
-    Vkid: typeof import('./src/components/login-page/Vkid.vue')['default']
     WorkSchedule: typeof import('./src/components/shared/WorkSchedule.vue')['default']
   }
 }
