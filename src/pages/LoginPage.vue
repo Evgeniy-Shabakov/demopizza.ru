@@ -61,35 +61,32 @@ async function handleButton() {
               alt="VK ID" />
       </PageHeader>
 
-      <ul class="space-y-3.5">
-         <li class="flex items-center gap-3">
-            <span class="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary shrink-0">
-               <User class="size-5" />
-            </span>
-            <div>
-               <p class="font-medium leading-5">Личный кабинет</p>
-               <p class="text-sm text-muted-foreground">История и статус ваших заказов</p>
-            </div>
-         </li>
-         <li class="flex items-center gap-3">
-            <span class="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary shrink-0">
-               <PackageCheck class="size-5" />
-            </span>
-            <div>
-               <p class="font-medium leading-5">Быстрое оформление заказа</p>
-               <p class="text-sm text-muted-foreground">Персональные данные уже заполнены</p>
-            </div>
-         </li>
-         <li class="flex items-center gap-3">
-            <span class="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary shrink-0">
-               <MapPin class="size-5" />
-            </span>
-            <div>
-               <p class="font-medium leading-5">Сохранённые адреса</p>
-               <p class="text-sm text-muted-foreground">Доставка в один клик</p>
-            </div>
-         </li>
-      </ul>
+      <div>
+         <p class="text-sm text-muted-foreground text-center -mt-3 mb-3">
+            После входа вам будут доступны:
+         </p>
+
+         <ul class="space-y-3.5">
+            <li class="flex items-center gap-3">
+               <span class="p-1.5 rounded-xl bg-primary/10 text-primary">
+                  <User class="size-5" />
+               </span>
+               <div>История и статус ваших заказов</div>
+            </li>
+            <li class="flex items-center gap-3">
+               <span class="p-1.5 rounded-xl bg-primary/10 text-primary ">
+                  <PackageCheck class="size-5" />
+               </span>
+               <div>Быстрое оформление заказа</div>
+            </li>
+            <li class="flex items-center gap-3">
+               <span class="p-1.5 rounded-xl bg-primary/10 text-primary">
+                  <MapPin class="size-5" />
+               </span>
+               <div>Сохранённые адреса</div>
+            </li>
+         </ul>
+      </div>
 
       <div v-if="errorAuth && errorAuth.statusCode != 401"
            class="text-center">
