@@ -14,3 +14,13 @@ export async function loadAuthUser() {
       userIsLoaded = true
    }
 }
+
+export async function logoutUser() {
+   try {
+      await api.delete('/auth/logout')
+   } catch {
+      // ignore server errors, always clear local state
+   } finally {
+      authUser.value = null
+   }
+}
