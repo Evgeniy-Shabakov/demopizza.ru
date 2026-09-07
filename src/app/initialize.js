@@ -4,6 +4,9 @@ import { loadCompany } from '@/composables/useCompany'
 import { loadCategories } from '@/composables/useCategories'
 import { loadAuthUser } from '@/composables/useAuthUser'
 
+import '@/api/api'
+import '@/api/api.interceptor'
+
 useDark()
 
 loadCategories()
