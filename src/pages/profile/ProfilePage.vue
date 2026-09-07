@@ -6,7 +6,7 @@ import { formatPhone } from '@/helpers/formatPhone';
 
 <template>
    <PageHeader>Профиль</PageHeader>
-   <div class="-mt-2 text-center">{{ formatPhone(authUser.phone) }}</div>
+   <div class="-mt-2 text-center">{{ formatPhone(authUser?.phone) }}</div>
 
    <div class="flex flex-col gap-3 mt-6">
       <Button as-child>
