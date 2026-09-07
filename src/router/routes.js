@@ -1,6 +1,9 @@
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import HomePage from '@/pages/HomePage.vue'
-import ProfilePage from '@/pages/ProfilePage.vue'
+import ProfilePage from '@/pages/profile/ProfilePage.vue'
+import DeliveryAddressesPage from '@/pages/profile/DeliveryAddressesPage.vue'
+import ProfileEditPage from '@/pages/profile/ProfileEditPage.vue'
+import OrderHistoryPage from '@/pages/profile/OrderHistoryPage.vue'
 import CartPage from '@/pages/CartPage.vue'
 import CompanyDetailsPage from '@/pages/CompanyDetailsPage.vue'
 import LegalDocumentsIndexPage from '@/pages/legal-documents/LegalDocumentsIndexPage.vue'
@@ -20,6 +23,9 @@ export const routes = [
       children: [
          { path: '', name: 'home', component: HomePage },
          { path: 'profile', name: 'profile', component: ProfilePage },
+         { path: 'profile/delivery-addresses', name: 'profile-delivery-addresses', component: DeliveryAddressesPage },
+         { path: 'profile/edit', name: 'profile-edit', component: ProfileEditPage },
+         { path: 'profile/order-history', name: 'profile-order-history', component: OrderHistoryPage },
          { path: 'login', name: 'login', component: LoginPage },
          { path: 'cart', name: 'cart', component: CartPage },
          { path: 'phone', name: 'phone', component: PhonePage },
