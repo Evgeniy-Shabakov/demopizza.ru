@@ -14,7 +14,7 @@ async function handleLogout() {
 
 <template>
    <PageHeader>Управление профилем</PageHeader>
-   <div class="-mt-2 text-center">{{ formatPhone(authUser.phone) }}</div>
+   <div class="-mt-2 mb-3 text-center">{{ formatPhone(authUser.phone) }}</div>
 
    <Button variant="destructive"
            :disabled="isLoggingOut"
