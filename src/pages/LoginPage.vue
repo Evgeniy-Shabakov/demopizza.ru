@@ -2,7 +2,7 @@
 import * as VKID from '@vkid/sdk'
 import { User, PackageCheck, MapPin } from '@lucide/vue'
 import { api } from '@/api/api'
-import { authUser } from '@/composables/useAuthUser'
+import { authUser, loadAuthUser } from '@/composables/useAuthUser'
 
 const router = useRouter()
 
@@ -36,6 +36,7 @@ async function handleButton() {
          })
 
       authUser.value = res.data.data
+      loadAuthUser()  //дополнительно загружаются адреса
 
       router.push('/profile')
    }
