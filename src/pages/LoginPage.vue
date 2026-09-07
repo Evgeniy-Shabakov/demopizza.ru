@@ -1,8 +1,7 @@
 <script setup>
 import * as VKID from '@vkid/sdk'
 import { User, PackageCheck, MapPin } from '@lucide/vue'
-import { api } from '@/api/api'
-import { authUser, loadAuthUser } from '@/composables/useAuthUser'
+import { loginUser } from '@/composables/useAuthUser'
 
 const router = useRouter()
 
@@ -30,13 +29,7 @@ async function handleButton() {
       const payload = await VKID.Auth.login()
       const authData = await VKID.Auth.exchangeCode(payload.code, payload.device_id)
 
-      const res = await api.post('/auth/login',
-         {
-            vkidAccessToken: authData.access_token
-         })
-
-      authUser.value = res.data.data
-      loadAuthUser()  //дополнительно загружаются адреса
+      await loginUser(authData.access_token)
 
       router.push('/profile')
    }
