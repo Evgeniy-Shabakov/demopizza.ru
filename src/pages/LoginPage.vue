@@ -106,10 +106,10 @@ async function handleButton() {
    <BottomBar>
       <ButtonLgWfull :disabled="!isCheckedSoglasie || isLoading"
                      @click="handleButton">
-         Продолжить с VK ID
          <img src="/vk-logo.png"
               class="size-6 rounded-md object-contain"
               alt="VK ID" />
+         Продолжить с VK ID
       </ButtonLgWfull>
    </BottomBar>
 </template>
