@@ -1,5 +1,5 @@
 <script setup>
-import { logoutUser } from '@/composables/useAuthUser'
+import { authUser, logoutUser } from '@/composables/useAuthUser'
 import router from '@/router/router'
 
 const isLoggingOut = ref(false)
