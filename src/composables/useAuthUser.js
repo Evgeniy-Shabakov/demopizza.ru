@@ -18,7 +18,7 @@ export async function loadAuthUser() {
 export async function loginUser(vkidAccessToken) {
    const res = await api.post('/auth/login', { vkidAccessToken })
    authUser.value = res.data.data
-   loadAuthUser()
+   loadAuthUser()  //дополнительно загружает адреса
 }
 
 export async function logoutUser() {
