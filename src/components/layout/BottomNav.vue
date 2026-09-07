@@ -26,11 +26,15 @@ function handleHomeClick() {
 function isActive(path) {
    return route.path === path
 }
+
+const isProfileActive = computed(() => {
+   return route.path.startsWith('/profile') || route.path === '/login'
+})
 </script>
 
 <template>
    <nav class="fixed bottom-0 inset-x-0 bg-background border-t z-50">
-     
+
       <div class="flex items-stretch h-full">
 
          <button @click="handleHomeClick"
@@ -45,7 +49,7 @@ function isActive(path) {
 
          <router-link :to="'/profile'"
                       class="flex flex-1 flex-col items-center justify-center gap-0.5 transition-colors hover:bg-muted"
-                      :class="isActive('/profile') ? 'text-primary' : 'text-muted-foreground hover:text-foreground'">
+                      :class="isProfileActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'">
             <User class="w-5 h-5" />
             <span class="text-[10px] font-medium">Профиль</span>
          </router-link>
@@ -64,6 +68,6 @@ function isActive(path) {
          </router-link>
 
       </div>
-   
+
    </nav>
 </template>
