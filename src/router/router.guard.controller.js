@@ -1,6 +1,11 @@
 import { authUser, loadAuthUser, userIsLoaded } from '@/composables/useAuthUser'
 
-const PROTECTED_ROUTES = ['profile', 'profile-delivery-addresses', 'profile-edit', 'profile-order-history']
+const PROTECTED_ROUTES = [
+   'profile',
+   'profile-delivery-addresses',
+   'profile-edit',
+   'profile-order-history'
+]
 
 export async function routerGuardController(to) {
    if (PROTECTED_ROUTES.includes(to.name)) {
