@@ -77,7 +77,7 @@ async function handleButton() {
                <span class="p-1.5 rounded-xl bg-primary/10 text-primary">
                   <MapPin class="size-5" />
                </span>
-               <div>Сохранённые адреса</div>
+               <div>Сохранение адресов доставки</div>
             </li>
          </ul>
       </div>
