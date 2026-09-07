@@ -1,5 +1,6 @@
 <script setup>
 import { authUser, logoutUser } from '@/composables/useAuthUser'
+import { formatPhone } from '@/helpers/formatPhone'
 import router from '@/router/router'
 
 const isLoggingOut = ref(false)
