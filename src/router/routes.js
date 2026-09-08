@@ -5,11 +5,11 @@ import DeliveryAddressesPage from '@/pages/profile/DeliveryAddressesPage.vue'
 import ProfileEditPage from '@/pages/profile/ProfileEditPage.vue'
 import OrderHistoryPage from '@/pages/profile/OrderHistoryPage.vue'
 import CartPage from '@/pages/CartPage.vue'
-import CompanyDetailsPage from '@/pages/CompanyDetailsPage.vue'
-import LegalDocumentsIndexPage from '@/pages/legal-documents/LegalDocumentsIndexPage.vue'
-import LegalDocumentPage from '@/pages/legal-documents/LegalDocumentPage.vue'
-import DeliveryAndPaymentsPage from '@/pages/DeliveryAndPaymentsPage.vue'
-import MapPage from '@/pages/MapPage.vue'
+import CompanyDetailsPage from '@/pages/info/CompanyDetailsPage.vue'
+import LegalDocumentsIndexPage from '@/pages/info/LegalDocumentsIndexPage.vue'
+import LegalDocumentPage from '@/pages/info/LegalDocumentPage.vue'
+import DeliveryAndPaymentsPage from '@/pages/info/DeliveryAndPaymentsPage.vue'
+import MapPage from '@/pages/info/MapPage.vue'
 import CreateAddressPage from '@/pages/CreateAddressPage.vue'
 import OrderPanelPage from '@/pages/OrderPanelPage.vue'
 import PhonePage from '@/pages/PhonePage.vue'
@@ -32,8 +32,8 @@ export const routes = [
          { path: 'order-panel', name: 'order-panel', component: OrderPanelPage },
          { path: 'order-status', name: 'order-status', component: OrderStatusPage },
          { path: 'company-datails', name: 'company-datails', component: CompanyDetailsPage },
-         { path: 'delivery-and-payments', name: 'delivery-and-payments', component: DeliveryAndPaymentsPage },
-         { path: 'map', name: 'map', component: MapPage },
+          { path: 'delivery-and-payments', name: 'delivery-and-payments', component: DeliveryAndPaymentsPage },
+          { path: 'map', name: 'map', component: MapPage },
          { path: 'legal-documents', name: 'legal-documents', component: LegalDocumentsIndexPage },
          { path: 'legal-documents/:id', name: 'legal-document', component: LegalDocumentPage },
          { path: 'create-address', name: 'create-address', component: CreateAddressPage },
