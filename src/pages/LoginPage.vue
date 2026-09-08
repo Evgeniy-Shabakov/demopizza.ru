@@ -3,6 +3,7 @@ import * as VKID from '@vkid/sdk'
 import { User, PackageCheck, MapPin } from '@lucide/vue'
 import { loginUser } from '@/composables/useAuthUser'
 
+const route = useRoute()
 const router = useRouter()
 
 const vkAppId = import.meta.env.VITE_VK_APP_ID
@@ -31,7 +32,7 @@ async function handleButton() {
 
       await loginUser(authData.access_token)
 
-      router.push('/profile')
+      router.push(route.query.redirect || '/profile')
    }
    catch (error) {
       errorAuth.value = error

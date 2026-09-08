@@ -68,9 +68,9 @@ const isButtonNextActive = computed(() => {
                   </DialogDescription>
                </DialogHeader>
 
-               <ButtonLg @click="$router.push('/profile')">
-                  Войти в личный кабинет
-               </ButtonLg>
+                <ButtonLg @click="$router.push('/login?redirect=/order-panel')">
+                   Войти в личный кабинет
+                </ButtonLg>
                <ButtonLg @click="$router.push('/phone')">
                   Продолжить без входа
                </ButtonLg>
