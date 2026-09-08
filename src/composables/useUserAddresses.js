@@ -5,7 +5,7 @@ export const userAddresses = ref([])
 export const currentUserAddressId = useLocalStorage('current_user_address_id', null)
 
 export const currentUserAddress = computed({
-   get: () => userAddresses.value.find(a => a.id === currentUserAddressId.value) ?? null,
+   get: () => userAddresses.value.find(a => a.id == currentUserAddressId.value) ?? null,
    set: (address) => { currentUserAddressId.value = address?.id ?? null }
 })
 
@@ -25,7 +25,7 @@ function selectAddressForCity() {
    const cityAddresses = userAddresses.value.filter(a => a.cityId == cityId.value)
 
    if (currentUserAddress.value &&
-       !cityAddresses.some(a => a.id === currentUserAddress.value.id)) {
+       !cityAddresses.some(a => a.id == currentUserAddress.value.id)) {
       currentUserAddress.value = null
    }
 
