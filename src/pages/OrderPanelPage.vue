@@ -19,7 +19,10 @@ import { packTakeaway, tableNumber } from '@/composables/useOrderRestaurantSetti
 
 const router = useRouter()
 
-const phone = computed(() => formatPhone('+7' + inputedPhone.value))
+const phone = computed(() => {
+   if (authUser.value) return formatPhone(authUser.value.phone)
+   else return formatPhone('+7' + inputedPhone.value)
+})
 
 const address = computed(() => {
    if (deliveryToAddress.value) {
