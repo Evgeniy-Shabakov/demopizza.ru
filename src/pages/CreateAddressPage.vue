@@ -1,8 +1,6 @@
 <script setup>
-import { api } from '@/api/api'
 import { currentCity } from '@/composables/useCities'
-import { currentUserAddress, userAddresses } from '@/composables/useUserAddresses'
-import { authUser } from '@/composables/useAuthUser'
+import { saveNewAddress } from '@/composables/useUserAddresses'
 
 const router = useRouter()
 
@@ -40,16 +38,7 @@ async function saveAddress() {
          addressData.addressAsString = addressData.addressAsString + ', кв ' + flat.value
       }
 
-      if (authUser.value) {
-         const res = await api.post('/addresses', addressData)
-         const savedAddress = res.data.data
-         userAddresses.value.push(savedAddress)
-         currentUserAddress.value = savedAddress
-      } else {
-         const newAddress = { id: Date.now(), ...addressData }
-         userAddresses.value.push(newAddress)
-         currentUserAddress.value = newAddress
-      }
+      await saveNewAddress(addressData)
 
       router.push('/cart')
    } catch (error) {

@@ -1,3 +1,4 @@
+import { api } from '@/api/api'
 import { cityId } from '@/composables/useCities'
 import { authUser } from '@/composables/useAuthUser'
 
@@ -15,14 +16,25 @@ export const currentUserAddress = computed({
    }
 })
 
-watch(() => authUser.value, (user) => {
-   if (user) {
-      currentUserAddressId.value = savedCurrentUserAddressId.value
+export async function saveNewAddress(addressData) {
+   if (authUser.value) {
+      const res = await api.post('/addresses', addressData)
+      const savedAddress = res.data.data
+      userAddresses.value.push(savedAddress)
+      currentUserAddress.value = savedAddress
+      return savedAddress
    } else {
-      savedCurrentUserAddressId.value = null
+      const newAddress = { id: Date.now(), ...addressData }
+      userAddresses.value.push(newAddress)
+      currentUserAddress.value = newAddress
+      return newAddress
    }
 }
-)
+
+watch(() => authUser.value, (user) => {
+   if (user) currentUserAddressId.value = savedCurrentUserAddressId.value
+   else savedCurrentUserAddressId.value = null
+})
 
 watch(() => authUser.value?.addresses, (addresses) => {
    userAddresses.value = addresses ?? []
