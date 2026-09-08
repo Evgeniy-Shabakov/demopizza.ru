@@ -1,6 +1,5 @@
 <script setup>
 import { deliveryToAddress } from '@/composables/useOrderType'
-import { ORDER_TYPE } from '@/constants/orderType'
 import { totalProductPrice } from '@/composables/usePrices'
 import { currentDeliveryZone } from '@/composables/useDeliveryZones'
 import { currentUserAddress } from '@/composables/useUserAddresses'
