@@ -32,7 +32,9 @@ export async function saveNewAddress(addressData) {
 }
 
 export async function deleteAddress(id) {
-   if (authUser.value) await api.delete(`/addresses/${id}`)
+   if (!authUser.value) throw new Error('Требуется авторизация')
+
+   await api.delete(`/addresses/${id}`)
 
    const isCurrent = currentUserAddress.value?.id == id
    userAddresses.value = userAddresses.value.filter(a => a.id != id)
