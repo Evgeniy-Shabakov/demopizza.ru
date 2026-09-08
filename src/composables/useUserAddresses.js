@@ -1,13 +1,28 @@
 import { cityId } from '@/composables/useCities'
 import { authUser } from '@/composables/useAuthUser'
 
+const savedCurrentUserAddressId = useLocalStorage('current_user_address_id', null)
+
 export const userAddresses = ref([])
-export const currentUserAddressId = useLocalStorage('current_user_address_id', null)
+
+export const currentUserAddressId = ref(null)
 
 export const currentUserAddress = computed({
    get: () => userAddresses.value.find(a => a.id == currentUserAddressId.value) ?? null,
-   set: (address) => { currentUserAddressId.value = address?.id ?? null }
+   set: (address) => {
+      currentUserAddressId.value = address?.id ?? null
+      if (authUser.value) savedCurrentUserAddressId.value = currentUserAddressId.value
+   }
 })
+
+watch(() => authUser.value, (user) => {
+   if (user) {
+      currentUserAddressId.value = savedCurrentUserAddressId.value
+   } else {
+      savedCurrentUserAddressId.value = null
+   }
+}
+)
 
 watch(() => authUser.value?.addresses, (addresses) => {
    userAddresses.value = addresses ?? []
@@ -25,7 +40,7 @@ function selectAddressForCity() {
    const cityAddresses = userAddresses.value.filter(a => a.cityId == cityId.value)
 
    if (currentUserAddress.value &&
-       !cityAddresses.some(a => a.id == currentUserAddress.value.id)) {
+      !cityAddresses.some(a => a.id == currentUserAddress.value.id)) {
       currentUserAddress.value = null
    }
 
