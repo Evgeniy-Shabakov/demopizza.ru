@@ -42,12 +42,14 @@ async function saveAddress() {
 
       if (authUser.value) {
          const res = await api.post('/addresses', addressData)
-         currentUserAddress.value = res.data.data
+         const savedAddress = res.data.data
+         userAddresses.value.push(savedAddress)
+         currentUserAddress.value = savedAddress
       } else {
-         currentUserAddress.value = { id: Date.now(), ...addressData }
+         const newAddress = { id: Date.now(), ...addressData }
+         userAddresses.value.push(newAddress)
+         currentUserAddress.value = newAddress
       }
-
-      userAddresses.value.push({ ...currentUserAddress.value })
 
       router.push('/cart')
    } catch (error) {
