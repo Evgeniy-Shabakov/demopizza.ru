@@ -14,6 +14,7 @@ const addressesByCity = computed(() =>
 )
 
 const addressToDelete = ref(null)
+const isDeleteDialogOpen = ref(false)
 const isDeleting = ref(false)
 const deleteError = ref(null)
 
@@ -23,7 +24,7 @@ async function handleDelete() {
    deleteError.value = null
    try {
       await deleteAddress(addressToDelete.value.id)
-      addressToDelete.value = null
+      isDeleteDialogOpen.value = false
    } catch (error) {
       deleteError.value = error.response?.data?.message || 'Ошибка при удалении адреса!'
    } finally {
@@ -62,7 +63,7 @@ async function handleDelete() {
                      {{ address.addressAsString }}
                   </CardTitle>
                   <ButtonIconSm variant="outline"
-                                @click="addressToDelete = address">
+                                @click="() => { addressToDelete = address; isDeleteDialogOpen = true }">
                      <Trash2 class="text-destructive" />
                   </ButtonIconSm>
                </div>
@@ -98,7 +99,7 @@ async function handleDelete() {
 
    <BottomBar />
 
-   <Dialog v-model:open="addressToDelete">
+   <Dialog v-model:open="isDeleteDialogOpen">
       <DialogContent>
          <DialogHeader>
             <DialogTitle>Удалить адрес?</DialogTitle>
@@ -115,7 +116,7 @@ async function handleDelete() {
          <DialogFooter>
             <Button variant="outline"
                     :disabled="isDeleting"
-                    @click="addressToDelete = null">
+                    @click="isDeleteDialogOpen = false">
                Отмена
             </Button>
             <Button variant="destructive"

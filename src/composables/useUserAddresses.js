@@ -34,9 +34,10 @@ export async function saveNewAddress(addressData) {
 export async function deleteAddress(id) {
    if (authUser.value) await api.delete(`/addresses/${id}`)
 
+   const isCurrent = currentUserAddress.value?.id == id
    userAddresses.value = userAddresses.value.filter(a => a.id != id)
 
-   if (currentUserAddress.value?.id == id) {
+   if (isCurrent) {
       currentUserAddress.value = null
       selectAddressForCity()
    }
@@ -46,7 +47,9 @@ watch(() => authUser.value, (user) => {
    if (user) {
       const guestAddress = currentUserAddress.value
       currentUserAddressId.value = savedCurrentUserAddressId.value
-      if (guestAddress) saveNewAddress(guestAddress).catch(() => {})
+      if (guestAddress && !user.addresses?.some(a => a.id == guestAddress.id)) {
+         saveNewAddress(guestAddress).catch(() => {})
+      }
    } else {
       savedCurrentUserAddressId.value = null
    }
