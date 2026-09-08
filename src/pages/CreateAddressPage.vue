@@ -1,6 +1,8 @@
 <script setup>
+import { api } from '@/api/api'
 import { currentCity } from '@/composables/useCities'
 import { currentUserAddress, userAddresses } from '@/composables/useUserAddresses'
+import { authUser } from '@/composables/useAuthUser'
 
 const router = useRouter()
 
@@ -11,32 +13,48 @@ const floor = ref(null)
 const entranceCode = ref(null)
 const comment = ref(null)
 
+const isSaving = ref(false)
+const errorMessage = ref(null)
+
 watchEffect(() => {
    if (address.value?.flat) flat.value = address.value.flat
 })
 
-function saveAddress() {
-   currentUserAddress.value = {
-      id: Date.now(),
+async function saveAddress() {
+   isSaving.value = true
+   errorMessage.value = null
 
-      ...address.value,
+   try {
+      const addressData = {
+         ...address.value,
 
-      cityId: currentCity.value?.id,
-      flat: flat.value,
-      entrance: entrance.value,
-      floor: floor.value,
-      entranceCode: entranceCode.value,
-      comment: comment.value,
+         cityId: currentCity.value?.id,
+         flat: flat.value,
+         entrance: entrance.value,
+         floor: floor.value,
+         entranceCode: entranceCode.value,
+         comment: comment.value,
+      }
+
+      if (flat.value && !address.value?.flat) {
+         addressData.addressAsString = addressData.addressAsString + ', кв ' + flat.value
+      }
+
+      if (authUser.value) {
+         const res = await api.post('/addresses', addressData)
+         currentUserAddress.value = res.data.data
+      } else {
+         currentUserAddress.value = { id: Date.now(), ...addressData }
+      }
+
+      userAddresses.value.push({ ...currentUserAddress.value })
+
+      router.push('/cart')
+   } catch (error) {
+      errorMessage.value = error.response?.data?.message || 'Ошибка при сохранении адреса!'
+   } finally {
+      isSaving.value = false
    }
-
-   if (flat.value && !address.value?.flat) {
-      currentUserAddress.value.addressAsString =
-         currentUserAddress.value.addressAsString + ', кв ' + flat.value
-   }
-
-   userAddresses.value.push({ ...currentUserAddress.value })
-
-   router.push('/cart')
 }
 </script>
 
@@ -87,10 +105,16 @@ function saveAddress() {
 
    </div>
 
+   <div class="text-destructive">
+      {{ errorMessage }}
+   </div>
+
    <BottomBar>
-      <ButtonLgWfull :disabled="!address"
+      <ButtonLgWfull :disabled="!address || isSaving"
                      @click="saveAddress">
          Сохранить адрес
       </ButtonLgWfull>
    </BottomBar>
+
+   <SpinnerCenter v-if="isSaving" />
 </template>
