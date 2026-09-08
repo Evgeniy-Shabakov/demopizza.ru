@@ -43,8 +43,13 @@ export async function deleteAddress(id) {
 }
 
 watch(() => authUser.value, (user) => {
-   if (user) currentUserAddressId.value = savedCurrentUserAddressId.value
-   else savedCurrentUserAddressId.value = null
+   if (user) {
+      const guestAddress = currentUserAddress.value
+      currentUserAddressId.value = savedCurrentUserAddressId.value
+      if (guestAddress) saveNewAddress(guestAddress).catch(() => {})
+   } else {
+      savedCurrentUserAddressId.value = null
+   }
 })
 
 watch(() => authUser.value?.addresses, (addresses) => {
