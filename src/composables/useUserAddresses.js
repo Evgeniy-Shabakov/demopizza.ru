@@ -31,6 +31,17 @@ export async function saveNewAddress(addressData) {
    }
 }
 
+export async function deleteAddress(id) {
+   if (authUser.value) await api.delete(`/addresses/${id}`)
+
+   userAddresses.value = userAddresses.value.filter(a => a.id != id)
+
+   if (currentUserAddress.value?.id == id) {
+      currentUserAddress.value = null
+      selectAddressForCity()
+   }
+}
+
 watch(() => authUser.value, (user) => {
    if (user) currentUserAddressId.value = savedCurrentUserAddressId.value
    else savedCurrentUserAddressId.value = null
