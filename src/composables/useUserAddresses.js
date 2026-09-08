@@ -1,7 +1,13 @@
 import { cityId } from '@/composables/useCities'
+import { authUser } from '@/composables/useAuthUser'
 
 export const userAddresses = ref([])
 export const currentUserAddress = ref(null)
+
+watch(() => authUser.value?.addresses, (addresses) => {
+   userAddresses.value = addresses ?? []
+   selectAddressForCity()
+})
 
 watch(cityId, () => {
    selectAddressForCity()
