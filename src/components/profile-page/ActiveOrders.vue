@@ -1,7 +1,17 @@
 <script setup>
-import { activeOrders, isLoadingActiveOrders, activeOrdersError, loadActiveOrders } from '@/composables/useActiveOrders'
+import { activeOrders, isLoadingActiveOrders, activeOrdersError, loadActiveOrders }
+   from '@/composables/useActiveOrders'
 
-onMounted(loadActiveOrders)
+let refreshTimer = null
+
+onMounted(() => {
+   loadActiveOrders()
+   refreshTimer = setInterval(loadActiveOrders, 30000)
+})
+
+onBeforeUnmount(() => {
+   clearInterval(refreshTimer)
+})
 </script>
 
 <template>
@@ -16,15 +26,15 @@ onMounted(loadActiveOrders)
       </div>
 
       <div v-else-if="activeOrdersError"
-           class="py-6 text-center text-sm text-destructive">
+           class="text-center text-sm text-destructive">
          {{ activeOrdersError }}
       </div>
 
       <div v-else-if="activeOrders.length"
            class="flex flex-col gap-3">
          <OrderCardMini v-for="order in activeOrders"
-                    :key="order.id"
-                    :order="order" />
+                        :key="order.id"
+                        :order="order" />
       </div>
 
       <div v-else

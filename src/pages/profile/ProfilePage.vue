@@ -8,7 +8,7 @@ import { formatPhone } from '@/helpers/formatPhone';
    <PageHeader>Профиль</PageHeader>
    <div class="-mt-2 text-center">{{ formatPhone(authUser?.phone) }}</div>
 
-   <div class="flex flex-col gap-3 mt-6">
+   <div class="flex flex-col gap-3 mt-4">
       <Button as-child>
          <RouterLink to="/profile/delivery-addresses">
             Адреса доставки
