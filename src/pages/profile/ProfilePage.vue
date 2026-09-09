@@ -28,5 +28,7 @@ import { formatPhone } from '@/helpers/formatPhone';
       </Button>
    </div>
 
+   <ActiveOrders class="mt-4" />
+
    <BottomBar />
 </template>

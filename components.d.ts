@@ -11,6 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ActiveOrders: typeof import('./src/components/profile-page/ActiveOrders.vue')['default']
     AddressInput: typeof import('./src/components/create-address-page/AddressInput.vue')['default']
     Badge: typeof import('./src/shadcn/ui/badge/Badge.vue')['default']
     BaseLink: typeof import('./src/components/shared/base/BaseLink.vue')['default']
@@ -68,6 +69,7 @@ declare module 'vue' {
     NativeSelect: typeof import('./src/shadcn/ui/native-select/NativeSelect.vue')['default']
     NativeSelectOptGroup: typeof import('./src/shadcn/ui/native-select/NativeSelectOptGroup.vue')['default']
     NativeSelectOption: typeof import('./src/shadcn/ui/native-select/NativeSelectOption.vue')['default']
+    OrderCardMini: typeof import('./src/components/profile-page/OrderCardMini.vue')['default']
     OrderRestaurantSettings: typeof import('./src/components/order-panel-page/OrderRestaurantSettings.vue')['default']
     OrderTypeSelect: typeof import('./src/components/cart-page/OrderTypeSelect.vue')['default']
     PageHeader: typeof import('./src/components/layout/PageHeader.vue')['default']
