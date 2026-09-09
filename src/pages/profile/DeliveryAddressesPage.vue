@@ -89,7 +89,8 @@ async function handleDelete() {
                </div>
 
                <Badge v-if="address.comment"
-                      variant="outline">
+                      variant="outline"
+                      class="whitespace-normal">
                   {{ address.comment }}
                </Badge>
             </Card>
