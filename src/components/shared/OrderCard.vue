@@ -113,10 +113,11 @@ const orderAddress = computed(() => {
          </div>
       </div>
 
-      <Card v-if="order.userComment"
-            class="p-2 ">
-         {{ order.userComment }}
-      </Card>
+      <div v-if="order.userComment"
+           class="mt-2">
+         <Label class="text-center block mb-2">Ваш комментарий</Label>
+         <Card class="p-2 ">{{ order.userComment }}</Card>
+      </div>
 
    </Card>
 </template>
