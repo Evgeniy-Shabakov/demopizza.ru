@@ -102,7 +102,7 @@ const orderAddress = computed(() => {
                <span>Товары: </span>
                <span class="text-right">{{ order.totalProductsPrice }} ₽</span>
             </template>
-            
+
             <template v-if="isDelivery">
                <span>Доставка: </span>
                <span class="text-right">{{ order.deliveryPrice }} ₽</span>
@@ -113,10 +113,10 @@ const orderAddress = computed(() => {
          </div>
       </div>
 
-      <div v-if="order.userComment"
-           class="mt-1">
-         <Label class="text-center block">комментарий к заказу</Label>
-         <Card class="mt-2 p-4">{{ order.userComment }}</Card>
-      </div>
+      <Card v-if="order.userComment"
+            class="p-2 ">
+         {{ order.userComment }}
+      </Card>
+
    </Card>
 </template>
