@@ -10,8 +10,8 @@ import { currentOrder } from '@/composables/useOrder'
          Статус заказа можно отследить <br>
          в личном кабинете.
       </div>
-      <div v-if="!authUser" class="text-sm font-normal">
-         Статус заказа доступен при оформлении заказа после входа в личный кабинет
+      <div v-if="!authUser" class="text-sm font-normal text-destructive">
+         Статус заказа не доступен для заказов, сделанных без входа в личный кабинет
       </div>
    </PageHeader>
 
@@ -19,8 +19,8 @@ import { currentOrder } from '@/composables/useOrder'
               :order="currentOrder" />
 
    <BottomBar>
-      <ButtonLgWfull @click="$router.push('/')">
-         На главную
+      <ButtonLgWfull @click="$router.push('/profile')">
+         Личный кабинет
       </ButtonLgWfull>
    </BottomBar>
 </template>
