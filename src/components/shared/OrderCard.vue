@@ -53,16 +53,36 @@ const orderTime = computed(() => {
       minute: '2-digit',
    }).format(new Date(props.order.createdAt))
 })
+
+const ORDER_TYPE_BY_ID = Object.fromEntries(
+   Object.values(ORDER_TYPE).map(t => [t.ID, t])
+)
+
+const orderProgress = computed(() => {
+   const type = ORDER_TYPE_BY_ID[props.order.orderTypeId]
+   if (!type) return 0
+   const statuses = type.STATUSES
+   const idx = statuses.findIndex(s => s.ID === props.order.orderStatusId)
+   if (idx === -1) return 0
+   return ((idx + 1) / statuses.length) * 100
+})
+
+const orderProgressRounded = computed(() => Math.round(orderProgress.value))
 </script>
 
 <template>
    <Card class="gap-2 p-3 text-sm">
       <div class="grid grid-cols-3 items-center">
-         <span class="text-lg font-bold text-primary justify-self-start">
-            {{ order.number }}
-         </span>
+         <div class="justify-self-start">
+            <span class="text-base font-bold text-primary">
+               {{ order.number }}
+            </span>
+            <div class="text-xs text-muted-foreground -mt-1">
+               {{ ORDER_TYPE_SHORT_NAME_BY_ID[order.orderTypeId] }}
+            </div>
+         </div>
          <span v-if="orderTime"
-               class="text-muted-foreground text-center">
+               class="text-muted-foreground text-center text-base">
             {{ orderTime }}
          </span>
          <Badge class="font-semibold justify-self-end">
@@ -70,10 +90,15 @@ const orderTime = computed(() => {
          </Badge>
       </div>
 
-      <Badge variant="outline"
-             class="font-semibold w-fit">
-         {{ ORDER_TYPE_SHORT_NAME_BY_ID[order.orderTypeId] }}
-      </Badge>
+      <div class="flex items-center gap-2">
+         <div class="h-2 flex-1 rounded-full bg-muted overflow-hidden">
+            <div class="h-full rounded-full bg-primary transition-all duration-500 order-progress-stripe"
+                 :style="{ width: `${orderProgress}%` }" />
+         </div>
+         <span class="text-muted-foreground text-xs tabular-nums shrink-0">
+            {{ orderProgressRounded }}%
+         </span>
+      </div>
 
       <div class="flex items-center gap-1.5 text-muted-foreground min-w-0">
          <span class="">
@@ -145,3 +170,28 @@ const orderTime = computed(() => {
 
    </Card>
 </template>
+
+<style>
+@keyframes progress-stripe {
+   0% {
+      background-position: 0 0;
+   }
+
+   100% {
+      background-position: 1rem 0;
+   }
+}
+
+.order-progress-stripe {
+   background-image: linear-gradient(45deg,
+         oklch(1 0 0 / 0.25) 25%,
+         transparent 25%,
+         transparent 50%,
+         oklch(1 0 0 / 0.25) 50%,
+         oklch(1 0 0 / 0.25) 75%,
+         transparent 75%,
+         transparent);
+   background-size: 1rem 1rem;
+   animation: progress-stripe 1s linear infinite;
+}
+</style>
