@@ -123,11 +123,11 @@ const orderProgressRounded = computed(() => Math.round(orderProgress.value))
             </div>
 
             <div class="text-muted-foreground ml-auto">
-               {{ orderProduct.quantity }} шт. × {{ orderProduct.product.priceDefault }}
+               {{ orderProduct.quantity }} шт. × {{ orderProduct.price }}
             </div>
 
             <div class="ml-auto">
-               {{ Number(orderProduct.quantity) * Number(orderProduct.product.priceDefault) }} ₽
+               {{ Number(orderProduct.quantity) * Number(orderProduct.price) }} ₽
             </div>
 
          </template>
