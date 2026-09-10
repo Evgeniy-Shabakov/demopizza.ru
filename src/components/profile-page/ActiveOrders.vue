@@ -20,10 +20,7 @@ onBeforeUnmount(() => {
          Активные заказы
       </h2>
 
-      <div v-if="isLoadingActiveOrders && !activeOrders.length"
-           class="py-10">
-         <SpinnerCenter />
-      </div>
+      <SpinnerCenter v-if="isLoadingActiveOrders && !activeOrders.length" />
 
       <div v-else-if="activeOrdersError"
            class="text-center text-sm text-destructive">

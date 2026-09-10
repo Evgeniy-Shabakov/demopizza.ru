@@ -17,6 +17,8 @@ const paymentStatusClass = computed(() => {
 
 const products = computed(() => props.order.orderProducts ?? [])
 
+const isDelivery = computed(() => props.order.orderTypeId == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID)
+
 const orderAddress = computed(() => {
    if (props.order.orderTypeId == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
       return props.order.addressJson?.addressAsString
@@ -36,9 +38,9 @@ const orderAddress = computed(() => {
                {{ ORDER_TYPE_NAME_BY_ID[order.orderTypeId] }}
             </span>
          </div>
-         <span class="font-semibold">
+         <Badge class="font-semibold">
             {{ ORDER_STATUS_NAME_BY_ID[order.orderStatusId] }}
-         </span>
+         </Badge>
       </div>
 
       <div class="flex items-center justify-between gap-2 text-muted-foreground">
@@ -47,22 +49,27 @@ const orderAddress = computed(() => {
          </span>
       </div>
 
-      <div class="flex flex-col gap-1">
-         <div v-for="orderProduct in products"
-              :key="orderProduct.product.id"
-              class="flex items-center gap-2">
+      <div class="grid grid-cols-[auto_1fr_auto_auto] items-center gap-1">
+         <template v-for="orderProduct in products"
+                   :key="orderProduct.product.id">
+
             <img :src="orderProduct.product.imagePath"
                  :alt="orderProduct.product.name"
-                 class="size-8 shrink-0 aspect-square rounded-xl object-cover" />
+                 class="size-8 aspect-square rounded-xl object-cover" />
 
             <div class="min-w-0 truncate">
                {{ orderProduct.product.name }}
             </div>
 
-            <div class="ml-auto text-muted-foreground">
-               {{ orderProduct.quantity }} шт.
+            <div class="text-muted-foreground ml-auto">
+               {{ orderProduct.quantity }} шт. × {{ orderProduct.product.priceDefault }}
             </div>
-         </div>
+
+            <div class="ml-auto">
+               {{ Number(orderProduct.quantity) * Number(orderProduct.product.priceDefault) }} ₽
+            </div>
+
+         </template>
       </div>
 
       <div class="flex items-center justify-between gap-2 mt-1">
@@ -74,13 +81,22 @@ const orderAddress = computed(() => {
             <a v-if="order.payment?.paymentUrl"
                :href="order.payment.paymentUrl"
                class="text-blue-600 hover:underline">
-               Оплатить
+               Ссылка на оплату
             </a>
          </div>
 
-         <span class="font-semibold">
-            {{ order.totalPrice }} ₽
-         </span>
+         <div class="grid grid-cols-[max-content_max-content] gap-x-2 ml-auto">
+            <span>Товары: </span>
+            <span class="text-right">{{ order.totalProductsPrice }} ₽</span>
+
+            <template v-if="isDelivery">
+               <span>Доставка: </span>
+               <span class="text-right">{{ order.deliveryPrice }} ₽</span>
+            </template>
+
+            <span>Итого: </span>
+            <span class="text-right font-semibold">{{ order.totalPrice }} ₽</span>
+         </div>
       </div>
    </Card>
 </template>
