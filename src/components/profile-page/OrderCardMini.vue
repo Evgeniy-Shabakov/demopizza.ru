@@ -15,8 +15,6 @@ const paymentStatusClass = computed(() => {
    return 'text-chart-4 font-semibold'
 })
 
-const products = computed(() => props.order.orderProducts ?? [])
-
 const isDelivery = computed(() => props.order.orderTypeId == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID)
 
 const orderAddress = computed(() => {
@@ -28,7 +26,7 @@ const orderAddress = computed(() => {
 </script>
 
 <template>
-   <Card class="gap-2 p-4 text-sm">
+   <Card class="gap-2 p-3 text-sm">
       <div class="flex items-center justify-between gap-2">
          <div class="flex items-center gap-2">
             <span class="text-lg font-bold text-primary">
@@ -50,7 +48,7 @@ const orderAddress = computed(() => {
       </div>
 
       <div class="grid grid-cols-[auto_1fr_auto_auto] items-center gap-1">
-         <template v-for="orderProduct in products"
+         <template v-for="orderProduct in order.orderProducts"
                    :key="orderProduct.product.id">
 
             <img :src="orderProduct.product.imagePath"
