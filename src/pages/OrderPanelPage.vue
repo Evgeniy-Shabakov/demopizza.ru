@@ -100,6 +100,13 @@ async function sendOrder() {
       const res = await api.post(`/orders`, orderData)
       currentOrder.value = res.data.data
 
+      const baseUrl = import.meta.env.VITE_SERVER_BASE_URL
+      currentOrder.value.orderProducts?.forEach(orderProduct => {
+         if (orderProduct.product?.imagePath) {
+            orderProduct.product.imagePath = `${baseUrl}/${orderProduct.product.imagePath.replace(/^\//, '').replace(/^storage\/public\/?/, '')}`
+         }
+      })
+
       lastOrderForUser.value = res.data.data
 
       clearCart()

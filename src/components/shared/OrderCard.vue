@@ -112,5 +112,11 @@ const orderAddress = computed(() => {
             <span class="text-right font-semibold">{{ order.totalPrice }} ₽</span>
          </div>
       </div>
+
+      <div v-if="order.userComment"
+           class="mt-1">
+         <Label class="text-center block">комментарий к заказу</Label>
+         <Card class="mt-2 p-4">{{ order.userComment }}</Card>
+      </div>
    </Card>
 </template>

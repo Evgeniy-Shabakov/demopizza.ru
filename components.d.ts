@@ -70,7 +70,6 @@ declare module 'vue' {
     NativeSelectOptGroup: typeof import('./src/shadcn/ui/native-select/NativeSelectOptGroup.vue')['default']
     NativeSelectOption: typeof import('./src/shadcn/ui/native-select/NativeSelectOption.vue')['default']
     OrderCard: typeof import('./src/components/shared/OrderCard.vue')['default']
-    OrderCardMini: typeof import('./src/components/profile-page/OrderCardMini.vue')['default']
     OrderRestaurantSettings: typeof import('./src/components/order-panel-page/OrderRestaurantSettings.vue')['default']
     OrderTypeSelect: typeof import('./src/components/cart-page/OrderTypeSelect.vue')['default']
     PageHeader: typeof import('./src/components/layout/PageHeader.vue')['default']
