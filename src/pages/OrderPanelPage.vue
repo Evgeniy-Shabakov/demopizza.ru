@@ -131,6 +131,10 @@ async function sendOrder() {
       <div class="text-sm font-normal text-primary">
          {{ address }}
       </div>
+      <div v-if="deliveryToAddress && currentUserAddress?.comment"
+           class="text-xs font-normal text-muted-foreground">
+         {{ currentUserAddress.comment }}
+      </div>
       <div class="text-destructive">
          {{ errorMessage }}
       </div>
