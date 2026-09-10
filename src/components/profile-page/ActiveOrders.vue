@@ -29,7 +29,7 @@ onBeforeUnmount(() => {
 
       <div v-else-if="activeOrders.length"
            class="flex flex-col gap-3">
-         <OrderCardMini v-for="order in activeOrders"
+         <OrderCard v-for="order in activeOrders"
                         :key="order.id"
                         :order="order" />
       </div>
