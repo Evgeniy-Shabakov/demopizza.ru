@@ -45,24 +45,35 @@ const orderAddressComment = computed(() => {
    }
    return null
 })
+
+const orderTime = computed(() => {
+   if (!props.order?.createdAt) return null
+   return new Intl.DateTimeFormat('ru-RU', {
+      hour: '2-digit',
+      minute: '2-digit',
+   }).format(new Date(props.order.createdAt))
+})
 </script>
 
 <template>
    <Card class="gap-2 p-3 text-sm">
-      <div class="flex items-center justify-between gap-2">
-         <div class="flex items-center gap-2">
-            <span class="text-lg font-bold text-primary">
-               {{ order.number }}
-            </span>
-            <Badge variant="outline"
-                   class="font-semibold">
-               {{ ORDER_TYPE_SHORT_NAME_BY_ID[order.orderTypeId] }}
-            </Badge>
-         </div>
-         <Badge class="font-semibold">
+      <div class="grid grid-cols-3 items-center">
+         <span class="text-lg font-bold text-primary justify-self-start">
+            {{ order.number }}
+         </span>
+         <span v-if="orderTime"
+               class="text-muted-foreground text-center">
+            {{ orderTime }}
+         </span>
+         <Badge class="font-semibold justify-self-end">
             {{ ORDER_STATUS_NAME_BY_ID[order.orderStatusId] }}
          </Badge>
       </div>
+
+      <Badge variant="outline"
+             class="font-semibold w-fit">
+         {{ ORDER_TYPE_SHORT_NAME_BY_ID[order.orderTypeId] }}
+      </Badge>
 
       <div class="flex items-center gap-1.5 text-muted-foreground min-w-0">
          <span class="">
