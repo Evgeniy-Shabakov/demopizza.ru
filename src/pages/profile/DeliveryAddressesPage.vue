@@ -57,7 +57,7 @@ async function handleDelete() {
          <div class="flex flex-col gap-3">
             <Card v-for="address in group.addresses"
                   :key="address.id"
-                  class="gap-2 p-4 text-sm">
+                  class="gap-2 p-3 text-sm">
                <div class="flex items-start justify-between gap-2">
                   <CardTitle>
                      {{ address.addressAsString }}
@@ -88,11 +88,11 @@ async function handleDelete() {
                   </Badge>
                </div>
 
-               <Badge v-if="address.comment"
+               <Card v-if="address.comment"
                       variant="outline"
-                      class="whitespace-normal">
+                      class="whitespace-normal p-2 text-xs">
                   {{ address.comment }}
-               </Badge>
+               </Card>
             </Card>
          </div>
       </section>

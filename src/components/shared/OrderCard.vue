@@ -26,11 +26,24 @@ const paymentStatusClass = computed(() => {
 
 const isDelivery = computed(() => props.order.orderTypeId == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID)
 
-const orderAddress = computed(() => {
-   if (props.order.orderTypeId == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
-      return props.order.addressJson?.addressAsString
+const orderFullAddress = computed(() => {
+   if (props.order.orderTypeId != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
+      return props.order.restaurant?.address?.addressAsString
    }
-   return props.order.restaurant?.address?.addressAsString
+   const addr = props.order.addressJson
+   if (!addr) return null
+   const parts = [addr.addressAsString]
+   if (addr.entrance) parts.push(`под. ${addr.entrance}`)
+   if (addr.floor) parts.push(`эт. ${addr.floor}`)
+   if (addr.entranceCode) parts.push(`код ${addr.entranceCode}`)
+   return parts.join(', ')
+})
+
+const orderAddressComment = computed(() => {
+   if (props.order.orderTypeId == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
+      return props.order.addressJson?.comment || null
+   }
+   return null
 })
 </script>
 
@@ -52,8 +65,8 @@ const orderAddress = computed(() => {
       </div>
 
       <div class="flex items-center gap-1.5 text-muted-foreground min-w-0">
-         <span class="truncate">
-            {{ orderAddress }}
+         <span class="">
+            {{ orderFullAddress }}<template v-if="orderAddressComment"> ({{ orderAddressComment }})</template>
          </span>
          <template v-if="order.orderTypeId == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID && order.tableNumber">
             <span class="shrink-0">·</span>
