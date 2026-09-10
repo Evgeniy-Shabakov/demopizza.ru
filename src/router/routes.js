@@ -13,7 +13,7 @@ import MapPage from '@/pages/info/MapPage.vue'
 import CreateAddressPage from '@/pages/CreateAddressPage.vue'
 import OrderPanelPage from '@/pages/OrderPanelPage.vue'
 import PhonePage from '@/pages/PhonePage.vue'
-import OrderStatusPage from '@/pages/OrderStatusPage.vue'
+import OrderSuccessPage from '@/pages/OrderSuccessPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 
 export const routes = [
@@ -30,7 +30,7 @@ export const routes = [
          { path: 'cart', name: 'cart', component: CartPage },
          { path: 'phone', name: 'phone', component: PhonePage },
          { path: 'order-panel', name: 'order-panel', component: OrderPanelPage },
-         { path: 'order-status', name: 'order-status', component: OrderStatusPage },
+         { path: 'order-success', name: 'order-success', component: OrderSuccessPage },
          { path: 'company-datails', name: 'company-datails', component: CompanyDetailsPage },
           { path: 'delivery-and-payments', name: 'delivery-and-payments', component: DeliveryAndPaymentsPage },
           { path: 'map', name: 'map', component: MapPage },

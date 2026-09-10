@@ -115,7 +115,7 @@ async function sendOrder() {
          window.location.href = currentOrder.value.payment.paymentUrl
       }
 
-      else router.push('/order-status')
+      else router.push('/order-success')
    } catch (error) {
       errorMessage.value = error.response?.data?.message || 'Ошибка при оформлении заказа!'
    } finally {
