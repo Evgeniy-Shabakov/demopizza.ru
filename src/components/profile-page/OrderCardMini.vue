@@ -1,7 +1,16 @@
 <script setup>
 import { ORDER_STATUS_NAME_BY_ID } from '@/constants/orderStatus'
-import { ORDER_TYPE, ORDER_TYPE_NAME_BY_ID } from '@/constants/orderType'
+import { ORDER_TYPE } from '@/constants/orderType'
 import { PAYMENT_STATUS, PAYMENT_STATUS_NAME_BY_ID } from '@/constants/paymentStatus'
+
+const ORDER_TYPE_SHORT_NAME_BY_ID = {
+   [ORDER_TYPE.DELIVERY_TO_ADDRESS.ID]: 'доставка',
+   [ORDER_TYPE.PICK_UP_AT_COUNTER.ID]: 'самовывоз',
+   [ORDER_TYPE.PICK_UP_AT_CAR_WINDOW.ID]: 'самовывоз (авто)',
+   [ORDER_TYPE.AT_RESTAURANT_AT_COUNTER.ID]: 'в ресторане',
+   [ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID]: 'в ресторане (столик)',
+   [ORDER_TYPE.DELIVERY_TO_RESTAURANT_PARKING.ID]: 'доставка к машине',
+}
 
 const props = defineProps({
    order: { type: Object, required: true },
@@ -32,19 +41,24 @@ const orderAddress = computed(() => {
             <span class="text-lg font-bold text-primary">
                {{ order.number }}
             </span>
-            <span class="text-muted-foreground">
-               {{ ORDER_TYPE_NAME_BY_ID[order.orderTypeId] }}
-            </span>
+            <Badge variant="outline"
+                   class="font-semibold">
+               {{ ORDER_TYPE_SHORT_NAME_BY_ID[order.orderTypeId] }}
+            </Badge>
          </div>
          <Badge class="font-semibold">
             {{ ORDER_STATUS_NAME_BY_ID[order.orderStatusId] }}
          </Badge>
       </div>
 
-      <div class="flex items-center justify-between gap-2 text-muted-foreground">
-         <span class="min-w-0 truncate">
+      <div class="flex items-center gap-1.5 text-muted-foreground min-w-0">
+         <span class="truncate">
             {{ orderAddress }}
          </span>
+         <template v-if="order.orderTypeId == ORDER_TYPE.AT_RESTAURANT_TO_TABLE.ID && order.tableNumber">
+            <span class="shrink-0">·</span>
+            <span class="shrink-0">Столик №{{ order.tableNumber }}</span>
+         </template>
       </div>
 
       <div class="grid grid-cols-[auto_1fr_auto_auto] items-center gap-1">
@@ -84,9 +98,11 @@ const orderAddress = computed(() => {
          </div>
 
          <div class="grid grid-cols-[max-content_max-content] gap-x-2 ml-auto">
-            <span>Товары: </span>
-            <span class="text-right">{{ order.totalProductsPrice }} ₽</span>
-
+            <template v-if="isDelivery">
+               <span>Товары: </span>
+               <span class="text-right">{{ order.totalProductsPrice }} ₽</span>
+            </template>
+            
             <template v-if="isDelivery">
                <span>Доставка: </span>
                <span class="text-right">{{ order.deliveryPrice }} ₽</span>
