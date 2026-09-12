@@ -14,6 +14,7 @@ const ORDER_TYPE_SHORT_NAME_BY_ID = {
 
 const props = defineProps({
    order: { type: Object, required: true },
+   showPaymentStatus: { type: Boolean, default: true },
 })
 
 const paymentStatusClass = computed(() => {
@@ -135,7 +136,8 @@ const orderProgressRounded = computed(() => Math.round(orderProgress.value))
 
       <div class="flex items-center justify-between gap-2 mt-1">
          <div class="flex flex-col gap-2">
-            <Badge variant="outline"
+            <Badge v-if="showPaymentStatus"
+                   variant="outline"
                    :class="paymentStatusClass">
                {{ PAYMENT_STATUS_NAME_BY_ID[order.paymentStatusId] }}
             </Badge>
