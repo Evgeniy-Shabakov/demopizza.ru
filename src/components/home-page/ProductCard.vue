@@ -1,10 +1,13 @@
 <script setup>
 import { Minus, Plus } from '@lucide/vue'
 import { itemsInCart, addProductToCart, minusProductFromCart } from '@/composables/useCart'
+import { isProductInStopList } from '@/helpers/isProductInStopList'
 
 const props = defineProps({
    product: { type: Object, required: true },
 })
+
+const isInStopList = computed(() => isProductInStopList(props.product))
 
 const cartItem = computed(() =>
    itemsInCart.value.find(item => item.productId === props.product.id)
@@ -24,7 +27,11 @@ const cartItem = computed(() =>
          <div class="flex flex-wrap items-center justify-between gap-1 mt-auto">
             <span class="font-semibold">{{ product.priceDefault }} ₽</span>
 
-            <template v-if="cartItem && cartItem.quantity > 0">
+            <Button v-if="isInStopList"
+                    disabled>
+               Будет позже
+            </Button>
+            <template v-else-if="cartItem && cartItem.quantity > 0">
                <div class="flex items-center gap-1">
                   <ButtonIcon variant="outline"
                               @click="minusProductFromCart(product.id)">

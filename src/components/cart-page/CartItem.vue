@@ -16,7 +16,11 @@ defineProps({
          <div>
             <div class="flex items-start justify-between gap-2">
                <div>
-                  <CardTitle>{{ product.name }}</CardTitle>
+                  <div class="flex items-center gap-2">
+                     <CardTitle>{{ product.name }}</CardTitle>
+                     <Badge v-if="product.isInStopList"
+                            variant="secondary">Будет позже</Badge>
+                  </div>
                   <CardDescription>{{ product.priceDefault }} ₽</CardDescription>
                </div>
                <ButtonIconSm variant="outline"
@@ -28,15 +32,17 @@ defineProps({
          <div class="flex items-center justify-between gap-2 pt-3">
             <div class="flex items-center gap-1">
                <ButtonIconSm variant="outline"
-                           @click="minusProductFromCartWithZero(product.productId)">
+                             :disabled="product.isInStopList"
+                             @click="minusProductFromCartWithZero(product.productId)">
                   <Minus />
                </ButtonIconSm>
-               <span class="w-6 text-center font-medium tabular-nums">{{ product.quantity }}</span>
-               <ButtonIconSm @click="addProductToCart(product.productId)">
+               <span class="w-6 text-center font-medium tabular-nums">{{ product.isInStopList ? 0 : product.quantity }}</span>
+               <ButtonIconSm :disabled="product.isInStopList"
+                             @click="addProductToCart(product.productId)">
                   <Plus />
                </ButtonIconSm>
             </div>
-            <span class="tabular-nums">{{ product.priceDefault * product.quantity }} ₽</span>
+            <span class="tabular-nums">{{ product.isInStopList ? 0 : product.priceDefault * product.quantity }} ₽</span>
          </div>
       </div>
    </Card>

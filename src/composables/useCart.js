@@ -1,9 +1,10 @@
 import { categories } from '@/composables/useCategories'
+import { isProductInStopList } from '@/helpers/isProductInStopList'
 
 export const itemsInCart = useLocalStorage('cart_v1', [])
 
 export const totalProductsInCart = computed(() =>
-   itemsInCart.value.reduce((sum, item) => sum + item.quantity, 0)
+   productsInCart.value.reduce((sum, product) => sum + product.quantity, 0)
 )
 
 const allProducts = computed(() => {
@@ -16,12 +17,14 @@ export const productsInCart = computed(() => {
       .map(item => {
          const product = allProducts.value.find(p => p.id === item.productId)
          if (!product) return null
+         const inStopList = isProductInStopList(product)
          return {
             productId: item.productId,
             name: product.name,
             imagePath: product.imagePath,
             priceDefault: product.priceDefault,
-            quantity: item.quantity,
+            quantity: inStopList ? 0 : item.quantity,
+            isInStopList: inStopList,
          }
       })
       .filter(Boolean)
