@@ -10,7 +10,7 @@ import { currentRestaurant } from '@/composables/useRestaurants'
 import { currentUserAddress } from '@/composables/useUserAddresses'
 import { formatPhone } from '@/helpers/formatPhone'
 import { paymentTypeId } from '@/composables/usePaymentType'
-import { productsInOrder, clearCart } from '@/composables/useCart'
+import { productsInOrder } from '@/composables/useCart'
 import { deliveryPrice, totalPrice, totalProductPrice } from '@/composables/usePrices'
 import { authUser } from '@/composables/useAuthUser'
 import { currentDeliveryZone } from '@/composables/useDeliveryZones'
@@ -108,8 +108,6 @@ async function sendOrder() {
       })
 
       lastOrderForUser.value = res.data.data
-
-      clearCart()
 
       if (currentOrder.value.payment?.paymentUrl) {
          window.location.href = currentOrder.value.payment.paymentUrl

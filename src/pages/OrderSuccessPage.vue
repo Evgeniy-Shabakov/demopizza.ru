@@ -1,11 +1,16 @@
 <script setup>
 import { authUser } from '@/composables/useAuthUser'
+import { clearCart } from '@/composables/useCart'
 import { currentOrder } from '@/composables/useOrder'
 
 const router = useRouter()
 
 onMounted(() => {
-   if (!currentOrder.value) router.replace({ name: 'home' })
+   if (!currentOrder.value) {
+      router.replace({ name: 'home' })
+      return
+   }
+   clearCart()
 })
 
 onBeforeRouteLeave(() => {
