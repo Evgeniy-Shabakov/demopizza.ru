@@ -134,7 +134,7 @@ const orderProgressRounded = computed(() => Math.round(orderProgress.value))
       </div>
 
       <div class="flex items-center justify-between gap-2 mt-1">
-         <div class="flex items-center gap-2">
+         <div class="flex flex-col gap-2">
             <Badge variant="outline"
                    :class="paymentStatusClass">
                {{ PAYMENT_STATUS_NAME_BY_ID[order.paymentStatusId] }}
@@ -142,7 +142,7 @@ const orderProgressRounded = computed(() => Math.round(orderProgress.value))
             <a v-if="order.payment?.paymentUrl"
                :href="order.payment.paymentUrl"
                class="text-blue-600 hover:underline">
-               Ссылка на оплату
+               Платежная ссылка
             </a>
          </div>
 
