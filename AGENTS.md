@@ -36,7 +36,7 @@ src/
   components/     # App components (auto-imported)
     simple/       # Small standalone components
     structure/    # Layout structural components
-  composables/    # Singleton reactive state modules (useX.js)
+  composables/    # Singleton reactive state modules (use-cart.js)
   constants/      # Enum-like frozen objects (order-type.js, order-status.js)
   helpers/        # Pure utility functions
   layouts/        # Layout wrappers (default.layout.vue)
@@ -58,11 +58,11 @@ src/
 ### File Naming
 - **Vue components:** PascalCase (e.g., `ProductCard.vue`, `BottomNav.vue`).
 - **Page components:** lowercase `*.page.vue` (e.g., `home.page.vue`, `order-history.page.vue`).
-- **JS modules:** helpers and constants kebab-case (`format-phone.js`, `order-type.js`), composables camelCase (`useCart.js`).
+- **JS modules:** helpers, constants, and composables kebab-case (`format-phone.js`, `order-type.js`, `use-cart.js`).
 - **shadcn dirs:** kebab-case (e.g., `dropdown-menu/`, `native-select/`).
 
 ### Naming Conventions
-- **Composables:** `use` prefix + camelCase (`useCart`, `useCategories`).
+- **Composables:** `use` prefix in file name (`use-cart.js`); exported identifiers remain camelCase (`useCart`, `useCategories`).
 - **Exported state:** camelCase (`productsInCart`, `totalProductsInCart`, `isLoadingCategories`).
 - **Exported functions:** camelCase (`loadCities`, `addProductToCart`, `clearCart`).
 - **Props:** camelCase (`product`, `isBack`, `modelValue`).
@@ -70,10 +70,10 @@ src/
 - **Environment variables:** UPPER_SNAKE_CASE with `VITE_` prefix.
 
 ### Imports
-- Use `@` alias for project-internal imports (`@/api/api`, `@/composables/useCart`, `@/shadcn/lib/utils`).
+- Use `@` alias for project-internal imports (`@/api/api`, `@/composables/use-cart`, `@/shadcn/lib/utils`).
 - Third-party libs: bare specifiers (`import axios from 'axios'`).
 - Relative imports only for same-directory index files (`import { badgeVariants } from '.'`).
-- Destructure named exports from composables: `import { categories, loadCategories } from '@/composables/useCategories'`.
+- Destructure named exports from composables: `import { categories, loadCategories } from '@/composables/use-categories'`.
 
 ### Auto-imports (do NOT import these)
 - **Vue APIs** (`ref`, `computed`, `watch`, `onMounted`, `defineProps`, `defineEmits`, etc.), **Vue Router APIs** (`useRoute`, `useRouter`, etc.), and **all @vueuse/core exports** (`useLocalStorage`, `useDark`, `useToggle`, etc.) are auto-imported via `unplugin-auto-import`. See `auto-imports.d.ts` for the full list.

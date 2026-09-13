@@ -1,5 +1,5 @@
 <script setup>
-import { company } from '@/composables/useCompany'
+import { company } from '@/composables/use-company'
 import { formatPhone } from '@/helpers/format-phone'
 </script>
 

@@ -1,7 +1,7 @@
 <script setup>
 import { Truck } from '@lucide/vue'
-import { currentDeliveryZone } from '@/composables/useDeliveryZones'
-import { deliveryPrice } from '@/composables/usePrices';
+import { currentDeliveryZone } from '@/composables/use-delivery-zones'
+import { deliveryPrice } from '@/composables/use-prices';
 </script>
 
 <template>

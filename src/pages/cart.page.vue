@@ -1,6 +1,6 @@
 <script setup>
-import { productsInCart } from '@/composables/useCart'
-import { deliveryToAddress } from '@/composables/useOrderType'
+import { productsInCart } from '@/composables/use-cart'
+import { deliveryToAddress } from '@/composables/use-order-type'
 </script>
 
 <template>

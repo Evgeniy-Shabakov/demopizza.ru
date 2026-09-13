@@ -1,4 +1,4 @@
-import { categories } from '@/composables/useCategories'
+import { categories } from '@/composables/use-categories'
 import { isProductInStopList } from '@/helpers/is-product-in-stop-list'
 
 export const itemsInCart = useLocalStorage('cart_v1', [])

@@ -1,9 +1,9 @@
 <script setup>
 import { PaperBag, HandPlatter, Soup, LaptopMinimalCheck } from '@lucide/vue'
 import { ORDER_TYPE } from '@/constants/order-type'
-import { orderTypeId, atRestToTable, atRestAtCounter, atRest } from '@/composables/useOrderType'
-import { currentRestaurant } from '@/composables/useRestaurants'
-import { tableNumber, packTakeaway } from '@/composables/useOrderRestaurantSettings'
+import { orderTypeId, atRestToTable, atRestAtCounter, atRest } from '@/composables/use-order-type'
+import { currentRestaurant } from '@/composables/use-restaurants'
+import { tableNumber, packTakeaway } from '@/composables/use-order-restaurant-settings'
 </script>
 
 <template>

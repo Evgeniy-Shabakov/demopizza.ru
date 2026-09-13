@@ -1,4 +1,4 @@
-import { authUser, loadAuthUser, userIsLoaded } from '@/composables/useAuthUser'
+import { authUser, loadAuthUser, userIsLoaded } from '@/composables/use-auth-user'
 
 const PROTECTED_ROUTES = [
    'profile',

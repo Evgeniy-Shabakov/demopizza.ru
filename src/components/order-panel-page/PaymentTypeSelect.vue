@@ -1,5 +1,5 @@
 <script setup>
-import { AVAILABLE_PAYMENT_TYPES, paymentTypeId } from '@/composables/usePaymentType'
+import { AVAILABLE_PAYMENT_TYPES, paymentTypeId } from '@/composables/use-payment-type'
 </script>
 
 <template>

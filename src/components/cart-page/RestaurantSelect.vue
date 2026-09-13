@@ -1,6 +1,6 @@
 <script setup>
-import { atRest, pickUpAtCounter } from '@/composables/useOrderType'
-import { restaurantId, availableRestaurants } from '@/composables/useRestaurants'
+import { atRest, pickUpAtCounter } from '@/composables/use-order-type'
+import { restaurantId, availableRestaurants } from '@/composables/use-restaurants'
 import { ORDER_TYPE } from '@/constants/order-type'
 </script>
 

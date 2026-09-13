@@ -1,6 +1,6 @@
 <script setup>
-import { deliveryToAddress } from '@/composables/useOrderType'
-import { deliveryPrice, totalPrice, totalProductPrice } from '@/composables/usePrices'
+import { deliveryToAddress } from '@/composables/use-order-type'
+import { deliveryPrice, totalPrice, totalProductPrice } from '@/composables/use-prices'
 </script>
 
 <template>

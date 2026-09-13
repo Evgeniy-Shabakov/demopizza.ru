@@ -1,7 +1,7 @@
 <script setup>
 import { Home, Trash2 } from '@lucide/vue'
-import { userAddresses, deleteAddress } from '@/composables/useUserAddresses'
-import { cities } from '@/composables/useCities'
+import { userAddresses, deleteAddress } from '@/composables/use-user-addresses'
+import { cities } from '@/composables/use-cities'
 
 const addressesByCity = computed(() =>
    (cities.value ?? [])

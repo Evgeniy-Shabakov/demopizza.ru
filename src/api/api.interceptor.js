@@ -1,5 +1,5 @@
 import { api } from './api'
-import { authUser } from '@/composables/useAuthUser'
+import { authUser } from '@/composables/use-auth-user'
 
 let isRefreshing = false
 let failedQueue = []

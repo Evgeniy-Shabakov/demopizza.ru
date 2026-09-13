@@ -1,7 +1,7 @@
 <script setup>
 import * as VKID from '@vkid/sdk'
 import { User, PackageCheck, MapPin } from '@lucide/vue'
-import { loginUser } from '@/composables/useAuthUser'
+import { loginUser } from '@/composables/use-auth-user'
 
 const route = useRoute()
 const router = useRouter()

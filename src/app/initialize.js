@@ -1,8 +1,8 @@
-import { loadCities } from '@/composables/useCities'
-import { loadRestaurants } from '@/composables/useRestaurants'
-import { loadCompany } from '@/composables/useCompany'
-import { loadCategories } from '@/composables/useCategories'
-import { loadAuthUser } from '@/composables/useAuthUser'
+import { loadCities } from '@/composables/use-cities'
+import { loadRestaurants } from '@/composables/use-restaurants'
+import { loadCompany } from '@/composables/use-company'
+import { loadCategories } from '@/composables/use-categories'
+import { loadAuthUser } from '@/composables/use-auth-user'
 
 import '@/api/api'
 import '@/api/api.interceptor'

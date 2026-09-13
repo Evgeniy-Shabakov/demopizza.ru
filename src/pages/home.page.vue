@@ -1,5 +1,5 @@
 <script setup>
-import { categories, isLoadingCategories } from '@/composables/useCategories'
+import { categories, isLoadingCategories } from '@/composables/use-categories'
 </script>
 
 <template>

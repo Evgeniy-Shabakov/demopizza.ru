@@ -1,6 +1,6 @@
 import * as turf from '@turf/turf'
-import { currentCity } from './useCities'
-import { currentUserAddress } from './useUserAddresses'
+import { currentCity } from './use-cities'
+import { currentUserAddress } from './use-user-addresses'
 
 export const currentDeliveryZone = computed(() => {
    if (!currentCity.value || !currentUserAddress.value) return null

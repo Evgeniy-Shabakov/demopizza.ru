@@ -1,8 +1,8 @@
 <script setup>
 import { Plus } from '@lucide/vue'
-import { userAddresses, currentUserAddress } from '@/composables/useUserAddresses'
-import { currentCity } from '@/composables/useCities'
-import { currentDeliveryZone } from '@/composables/useDeliveryZones'
+import { userAddresses, currentUserAddress } from '@/composables/use-user-addresses'
+import { currentCity } from '@/composables/use-cities'
+import { currentDeliveryZone } from '@/composables/use-delivery-zones'
 
 const userAddressesForSelectedCity = computed(() =>
    userAddresses.value.filter(a => a.cityId == currentCity.value?.id)

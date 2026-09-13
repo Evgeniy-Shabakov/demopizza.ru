@@ -1,5 +1,5 @@
 <script setup>
-import { productsInOrder, totalProductsInCart } from '@/composables/useCart'
+import { productsInOrder, totalProductsInCart } from '@/composables/use-cart'
 </script>
 
 <template>

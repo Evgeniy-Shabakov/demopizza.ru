@@ -1,7 +1,7 @@
 <script setup>
 import { Trash2, Minus, Plus } from '@lucide/vue'
 import { addProductToCart, removeProductFromCart, minusProductFromCartWithZero }
-   from '@/composables/useCart'
+   from '@/composables/use-cart'
 
 defineProps({
    product: { type: Object, required: true },

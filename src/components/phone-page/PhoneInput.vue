@@ -1,6 +1,6 @@
 <script setup>
 import { vMaska } from 'maska/vue'
-import { inputedPhone } from '@/composables/usePhoneInput'
+import { inputedPhone } from '@/composables/use-phone-input'
 
 const fieldInputPhone = ref()
 

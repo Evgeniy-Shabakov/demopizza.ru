@@ -1,6 +1,6 @@
 <script setup>
 import { Minus, Plus } from '@lucide/vue'
-import { itemsInCart, addProductToCart, minusProductFromCart } from '@/composables/useCart'
+import { itemsInCart, addProductToCart, minusProductFromCart } from '@/composables/use-cart'
 import { isProductInStopList } from '@/helpers/is-product-in-stop-list'
 
 const props = defineProps({

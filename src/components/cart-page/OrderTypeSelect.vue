@@ -1,12 +1,12 @@
 <script setup>
 import { atRest, deliveryToAddress, orderTypeId, pickUpAtCounter }
-   from '@/composables/useOrderType'
+   from '@/composables/use-order-type'
 import {
    restaurantsForAtRestaurant,
    restaurantsForDeliveryToAddress,
    restaurantsForPickUpAtCounter
 }
-   from '@/composables/useRestaurants'
+   from '@/composables/use-restaurants'
 import { ORDER_TYPE } from '@/constants/order-type'
 </script>
 

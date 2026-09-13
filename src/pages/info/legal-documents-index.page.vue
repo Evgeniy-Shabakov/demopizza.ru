@@ -1,5 +1,5 @@
 <script setup>
-import { legalDocuments, loadLegalDocuments } from '@/composables/useLegalDocuments'
+import { legalDocuments, loadLegalDocuments } from '@/composables/use-legal-documents'
 
 loadLegalDocuments()
 </script>

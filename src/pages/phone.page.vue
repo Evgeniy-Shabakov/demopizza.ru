@@ -1,5 +1,5 @@
 <script setup>
-import { inputedPhone } from '@/composables/usePhoneInput'
+import { inputedPhone } from '@/composables/use-phone-input'
 
 const isCheckedSoglasie = ref(false)
 </script>

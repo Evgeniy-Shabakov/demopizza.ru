@@ -1,22 +1,22 @@
 <script setup>
 import { api } from '@/api/api'
-import { currentCity } from '@/composables/useCities'
+import { currentCity } from '@/composables/use-cities'
 import {
    atRest, atRestToTable, deliveryToAddress, orderTypeId, pickUpAtCounter, orderTypeShortName
 }
-   from '@/composables/useOrderType'
-import { inputedPhone } from '@/composables/usePhoneInput'
-import { currentRestaurant } from '@/composables/useRestaurants'
-import { currentUserAddress } from '@/composables/useUserAddresses'
+   from '@/composables/use-order-type'
+import { inputedPhone } from '@/composables/use-phone-input'
+import { currentRestaurant } from '@/composables/use-restaurants'
+import { currentUserAddress } from '@/composables/use-user-addresses'
 import { formatPhone } from '@/helpers/format-phone'
-import { paymentTypeId } from '@/composables/usePaymentType'
-import { productsInOrder } from '@/composables/useCart'
-import { deliveryPrice, totalPrice, totalProductPrice } from '@/composables/usePrices'
-import { authUser } from '@/composables/useAuthUser'
-import { currentDeliveryZone } from '@/composables/useDeliveryZones'
-import { currentOrder } from '@/composables/useCurrentOrder'
-import { packTakeaway, tableNumber } from '@/composables/useOrderRestaurantSettings'
-import { lastOrder } from '@/composables/useLastOrder'
+import { paymentTypeId } from '@/composables/use-payment-type'
+import { productsInOrder } from '@/composables/use-cart'
+import { deliveryPrice, totalPrice, totalProductPrice } from '@/composables/use-prices'
+import { authUser } from '@/composables/use-auth-user'
+import { currentDeliveryZone } from '@/composables/use-delivery-zones'
+import { currentOrder } from '@/composables/use-current-order'
+import { packTakeaway, tableNumber } from '@/composables/use-order-restaurant-settings'
+import { lastOrder } from '@/composables/use-last-order'
 import { normalizeProductImagePathForOrder } from '@/helpers/normalize-product-image-path'
 
 const router = useRouter()

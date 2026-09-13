@@ -1,6 +1,6 @@
 <script setup>
 import { lastOrder, isLoadingLastOrder, lastOrderError, loadLastOrder }
-   from '@/composables/useLastOrder'
+   from '@/composables/use-last-order'
 
 if(!lastOrder.value) loadLastOrder()
 

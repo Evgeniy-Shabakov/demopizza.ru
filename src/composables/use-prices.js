@@ -1,6 +1,6 @@
-import { currentDeliveryZone } from "./useDeliveryZones"
-import { deliveryToAddress } from "./useOrderType"
-import { productsInCart } from "./useCart"
+import { currentDeliveryZone } from "./use-delivery-zones"
+import { deliveryToAddress } from "./use-order-type"
+import { productsInCart } from "./use-cart"
 
 export const totalProductPrice = computed(() => {
    let total = 0

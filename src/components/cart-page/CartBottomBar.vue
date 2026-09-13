@@ -1,9 +1,9 @@
 <script setup>
-import { deliveryToAddress } from '@/composables/useOrderType'
-import { totalProductPrice } from '@/composables/usePrices'
-import { currentDeliveryZone } from '@/composables/useDeliveryZones'
-import { currentUserAddress } from '@/composables/useUserAddresses'
-import { authUser } from '@/composables/useAuthUser'
+import { deliveryToAddress } from '@/composables/use-order-type'
+import { totalProductPrice } from '@/composables/use-prices'
+import { currentDeliveryZone } from '@/composables/use-delivery-zones'
+import { currentUserAddress } from '@/composables/use-user-addresses'
+import { authUser } from '@/composables/use-auth-user'
 
 const isButtonNextActive = computed(() => {
    if (totalProductPrice.value <= 0) return false

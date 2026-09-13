@@ -1,5 +1,5 @@
 <script setup>
-import { authUser, logoutUser } from '@/composables/useAuthUser'
+import { authUser, logoutUser } from '@/composables/use-auth-user'
 import { formatPhone } from '@/helpers/format-phone'
 import router from '@/router/router'
 

@@ -1,6 +1,6 @@
 <script setup>
 import { api } from '@/api/api'
-import { currentCity } from '@/composables/useCities'
+import { currentCity } from '@/composables/use-cities'
 
 const vmodel = defineModel({ type: Object, default: null })
 

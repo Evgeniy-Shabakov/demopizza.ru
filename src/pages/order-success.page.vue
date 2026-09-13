@@ -1,7 +1,7 @@
 <script setup>
-import { authUser } from '@/composables/useAuthUser'
-import { clearCart } from '@/composables/useCart'
-import { currentOrder } from '@/composables/useCurrentOrder'
+import { authUser } from '@/composables/use-auth-user'
+import { clearCart } from '@/composables/use-cart'
+import { currentOrder } from '@/composables/use-current-order'
 
 const router = useRouter()
 

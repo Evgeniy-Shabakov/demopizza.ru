@@ -1,6 +1,6 @@
 <script setup>
-import { currentCity } from '@/composables/useCities'
-import { saveNewAddress } from '@/composables/useUserAddresses'
+import { currentCity } from '@/composables/use-cities'
+import { saveNewAddress } from '@/composables/use-user-addresses'
 
 const router = useRouter()
 

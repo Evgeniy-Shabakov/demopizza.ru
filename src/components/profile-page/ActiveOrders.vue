@@ -1,6 +1,6 @@
 <script setup>
 import { activeOrders, isLoadingActiveOrders, activeOrdersError, loadActiveOrders }
-   from '@/composables/useActiveOrders'
+   from '@/composables/use-active-orders'
 
 let refreshTimer = null
 

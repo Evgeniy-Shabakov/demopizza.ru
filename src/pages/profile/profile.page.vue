@@ -1,5 +1,5 @@
 <script setup>
-import { authUser } from '@/composables/useAuthUser'
+import { authUser } from '@/composables/use-auth-user'
 import { formatPhone } from '@/helpers/format-phone';
 
 </script>

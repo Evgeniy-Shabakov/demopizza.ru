@@ -1,6 +1,6 @@
 <script setup>
 import { Home, ArrowUp, User, ShoppingCart } from '@lucide/vue'
-import { totalProductsInCart } from '@/composables/useCart'
+import { totalProductsInCart } from '@/composables/use-cart'
 
 const route = useRoute()
 const router = useRouter()

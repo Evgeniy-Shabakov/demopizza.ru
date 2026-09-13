@@ -1,6 +1,6 @@
 import { api } from '@/api/api'
-import { cityId } from '@/composables/useCities'
-import { authUser } from '@/composables/useAuthUser'
+import { cityId } from '@/composables/use-cities'
+import { authUser } from '@/composables/use-auth-user'
 
 const savedCurrentUserAddressId = useLocalStorage('current_user_address_id', null)
 

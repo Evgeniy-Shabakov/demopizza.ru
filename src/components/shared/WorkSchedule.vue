@@ -1,5 +1,5 @@
 <script setup>
-import { currentRestaurant } from '@/composables/useRestaurants'
+import { currentRestaurant } from '@/composables/use-restaurants'
 </script>
 
 <template>

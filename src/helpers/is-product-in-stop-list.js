@@ -1,4 +1,4 @@
-import { restaurantId } from '@/composables/useRestaurants'
+import { restaurantId } from '@/composables/use-restaurants'
 
 export function isProductInStopList(product) {
    if (!product?.productRestaurants?.length) return false

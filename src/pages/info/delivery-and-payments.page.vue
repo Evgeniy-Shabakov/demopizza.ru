@@ -1,5 +1,5 @@
 <script setup>
-import { currentCity } from '@/composables/useCities'
+import { currentCity } from '@/composables/use-cities'
 
 </script>
 

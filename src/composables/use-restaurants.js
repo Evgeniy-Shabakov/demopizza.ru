@@ -1,7 +1,7 @@
 import { ORDER_TYPE } from '@/constants/order-type'
 import { api } from '@/api/api'
-import { cityId } from '@/composables/useCities'
-import { atRest, orderTypeId, pickUpAtCounter } from '@/composables/useOrderType'
+import { cityId } from '@/composables/use-cities'
+import { atRest, orderTypeId, pickUpAtCounter } from '@/composables/use-order-type'
 
 export const restaurants = ref(null)
 
@@ -60,7 +60,7 @@ export const availableRestaurants = computed(() => {
 
 // перенес сюда availableOrderTypeIds и watch из OrderTypeSelect, 
 // чтобы смена типа заказа происходила при смене города из бургер меню
-// нельзя в useOrderType т.к. будет циклическая зависимость 
+// нельзя в use-order-type т.к. будет циклическая зависимость 
 const availableOrderTypeIds = computed(() => {
    const ids = []
    if (restaurantsForDeliveryToAddress.value.length) ids.push(ORDER_TYPE.DELIVERY_TO_ADDRESS.ID)
