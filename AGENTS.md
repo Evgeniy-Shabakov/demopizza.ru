@@ -56,7 +56,7 @@ src/
 - SFCs have `<template>`, `<script setup>`, `<style>` in that order (no `<style scoped>` — all classes are global Tailwind utilities). Some components omit `<style>` entirely.
 
 ### File Naming
-- **Vue components:** PascalCase (e.g., `ProductCard.vue`, `BottomNav.vue`).
+- **Vue components:** lowercase `*.vue` in kebab-case (e.g., `product-card.vue`, `bottom-nav.vue`).
 - **Page components:** lowercase `*.page.vue` (e.g., `home.page.vue`, `order-history.page.vue`).
 - **JS modules:** helpers, constants, and composables kebab-case (`format-phone.js`, `order-type.js`, `use-cart.js`).
 - **shadcn dirs:** kebab-case (e.g., `dropdown-menu/`, `native-select/`).
