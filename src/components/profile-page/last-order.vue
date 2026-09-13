@@ -1,8 +1,11 @@
 <script setup>
-import { lastOrder, isLoadingLastOrder, lastOrderError, loadLastOrder }
-   from '@/composables/use-last-order'
+import { lastOrder, isLoadingLastOrder, lastOrderError, loadLastOrder, isLastOrderLoaded }
+   from '@/composables/orders/use-last-order'
 
-if(!lastOrder.value) loadLastOrder()
+if (!isLastOrderLoaded.value) {
+   loadLastOrder()
+   isLastOrderLoaded.value = true
+}
 
 </script>
 

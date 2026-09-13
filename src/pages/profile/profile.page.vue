@@ -1,7 +1,7 @@
 <script setup>
 import { authUser } from '@/composables/use-auth-user'
 import { formatPhone } from '@/helpers/format-phone';
-import { lastOrder } from '@/composables/use-last-order'
+import { lastOrder } from '@/composables/orders/use-last-order'
 import { repeatOrder } from '@/composables/use-cart'
 
 const router = useRouter()

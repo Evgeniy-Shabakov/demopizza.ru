@@ -14,9 +14,9 @@ import { productsInOrder } from '@/composables/use-cart'
 import { deliveryPrice, totalPrice, totalProductPrice } from '@/composables/use-prices'
 import { authUser } from '@/composables/use-auth-user'
 import { currentDeliveryZone } from '@/composables/use-delivery-zones'
-import { currentOrder } from '@/composables/use-current-order'
+import { currentOrder } from '@/composables/orders/use-current-order'
 import { packTakeaway, tableNumber } from '@/composables/use-order-restaurant-settings'
-import { lastOrder } from '@/composables/use-last-order'
+import { lastOrder } from '@/composables/orders/use-last-order'
 import { normalizeProductImagePathForOrder } from '@/helpers/normalize-product-image-path'
 
 const router = useRouter()

@@ -4,6 +4,7 @@ import { normalizeProductImagePathForOrder } from '@/helpers/normalize-product-i
 export const lastOrder = ref(null)
 export const isLoadingLastOrder = ref(false)
 export const lastOrderError = ref(null)
+export const isLastOrderLoaded = ref(false)
 
 export async function loadLastOrder() {
    if (isLoadingLastOrder.value) return

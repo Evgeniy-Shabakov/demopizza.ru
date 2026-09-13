@@ -1,5 +1,5 @@
 <script setup>
-import { ordersHistory, isLoadingOrdersHistory, ordersHistoryError, loadOrdersHistory } from '@/composables/use-orders-history'
+import { ordersHistory, isLoadingOrdersHistory, ordersHistoryError, loadOrdersHistory } from '@/composables/orders/use-orders-history'
 import { repeatOrder } from '@/composables/use-cart'
 
 const router = useRouter()
