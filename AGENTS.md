@@ -39,7 +39,7 @@ src/
   composables/    # Singleton reactive state modules (useX.js)
   constants/      # Enum-like frozen objects (orderType.js, orderStatus.js)
   helpers/        # Pure utility functions
-  layouts/        # Layout wrappers (DefaultLayout.vue)
+  layouts/        # Layout wrappers (default.layout.vue)
   pages/          # Route page components
   shadcn/         # shadcn-vue components
     lib/          # cn(), shadcn utilities
@@ -84,7 +84,7 @@ src/
 - `ContainerX` also registers as `Container` (via `unplugin-vue-components`).
 
 ### Components That MUST Be Explicitly Imported
-- Layouts: `import DefaultLayout from '@/layouts/DefaultLayout.vue'` (in router.js).
+- Layouts: `import DefaultLayout from '@/layouts/default.layout.vue'` (in router.js).
 - Page components: `import HomePage from '@/pages/home.page.vue'` (in router.js).
 
 ### Props & Events

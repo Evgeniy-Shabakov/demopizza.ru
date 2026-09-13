@@ -1,4 +1,4 @@
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import DefaultLayout from '@/layouts/default.layout.vue'
 import HomePage from '@/pages/home.page.vue'
 import ProfilePage from '@/pages/profile/profile.page.vue'
 import DeliveryAddressesPage from '@/pages/profile/delivery-addresses.page.vue'
