@@ -17,6 +17,7 @@ import { currentDeliveryZone } from '@/composables/useDeliveryZones'
 import { currentOrder } from '@/composables/useCurrentOrder'
 import { packTakeaway, tableNumber } from '@/composables/useOrderRestaurantSettings'
 import { lastOrder } from '@/composables/useLastOrder'
+import { normalizeProductImagePathForOrder } from '@/helpers/normalizeProductImagePath'
 
 const router = useRouter()
 
@@ -101,14 +102,9 @@ async function sendOrder() {
       const res = await api.post(`/orders`, orderData)
       currentOrder.value = res.data.data
 
-      const baseUrl = import.meta.env.VITE_SERVER_BASE_URL
-      currentOrder.value.orderProducts?.forEach(orderProduct => {
-         if (orderProduct.product?.imagePath) {
-            orderProduct.product.imagePath = `${baseUrl}/${orderProduct.product.imagePath.replace(/^\//, '').replace(/^storage\/public\/?/, '')}`
-         }
-      })
+      normalizeProductImagePathForOrder(currentOrder.value)
 
-      lastOrder.value = structuredClone(currentOrder.value)
+      lastOrder.value = JSON.parse(JSON.stringify(currentOrder.value))
 
       if (currentOrder.value.payment?.paymentUrl) {
          window.location.href = currentOrder.value.payment.paymentUrl

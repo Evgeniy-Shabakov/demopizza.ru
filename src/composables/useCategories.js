@@ -1,4 +1,5 @@
 import { api } from '@/api/api'
+import { normalizeProductImagePathForCategories } from '@/helpers/normalizeProductImagePath'
 
 export const categories = ref(null)
 export const isLoadingCategories = ref(false)
@@ -14,12 +15,7 @@ export async function loadCategories() {
    const response = await api.get('/categories')
    categories.value = response.data.data
 
-   const baseUrl = import.meta.env.VITE_SERVER_BASE_URL
-   categories.value.forEach(category => {
-      category.products.forEach(product => {
-         product.imagePath = `${baseUrl}${product.imagePath.replace('storage/public', '')}`
-      })
-   })
+   normalizeProductImagePathForCategories(categories.value)
 
    lastFetched.value = Date.now()
    isLoadingCategories.value = false

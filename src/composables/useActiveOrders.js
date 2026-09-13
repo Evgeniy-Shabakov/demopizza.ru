@@ -1,4 +1,5 @@
 import { api } from '@/api/api'
+import { normalizeProductImagePathForOrders } from '@/helpers/normalizeProductImagePath'
 
 export const activeOrders = ref([])
 export const isLoadingActiveOrders = ref(false)
@@ -14,14 +15,7 @@ export async function loadActiveOrders() {
       const response = await api.get('/orders/active')
       activeOrders.value = response.data.data ?? []
 
-      const baseUrl = import.meta.env.VITE_SERVER_BASE_URL
-      activeOrders.value.forEach(order => {
-         order.orderProducts?.forEach(orderProduct => {
-            if (orderProduct.product?.imagePath) {
-               orderProduct.product.imagePath = `${baseUrl}/${orderProduct.product.imagePath.replace(/^\//, '').replace(/^storage\/public\/?/, '')}`
-            }
-         })
-      })
+      normalizeProductImagePathForOrders(activeOrders.value)
    } catch (error) {
       activeOrdersError.value = error.response?.data?.message || 'Ошибка при загрузке активных заказов!'
    } finally {

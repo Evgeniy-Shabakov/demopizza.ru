@@ -1,4 +1,5 @@
 import { api } from '@/api/api'
+import { normalizeProductImagePathForOrder } from '@/helpers/normalizeProductImagePath'
 
 export const lastOrder = ref(null)
 export const isLoadingLastOrder = ref(false)
@@ -14,12 +15,7 @@ export async function loadLastOrder() {
       const response = await api.get('/orders/last')
       lastOrder.value = response.data.data
 
-      const baseUrl = import.meta.env.VITE_SERVER_BASE_URL
-      lastOrder.value?.orderProducts?.forEach(orderProduct => {
-         if (orderProduct.product?.imagePath) {
-            orderProduct.product.imagePath = `${baseUrl}/${orderProduct.product.imagePath.replace(/^\//, '').replace(/^storage\/public\/?/, '')}`
-         }
-      })
+      normalizeProductImagePathForOrder(lastOrder.value)
    } catch (error) {
       lastOrderError.value = error.response?.data?.message || 'Ошибка при загрузке последнего заказа!'
    } finally {
