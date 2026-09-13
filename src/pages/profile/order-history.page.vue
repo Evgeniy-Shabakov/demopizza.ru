@@ -1,7 +1,15 @@
 <script setup>
 import { ordersHistory, isLoadingOrdersHistory, ordersHistoryError, loadOrdersHistory } from '@/composables/use-orders-history'
+import { repeatOrder } from '@/composables/use-cart'
+
+const router = useRouter()
 
 loadOrdersHistory()
+
+function repeatOrderFromHistory(order) {
+   repeatOrder(order)
+   router.push('/cart')
+}
 </script>
 
 <template>
@@ -27,6 +35,11 @@ loadOrdersHistory()
             {{ new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }).format(new Date(order.createdAt)) }}
          </div>
          <OrderCard :order="order" />
+
+         <ButtonLgWfull class="mt-2"
+                        @click="repeatOrderFromHistory(order)">
+            Повторить заказ
+         </ButtonLgWfull>
       </div>
    </div>
 
