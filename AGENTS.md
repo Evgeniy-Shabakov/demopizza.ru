@@ -58,7 +58,7 @@ src/
 ### File Naming
 - **Vue components:** PascalCase (e.g., `ProductCard.vue`, `BottomNav.vue`).
 - **Page components:** lowercase `*.page.vue` (e.g., `home.page.vue`, `order-history.page.vue`).
-- **JS modules:** camelCase (e.g., `useCart.js`, `formatPhone.js`).
+- **JS modules:** helpers kebab-case (`format-phone.js`), composables camelCase (`useCart.js`).
 - **shadcn dirs:** kebab-case (e.g., `dropdown-menu/`, `native-select/`).
 
 ### Naming Conventions

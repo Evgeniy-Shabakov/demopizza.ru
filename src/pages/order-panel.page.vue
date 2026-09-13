@@ -8,7 +8,7 @@ import {
 import { inputedPhone } from '@/composables/usePhoneInput'
 import { currentRestaurant } from '@/composables/useRestaurants'
 import { currentUserAddress } from '@/composables/useUserAddresses'
-import { formatPhone } from '@/helpers/formatPhone'
+import { formatPhone } from '@/helpers/format-phone'
 import { paymentTypeId } from '@/composables/usePaymentType'
 import { productsInOrder } from '@/composables/useCart'
 import { deliveryPrice, totalPrice, totalProductPrice } from '@/composables/usePrices'
@@ -17,7 +17,7 @@ import { currentDeliveryZone } from '@/composables/useDeliveryZones'
 import { currentOrder } from '@/composables/useCurrentOrder'
 import { packTakeaway, tableNumber } from '@/composables/useOrderRestaurantSettings'
 import { lastOrder } from '@/composables/useLastOrder'
-import { normalizeProductImagePathForOrder } from '@/helpers/normalizeProductImagePath'
+import { normalizeProductImagePathForOrder } from '@/helpers/normalize-product-image-path'
 
 const router = useRouter()
 

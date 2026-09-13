@@ -1,5 +1,5 @@
 import { categories } from '@/composables/useCategories'
-import { isProductInStopList } from '@/helpers/isProductInStopList'
+import { isProductInStopList } from '@/helpers/is-product-in-stop-list'
 
 export const itemsInCart = useLocalStorage('cart_v1', [])
 

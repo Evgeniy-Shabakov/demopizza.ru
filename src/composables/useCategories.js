@@ -1,5 +1,5 @@
 import { api } from '@/api/api'
-import { normalizeProductImagePathForCategories } from '@/helpers/normalizeProductImagePath'
+import { normalizeProductImagePathForCategories } from '@/helpers/normalize-product-image-path'
 
 export const categories = ref(null)
 export const isLoadingCategories = ref(false)

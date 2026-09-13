@@ -1,5 +1,5 @@
 import { api } from '@/api/api'
-import { normalizeProductImagePathForOrder } from '@/helpers/normalizeProductImagePath'
+import { normalizeProductImagePathForOrder } from '@/helpers/normalize-product-image-path'
 
 export const lastOrder = ref(null)
 export const isLoadingLastOrder = ref(false)

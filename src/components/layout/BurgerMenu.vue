@@ -1,7 +1,7 @@
 <script setup>
 import { Menu, X, Phone } from '@lucide/vue'
 import { company } from '@/composables/useCompany'
-import { formatPhone } from '@/helpers/formatPhone'
+import { formatPhone } from '@/helpers/format-phone'
 
 </script>
 

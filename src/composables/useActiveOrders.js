@@ -1,5 +1,5 @@
 import { api } from '@/api/api'
-import { normalizeProductImagePathForOrders } from '@/helpers/normalizeProductImagePath'
+import { normalizeProductImagePathForOrders } from '@/helpers/normalize-product-image-path'
 
 export const activeOrders = ref([])
 export const isLoadingActiveOrders = ref(false)

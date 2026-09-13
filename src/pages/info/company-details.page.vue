@@ -1,6 +1,6 @@
 <script setup>
 import { company } from '@/composables/useCompany'
-import { formatPhone } from '@/helpers/formatPhone'
+import { formatPhone } from '@/helpers/format-phone'
 </script>
 
 <template>
