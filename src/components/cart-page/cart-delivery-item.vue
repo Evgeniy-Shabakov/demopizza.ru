@@ -7,7 +7,7 @@ import { deliveryPrice } from '@/composables/use-prices';
 <template>
    <Card class="flex-row gap-3.5 p-2 sm:p-3 lg:p-4">
 
-      <div class="w-1/5 xs:w-30 flex justify-center items-center">
+      <div class="w-1/5 sm:w-30 flex justify-center items-center">
          <Truck class="size-8 text-primary" />
       </div>
       <div class="flex gap-2 flex-1 min-w-0 justify-between items-center">
