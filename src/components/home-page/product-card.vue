@@ -27,9 +27,10 @@ const cartItem = computed(() =>
          <CardDescription class="line-clamp-2 sm:line-clamp-none">
             {{ product.descriptionShort }}
          </CardDescription>
-         <div class="font-semibold text-sm mt-auto">{{ product.priceDefault }} ₽</div>
       </RouterLink>
-
+      
+      <div class="font-semibold text-sm mt-auto">{{ product.priceDefault }} ₽</div>
+      
       <ButtonWfull v-if="isInStopList"
                    disabled>
          Будет позже
