@@ -7,7 +7,7 @@ import {
    restaurantsForPickUpAtCounter
 }
    from '@/composables/useRestaurants'
-import { ORDER_TYPE } from '@/constants/orderType'
+import { ORDER_TYPE } from '@/constants/order-type'
 </script>
 
 <template>

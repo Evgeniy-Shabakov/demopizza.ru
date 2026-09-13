@@ -1,7 +1,7 @@
 <script setup>
 import { atRest, pickUpAtCounter } from '@/composables/useOrderType'
 import { restaurantId, availableRestaurants } from '@/composables/useRestaurants'
-import { ORDER_TYPE } from '@/constants/orderType'
+import { ORDER_TYPE } from '@/constants/order-type'
 </script>
 
 <template>

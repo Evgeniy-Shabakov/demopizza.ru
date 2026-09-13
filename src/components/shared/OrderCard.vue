@@ -1,7 +1,7 @@
 <script setup>
-import { ORDER_STATUS_NAME_BY_ID } from '@/constants/orderStatus'
-import { ORDER_TYPE } from '@/constants/orderType'
-import { PAYMENT_STATUS, PAYMENT_STATUS_NAME_BY_ID } from '@/constants/paymentStatus'
+import { ORDER_STATUS_NAME_BY_ID } from '@/constants/order-status'
+import { ORDER_TYPE } from '@/constants/order-type'
+import { PAYMENT_STATUS, PAYMENT_STATUS_NAME_BY_ID } from '@/constants/payment-status'
 
 const ORDER_TYPE_SHORT_NAME_BY_ID = {
    [ORDER_TYPE.DELIVERY_TO_ADDRESS.ID]: 'доставка',

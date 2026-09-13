@@ -1,4 +1,4 @@
-import { ORDER_STATUS } from "./orderStatus.js"
+import { ORDER_STATUS } from "./order-status.js"
 
 export const ORDER_TYPE = Object.freeze({
    DELIVERY_TO_ADDRESS: {

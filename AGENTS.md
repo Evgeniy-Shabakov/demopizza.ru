@@ -37,7 +37,7 @@ src/
     simple/       # Small standalone components
     structure/    # Layout structural components
   composables/    # Singleton reactive state modules (useX.js)
-  constants/      # Enum-like frozen objects (orderType.js, orderStatus.js)
+  constants/      # Enum-like frozen objects (order-type.js, order-status.js)
   helpers/        # Pure utility functions
   layouts/        # Layout wrappers (default.layout.vue)
   pages/          # Route page components
@@ -58,7 +58,7 @@ src/
 ### File Naming
 - **Vue components:** PascalCase (e.g., `ProductCard.vue`, `BottomNav.vue`).
 - **Page components:** lowercase `*.page.vue` (e.g., `home.page.vue`, `order-history.page.vue`).
-- **JS modules:** helpers kebab-case (`format-phone.js`), composables camelCase (`useCart.js`).
+- **JS modules:** helpers and constants kebab-case (`format-phone.js`, `order-type.js`), composables camelCase (`useCart.js`).
 - **shadcn dirs:** kebab-case (e.g., `dropdown-menu/`, `native-select/`).
 
 ### Naming Conventions

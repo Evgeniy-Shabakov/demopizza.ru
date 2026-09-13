@@ -1,4 +1,4 @@
-import { ORDER_TYPE } from "@/constants/orderType"
+import { ORDER_TYPE } from "@/constants/order-type"
 
 export const orderTypeId = useLocalStorage('order_type_id', ORDER_TYPE.DELIVERY_TO_ADDRESS.ID)
 

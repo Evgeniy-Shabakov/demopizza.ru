@@ -1,4 +1,4 @@
-import { ORDER_TYPE } from '@/constants/orderType'
+import { ORDER_TYPE } from '@/constants/order-type'
 import { api } from '@/api/api'
 import { cityId } from '@/composables/useCities'
 import { atRest, orderTypeId, pickUpAtCounter } from '@/composables/useOrderType'

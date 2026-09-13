@@ -1,4 +1,4 @@
-import { PAYMENT_TYPE } from "@/constants/paymentType"
+import { PAYMENT_TYPE } from "@/constants/payment-type"
 
 export const paymentTypeId = useLocalStorage(
    'payment_type_id', Number(import.meta.env.VITE_PAYMENT_TYPE_BY_DEFAULT))
