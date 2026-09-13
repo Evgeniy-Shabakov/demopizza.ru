@@ -56,7 +56,8 @@ src/
 - SFCs have `<template>`, `<script setup>`, `<style>` in that order (no `<style scoped>` — all classes are global Tailwind utilities). Some components omit `<style>` entirely.
 
 ### File Naming
-- **Vue components:** PascalCase (e.g., `HomePage.vue`, `ProductCard.vue`, `BottomNav.vue`).
+- **Vue components:** PascalCase (e.g., `ProductCard.vue`, `BottomNav.vue`).
+- **Page components:** lowercase `*.page.vue` (e.g., `home.page.vue`, `order-history.page.vue`).
 - **JS modules:** camelCase (e.g., `useCart.js`, `formatPhone.js`).
 - **shadcn dirs:** kebab-case (e.g., `dropdown-menu/`, `native-select/`).
 
@@ -84,7 +85,7 @@ src/
 
 ### Components That MUST Be Explicitly Imported
 - Layouts: `import DefaultLayout from '@/layouts/DefaultLayout.vue'` (in router.js).
-- Page components: `import HomePage from '@/pages/HomePage.vue'` (in router.js).
+- Page components: `import HomePage from '@/pages/home.page.vue'` (in router.js).
 
 ### Props & Events
 - Define props using **object syntax** with `type`, `required`, `default`:
