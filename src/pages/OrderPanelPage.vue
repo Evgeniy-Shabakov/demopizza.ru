@@ -16,6 +16,7 @@ import { authUser } from '@/composables/useAuthUser'
 import { currentDeliveryZone } from '@/composables/useDeliveryZones'
 import { currentOrder } from '@/composables/useCurrentOrder'
 import { packTakeaway, tableNumber } from '@/composables/useOrderRestaurantSettings'
+import { lastOrder } from '@/composables/useLastOrder'
 
 const router = useRouter()
 
@@ -106,6 +107,8 @@ async function sendOrder() {
             orderProduct.product.imagePath = `${baseUrl}/${orderProduct.product.imagePath.replace(/^\//, '').replace(/^storage\/public\/?/, '')}`
          }
       })
+
+      lastOrder.value = structuredClone(currentOrder.value)
 
       if (currentOrder.value.payment?.paymentUrl) {
          window.location.href = currentOrder.value.payment.paymentUrl

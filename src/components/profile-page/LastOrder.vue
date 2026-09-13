@@ -2,9 +2,8 @@
 import { lastOrder, isLoadingLastOrder, lastOrderError, loadLastOrder }
    from '@/composables/useLastOrder'
 
-onMounted(() => {
-   loadLastOrder()
-})
+if(!lastOrder.value) loadLastOrder()
+
 </script>
 
 <template>
