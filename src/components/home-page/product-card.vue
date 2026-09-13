@@ -15,41 +15,40 @@ const cartItem = computed(() =>
 </script>
 
 <template>
-   <Card class="gap-3.5 p-2 sm:p-3 lg:p-4">
+   <Card class="gap-2 p-2">
 
-      <img :src="product.imagePath"
-           :alt="product.title"
-           class="shrink-0 self-start w-full aspect-square rounded-xl" />
+      <!-- <div> -->
+         <img :src="product.imagePath"
+              :alt="product.title"
+              class="w-full aspect-square rounded-xl mb-1.5" />
 
-      <div class="flex flex-col gap-2 min-w-0 grow">
          <CardTitle>{{ product.name }}</CardTitle>
          <CardDescription class="line-clamp-2 sm:line-clamp-none">
             {{ product.descriptionShort }}
          </CardDescription>
          <div class="font-semibold text-sm mt-auto">{{ product.priceDefault }} ₽</div>
+      <!-- </div> -->
 
-         <ButtonWfull v-if="isInStopList"
-                      disabled>
-            Будет позже
-         </ButtonWfull>
-         <template v-else-if="cartItem && cartItem.quantity > 0">
-            <div class="flex items-center gap-3 justify-between">
-               <ButtonIcon variant="outline"
-                           @click="minusProductFromCart(product.id)">
-                  <Minus />
-               </ButtonIcon>
-               <span class="w-4 text-center font-medium">{{ cartItem.quantity }}</span>
-               <ButtonIcon @click="addProductToCart(product.id)">
-                  <Plus />
-               </ButtonIcon>
-            </div>
-         </template>
-         <ButtonWfull v-else
-                      @click="addProductToCart(product.id)">
-            В корзину
-         </ButtonWfull>
-
-      </div>
+      <ButtonWfull v-if="isInStopList"
+                   disabled>
+         Будет позже
+      </ButtonWfull>
+      <template v-else-if="cartItem && cartItem.quantity > 0">
+         <div class="flex items-center gap-3 justify-between">
+            <ButtonIcon variant="outline"
+                        @click="minusProductFromCart(product.id)">
+               <Minus />
+            </ButtonIcon>
+            <span class="w-4 text-center font-medium">{{ cartItem.quantity }}</span>
+            <ButtonIcon @click="addProductToCart(product.id)">
+               <Plus />
+            </ButtonIcon>
+         </div>
+      </template>
+      <ButtonWfull v-else
+                   @click="addProductToCart(product.id)">
+         В корзину
+      </ButtonWfull>
 
    </Card>
 </template>

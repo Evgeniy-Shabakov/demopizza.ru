@@ -15,6 +15,7 @@ import OrderPanelPage from '@/pages/order-panel.page.vue'
 import PhonePage from '@/pages/phone.page.vue'
 import OrderSuccessPage from '@/pages/order-success.page.vue'
 import LoginPage from '@/pages/login.page.vue'
+import ProductPage from '@/pages/product.page.vue'
 
 export const routes = [
    {
@@ -28,6 +29,7 @@ export const routes = [
          { path: 'profile/order-history', name: 'profile-order-history', component: OrderHistoryPage },
          { path: 'login', name: 'login', component: LoginPage },
          { path: 'cart', name: 'cart', component: CartPage },
+         { path: 'products/:id', name: 'product', component: ProductPage },
          { path: 'phone', name: 'phone', component: PhonePage },
          { path: 'order-panel', name: 'order-panel', component: OrderPanelPage },
          { path: 'order-success', name: 'order-success', component: OrderSuccessPage },
