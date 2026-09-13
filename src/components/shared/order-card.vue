@@ -1,5 +1,5 @@
 <script setup>
-import { ORDER_STATUS_NAME_BY_ID } from '@/constants/order-status'
+import { ORDER_STATUS, ORDER_STATUS_NAME_BY_ID } from '@/constants/order-status'
 import { ORDER_TYPE } from '@/constants/order-type'
 import { PAYMENT_STATUS, PAYMENT_STATUS_NAME_BY_ID } from '@/constants/payment-status'
 
@@ -69,6 +69,10 @@ const orderProgress = computed(() => {
 })
 
 const orderProgressRounded = computed(() => Math.round(orderProgress.value))
+
+const isFinishedOrder = computed(() =>
+   [ORDER_STATUS.COMPLETED.ID, ORDER_STATUS.CANCEL.ID].includes(props.order.orderStatusId)
+)
 </script>
 
 <template>
@@ -93,7 +97,8 @@ const orderProgressRounded = computed(() => Math.round(orderProgress.value))
 
       <div class="flex items-center gap-2">
          <div class="h-2 flex-1 rounded-full bg-muted overflow-hidden">
-            <div class="h-full rounded-full bg-primary transition-all duration-500 order-progress-stripe"
+            <div class="h-full rounded-full bg-primary transition-all duration-500"
+                 :class="{ 'order-progress-stripe': !isFinishedOrder }"
                  :style="{ width: `${orderProgress}%` }" />
          </div>
          <span class="text-muted-foreground text-xs tabular-nums shrink-0">
