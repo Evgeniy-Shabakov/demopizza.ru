@@ -17,7 +17,8 @@ const cartItem = computed(() =>
 <template>
    <Card class="gap-2 p-2">
 
-      <!-- <div> -->
+      <RouterLink :to="{ name: 'product', params: { id: product.id } }"
+                  class="flex flex-col gap-2 flex-1">
          <img :src="product.imagePath"
               :alt="product.title"
               class="w-full aspect-square rounded-xl mb-1.5" />
@@ -27,7 +28,7 @@ const cartItem = computed(() =>
             {{ product.descriptionShort }}
          </CardDescription>
          <div class="font-semibold text-sm mt-auto">{{ product.priceDefault }} ₽</div>
-      <!-- </div> -->
+      </RouterLink>
 
       <ButtonWfull v-if="isInStopList"
                    disabled>
