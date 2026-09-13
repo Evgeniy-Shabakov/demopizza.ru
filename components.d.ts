@@ -66,6 +66,7 @@ declare module 'vue' {
     Input: typeof import('./src/shadcn/ui/input/Input.vue')['default']
     Label: typeof import('./src/shadcn/ui/label/Label.vue')['default']
     LastOrder: typeof import('./src/components/profile-page/last-order.vue')['default']
+    LastOrderCard: typeof import('./src/components/profile-page/last-order-card.vue')['default']
     MobileHomePageHeader: typeof import('./src/components/home-page/mobile-home-page-header.vue')['default']
     NativeSelect: typeof import('./src/shadcn/ui/native-select/NativeSelect.vue')['default']
     NativeSelectOptGroup: typeof import('./src/shadcn/ui/native-select/NativeSelectOptGroup.vue')['default']

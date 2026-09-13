@@ -19,7 +19,7 @@ if(!lastOrder.value) loadLastOrder()
          {{ lastOrderError }}
       </div>
 
-      <OrderCard v-else-if="lastOrder"
-                 :order="lastOrder" />
+      <LastOrderCard v-else-if="lastOrder"
+                     :order="lastOrder" />
    </section>
 </template>
