@@ -14,7 +14,7 @@ import { productsInOrder } from '@/composables/useCart'
 import { deliveryPrice, totalPrice, totalProductPrice } from '@/composables/usePrices'
 import { authUser } from '@/composables/useAuthUser'
 import { currentDeliveryZone } from '@/composables/useDeliveryZones'
-import { currentOrder, lastOrderForUser } from '@/composables/useOrder'
+import { currentOrder } from '@/composables/useCurrentOrder'
 import { packTakeaway, tableNumber } from '@/composables/useOrderRestaurantSettings'
 
 const router = useRouter()
@@ -106,8 +106,6 @@ async function sendOrder() {
             orderProduct.product.imagePath = `${baseUrl}/${orderProduct.product.imagePath.replace(/^\//, '').replace(/^storage\/public\/?/, '')}`
          }
       })
-
-      lastOrderForUser.value = res.data.data
 
       if (currentOrder.value.payment?.paymentUrl) {
          window.location.href = currentOrder.value.payment.paymentUrl

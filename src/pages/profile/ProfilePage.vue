@@ -30,5 +30,7 @@ import { formatPhone } from '@/helpers/formatPhone';
 
    <ActiveOrders class="mt-4" />
 
+   <LastOrder class="mt-4" />
+
    <BottomBar />
 </template>

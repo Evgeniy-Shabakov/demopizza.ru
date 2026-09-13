@@ -65,6 +65,7 @@ declare module 'vue' {
     DropdownMenuTrigger: typeof import('./src/shadcn/ui/dropdown-menu/DropdownMenuTrigger.vue')['default']
     Input: typeof import('./src/shadcn/ui/input/Input.vue')['default']
     Label: typeof import('./src/shadcn/ui/label/Label.vue')['default']
+    LastOrder: typeof import('./src/components/profile-page/LastOrder.vue')['default']
     MobileHomePageHeader: typeof import('./src/components/home-page/MobileHomePageHeader.vue')['default']
     NativeSelect: typeof import('./src/shadcn/ui/native-select/NativeSelect.vue')['default']
     NativeSelectOptGroup: typeof import('./src/shadcn/ui/native-select/NativeSelectOptGroup.vue')['default']
