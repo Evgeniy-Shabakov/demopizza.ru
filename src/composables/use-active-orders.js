@@ -13,7 +13,7 @@ export async function loadActiveOrders() {
 
    try {
       const response = await api.get('/orders/active')
-      activeOrders.value = response.data.data ?? []
+      activeOrders.value = response.data.data
 
       normalizeProductImagePathForOrders(activeOrders.value)
    } catch (error) {
