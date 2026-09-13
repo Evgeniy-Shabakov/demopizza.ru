@@ -66,3 +66,12 @@ export function removeProductFromCart(productId) {
 export function clearCart() {
    itemsInCart.value = []
 }
+
+export function repeatOrder(order) {
+   itemsInCart.value = order.orderProducts
+      .filter(orderProduct => !isProductInStopList(orderProduct.product))
+      .map(orderProduct => ({
+         productId: orderProduct.product.id,
+         quantity: orderProduct.quantity,
+      }))
+}

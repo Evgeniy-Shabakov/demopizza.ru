@@ -1,6 +1,15 @@
 <script setup>
 import { authUser } from '@/composables/use-auth-user'
 import { formatPhone } from '@/helpers/format-phone';
+import { lastOrder } from '@/composables/use-last-order'
+import { repeatOrder } from '@/composables/use-cart'
+
+const router = useRouter()
+
+function repeatLastOrder() {
+   repeatOrder(lastOrder.value)
+   router.push('/cart')
+}
 
 </script>
 
@@ -32,5 +41,14 @@ import { formatPhone } from '@/helpers/format-phone';
 
    <LastOrder class="mt-4" />
 
-   <BottomBar />
+   <BottomBar>
+      <ButtonLgWfull v-if="lastOrder"
+                     @click="repeatLastOrder">
+         Повторить последний заказ
+      </ButtonLgWfull>
+      <ButtonLgWfull v-else
+                     @click="$router.back()">
+         Назад
+      </ButtonLgWfull>
+   </BottomBar>
 </template>
