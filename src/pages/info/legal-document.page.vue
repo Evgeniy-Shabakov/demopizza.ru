@@ -20,12 +20,23 @@ const isIframeLoaded = ref(false)
 function onIframeLoad() {
    isIframeLoaded.value = true
 }
+
+const reservedSpaceForCookies = ref(0)
+
+onMounted(() => nextTick(() => {
+   const cookieBanner = document.getElementById('cookie-consent')
+   reservedSpaceForCookies.value = !isCookieConsentAccepted.value && cookieBanner
+      ? Math.max(0, cookieBanner.offsetHeight - 84 + 16)
+      : 0
+}))
+
+watch(isCookieConsentAccepted, () => { reservedSpaceForCookies.value = 0 })
 </script>
 
 <template>
 
    <div class="flex-1 flex flex-col"
-        :class="!isCookieConsentAccepted ? 'pb-40' : ''">
+        :style="{ paddingBottom: `${reservedSpaceForCookies}px` }">
 
       <PageHeader>Правовая информация</PageHeader>
 

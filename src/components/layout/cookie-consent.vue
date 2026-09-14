@@ -9,6 +9,7 @@ function acceptCookieConsent() {
 
 <template>
    <div v-if="!isCookieConsentAccepted"
+        id="cookie-consent"
         class="fixed bottom-12 inset-x-0 z-40 border-t bg-background">
 
       <ContainerX>
