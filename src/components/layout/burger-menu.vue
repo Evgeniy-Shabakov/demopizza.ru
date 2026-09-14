@@ -27,6 +27,8 @@ import { formatPhone } from '@/helpers/format-phone'
             {{ formatPhone(company.phoneForOrders) }}
          </a>
 
+         <PwaInstallButton />
+
          <WorkSchedule />
 
          <div class="flex flex-col">
