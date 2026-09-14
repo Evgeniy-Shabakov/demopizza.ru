@@ -1,4 +1,5 @@
 <script setup>
+import { UserRoundCheck, UserRoundX } from '@lucide/vue'
 import { deliveryToAddress } from '@/composables/use-order-type'
 import { totalProductPrice } from '@/composables/use-prices'
 import { currentDeliveryZone } from '@/composables/use-delivery-zones'
@@ -69,9 +70,11 @@ const isButtonNextActive = computed(() => {
                </DialogHeader>
 
                 <ButtonLg @click="$router.push('/login?redirect=/order-panel')">
+                   <UserRoundCheck class="size-5" />
                    Войти в личный кабинет
                 </ButtonLg>
                <ButtonLg @click="$router.push('/phone')">
+                  <UserRoundX class="size-5" />
                   Продолжить без входа
                </ButtonLg>
             </DialogContent>
