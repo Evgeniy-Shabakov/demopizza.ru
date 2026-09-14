@@ -1,5 +1,5 @@
 <script setup>
-import { Plus } from '@lucide/vue'
+import { Plus, MapPinPlus } from '@lucide/vue'
 import { userAddresses, currentUserAddress } from '@/composables/use-user-addresses'
 import { currentCity } from '@/composables/use-cities'
 import { currentDeliveryZone } from '@/composables/use-delivery-zones'
@@ -15,7 +15,10 @@ const userAddressesForSelectedCity = computed(() =>
       <div v-if="userAddressesForSelectedCity.length == 0"
            class="h-14 flex justify-center items-center">
          <ButtonLg as-child>
-            <RouterLink to="/create-address">Добавить адрес доставки</RouterLink>
+            <RouterLink to="/create-address">
+               <MapPinPlus class="size-5" />
+               Добавить адрес доставки
+            </RouterLink>
          </ButtonLg>
       </div>
 
