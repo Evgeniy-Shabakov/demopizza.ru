@@ -20,7 +20,7 @@ const isPWAdetect = isPWA()
 
 <template>
    <Button v-if="!isPWAdetect"
-           class="w-full h-14 py-2.5"
+           class="h-14"
            @click="install">
       <Download class="size-5" />
       Установить мобильное <br> приложение
