@@ -1,5 +1,5 @@
 <script setup>
-import { Minus, Plus, ShoppingCart, Hourglass } from '@lucide/vue'
+import { Minus, Plus, ShoppingCart, Hourglass, ArrowLeft } from '@lucide/vue'
 import { categories, isLoadingCategories, loadCategories } from '@/composables/use-categories'
 import { itemsInCart, addProductToCart, minusProductFromCart } from '@/composables/use-cart'
 import { isProductInStopList } from '@/helpers/is-product-in-stop-list'
@@ -59,6 +59,7 @@ const isNotFound = computed(() =>
    <BottomBar>
       <template v-if="!currentProduct">
          <ButtonLgWfull @click="$router.back()">
+            <ArrowLeft class="size-5" />
             Назад
          </ButtonLgWfull>
       </template>

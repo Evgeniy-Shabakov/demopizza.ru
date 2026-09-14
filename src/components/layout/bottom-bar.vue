@@ -1,5 +1,8 @@
-<template>
+<script setup>
+import { ArrowLeft } from '@lucide/vue'
+</script>
 
+<template>
    <div class="fixed bottom-12 inset-x-0 border-t bg-background">
 
       <ContainerX>
@@ -9,7 +12,8 @@
             <slot />
 
             <ButtonLgWfull v-if="!$slots.default"
-                           @click="$router.back()">
+                            @click="$router.back()">
+               <ArrowLeft class="size-5" />
                Назад
             </ButtonLgWfull>
 

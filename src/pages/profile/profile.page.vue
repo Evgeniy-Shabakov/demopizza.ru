@@ -3,7 +3,7 @@ import { authUser } from '@/composables/use-auth-user'
 import { formatPhone } from '@/helpers/format-phone';
 import { lastOrder } from '@/composables/orders/use-last-order'
 import { repeatOrder } from '@/composables/use-cart'
-import { MapPin, UserRound, History, RotateCcw } from '@lucide/vue'
+import { MapPin, UserRound, History, RotateCcw, ArrowLeft } from '@lucide/vue'
 
 const router = useRouter()
 
@@ -51,8 +51,9 @@ function repeatLastOrder() {
          <RotateCcw class="size-5" />
          Повторить последний заказ
       </ButtonLgWfull>
-      <ButtonLgWfull v-else
-                     @click="$router.back()">
+<ButtonLgWfull v-else
+                      @click="$router.back()">
+         <ArrowLeft class="size-5" />
          Назад
       </ButtonLgWfull>
    </BottomBar>
