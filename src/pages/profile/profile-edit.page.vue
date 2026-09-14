@@ -1,5 +1,6 @@
 <script setup>
 import { authUser, logoutUser } from '@/composables/use-auth-user'
+import { LogOut } from '@lucide/vue'
 import { formatPhone } from '@/helpers/format-phone'
 import router from '@/router/router'
 
@@ -21,6 +22,7 @@ async function handleLogout() {
    <Button variant="destructive"
            :disabled="isLoggingOut"
            @click="isDialogOpen = true">
+      <LogOut class="size-4" />
       Выйти из профиля
    </Button>
 
