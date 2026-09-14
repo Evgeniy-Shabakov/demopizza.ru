@@ -1,5 +1,41 @@
 <script setup>
+import { installPrompt } from '@/helpers/pwa/pwa-btn-initialize'
+import { BROWSER_TYPE, OS_TYPE, detectBrowser, detectOS } from '@/helpers/pwa/enviroment-detecting'
+import safariShareIcon from '@/assets/images/safari-share.png'
+import safariIcon from '@/assets/images/safari.png'
+import googleOptionIcon from '@/assets/images/google-option.png'
+import googleChromeIcon from '@/assets/images/google-chrome.png'
+
 const brandName = import.meta.env.VITE_BRAND_NAME
+const linkInstallApp = window.location.origin
+
+const OS = detectOS()
+const Browser = detectBrowser()
+
+const isAboutInstall = ref(false)
+
+function copyLink() {
+   navigator.clipboard.writeText(linkInstallApp)
+
+   const msg = document.createElement('div')
+   msg.innerText = 'Скопировано!'
+   msg.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      z-index: 9999;
+      white-space: nowrap;
+   `
+   document.body.appendChild(msg)
+
+   setTimeout(() => msg.remove(), 1000)
+}
 </script>
 
 <template>
@@ -23,7 +59,7 @@ const brandName = import.meta.env.VITE_BRAND_NAME
                   <ol class="list-decimal px-4 space-y-2 marker:text-blue-500 marker:font-bold">
                      <li>
                         Нажмите кнопку "Поделиться" внизу экрана
-                        <img src="/assets/icons/safari-share.png"
+                        <img :src="safariShareIcon"
                              class="ml-2 inline size-6 bg-gray-200">
                      </li>
                      <li>Выберите опцию "На экран "Домой"</li>
@@ -35,7 +71,7 @@ const brandName = import.meta.env.VITE_BRAND_NAME
                   <ol class="list-decimal px-4 space-y-2 marker:text-blue-500 marker:font-bold">
                      <li>
                         Справа от адресной строки нажмите на значок "Поделиться"
-                        <img src="/assets/icons/safari-share.png"
+                        <img :src="safariShareIcon"
                              class="ml-2 inline size-6 bg-gray-200">
                      </li>
                      <li>Выбирите опцию "Добавить на главный экран"</li>
@@ -53,7 +89,7 @@ const brandName = import.meta.env.VITE_BRAND_NAME
                            {{ linkInstallApp }}
                         </div>
                         <span>в браузере Safari</span>
-                        <img src="/assets/icons/safari.png"
+                        <img :src="safariIcon"
                              class="ml-2 inline size-6">
                      </li>
                      <li>
@@ -62,9 +98,9 @@ const brandName = import.meta.env.VITE_BRAND_NAME
                   </ol>
 
                   <div class="mt-4 flex flex-col gap-4">
-                     <BaseButton :click="() => copyLink()">
+                     <Button @click="copyLink">
                         Скопировать ссылку
-                     </BaseButton>
+                     </Button>
                   </div>
 
                </div>
@@ -78,7 +114,7 @@ const brandName = import.meta.env.VITE_BRAND_NAME
                   <ol class="list-decimal px-4 space-y-2 marker:text-blue-500 marker:font-bold">
                      <li>
                         Справа от адресной строки нажмите на значок с тремя точками
-                        <img src="/assets/icons/google-option.png"
+                        <img :src="googleOptionIcon"
                              class="ml-2 inline size-6 bg-gray-200">
                      </li>
                      <li>Добавить на главный экран</li>
@@ -97,7 +133,7 @@ const brandName = import.meta.env.VITE_BRAND_NAME
                            {{ linkInstallApp }}
                         </div>
                         <span>в браузере Chrome</span>
-                        <img src="/assets/icons/google-chrome.png"
+                        <img :src="googleChromeIcon"
                              class="ml-2 inline size-6">
                      </li>
                      <li>
@@ -106,9 +142,9 @@ const brandName = import.meta.env.VITE_BRAND_NAME
                   </ol>
 
                   <div class="mt-4 flex flex-col gap-4">
-                     <BaseButton :click="() => copyLink()">
+                     <Button @click="copyLink">
                         Скопировать ссылку
-                     </BaseButton>
+                     </Button>
                   </div>
 
                </div>
