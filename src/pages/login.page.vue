@@ -2,6 +2,7 @@
 import * as VKID from '@vkid/sdk'
 import { User, PackageCheck, MapPin } from '@lucide/vue'
 import { loginUser } from '@/composables/use-auth-user'
+import vkLogo from '@/assets/images/vk-logo.png'
 
 const route = useRoute()
 const router = useRouter()
@@ -51,9 +52,9 @@ async function handleButton() {
          Вход в личный кабинет
          <br> осуществляется с помощью VKID
          <br> это просто и безопасно
-         <img src="/vk-logo.png"
-              class="size-12 object-contain mx-auto mt-2"
-              alt="VK ID" />
+          <img :src="vkLogo"
+               class="size-12 object-contain mx-auto mt-2"
+               alt="VK ID" />
       </PageHeader>
 
       <div>
@@ -108,9 +109,9 @@ async function handleButton() {
       <ButtonLgWfull :disabled="!isCheckedSoglasie || isLoading"
                      @click="handleButton">
          Продолжить с VK ID
-         <img src="/vk-logo.png"
-              class="size-6 rounded-md object-contain"
-              alt="VK ID" />
+         <img :src="vkLogo"
+               class="size-6 rounded-md object-contain"
+               alt="VK ID" />
       </ButtonLgWfull>
    </BottomBar>
 </template>
