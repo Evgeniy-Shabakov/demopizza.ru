@@ -39,6 +39,7 @@ declare module 'vue' {
     Checkbox: typeof import('./src/shadcn/ui/checkbox/Checkbox.vue')['default']
     CitySelect: typeof import('./src/components/shared/city-select.vue')['default']
     ContainerX: typeof import('./src/components/layout/container-x.vue')['default']
+    CookieConsent: typeof import('./src/components/layout/cookie-consent.vue')['default']
     DeliveryAddressSelect: typeof import('./src/components/cart-page/delivery-address-select.vue')['default']
     Dialog: typeof import('./src/shadcn/ui/dialog/Dialog.vue')['default']
     DialogClose: typeof import('./src/shadcn/ui/dialog/DialogClose.vue')['default']

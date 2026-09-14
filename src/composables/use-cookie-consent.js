@@ -1,0 +1,1 @@
+export const isCookieConsentAccepted = useLocalStorage('cookie_consent_v1', false)

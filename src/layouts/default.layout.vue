@@ -24,4 +24,6 @@ onMounted(() => {
 
    <BottomNav class="h-12" />
 
+   <CookieConsent />
+
 </template>
