@@ -71,11 +71,13 @@ const isNotFound = computed(() =>
       <template v-else-if="cartItem && cartItem.quantity > 0">
          <div class="flex items-center gap-6 justify-between w-full">
             <ButtonIcon variant="outline"
+                        size="icon-lg"
                         @click="minusProductFromCart(id)">
                <Minus />
             </ButtonIcon>
             <span class="w-4 text-center font-medium tabular-nums">{{ cartItem.quantity }}</span>
-            <ButtonIcon @click="addProductToCart(id)">
+            <ButtonIcon size="icon-lg"
+                        @click="addProductToCart(id)">
                <Plus />
             </ButtonIcon>
          </div>
