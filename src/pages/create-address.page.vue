@@ -1,5 +1,6 @@
 <script setup>
 import { currentCity } from '@/composables/use-cities'
+import { CircleCheck } from '@lucide/vue'
 import { saveNewAddress } from '@/composables/use-user-addresses'
 
 const router = useRouter()
@@ -101,8 +102,9 @@ async function saveAddress() {
    </div>
 
    <BottomBar>
-      <ButtonLgWfull :disabled="!address || isSaving"
-                     @click="saveAddress">
+<ButtonLgWfull :disabled="!address || isSaving"
+                      @click="saveAddress">
+         <CircleCheck class="size-5" />
          Сохранить адрес
       </ButtonLgWfull>
    </BottomBar>
