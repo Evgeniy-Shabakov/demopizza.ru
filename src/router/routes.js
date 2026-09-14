@@ -16,6 +16,7 @@ import PhonePage from '@/pages/phone.page.vue'
 import OrderSuccessPage from '@/pages/order-success.page.vue'
 import LoginPage from '@/pages/login.page.vue'
 import ProductPage from '@/pages/product.page.vue'
+import InstallPage from '@/pages/install.page.vue'
 
 export const routes = [
    {
@@ -39,6 +40,7 @@ export const routes = [
          { path: 'legal-documents', name: 'legal-documents', component: LegalDocumentsIndexPage },
          { path: 'legal-documents/:id', name: 'legal-document', component: LegalDocumentPage },
          { path: 'create-address', name: 'create-address', component: CreateAddressPage },
+         { path: 'install', name: 'install', component: InstallPage },
       ],
    },
 ]
