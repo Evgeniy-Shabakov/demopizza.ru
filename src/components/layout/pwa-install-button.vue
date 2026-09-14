@@ -4,6 +4,7 @@ import { installPrompt } from '@/helpers/pwa/pwa-btn-initialize'
 import { BROWSER_TYPE, detectBrowser, isPWA } from '@/helpers/pwa/enviroment-detecting'
 
 const router = useRouter()
+
 function install() {
    if (detectBrowser() == BROWSER_TYPE.YANDEX) {
       router.push('/install')
@@ -18,9 +19,10 @@ const isPWAdetect = isPWA()
 </script>
 
 <template>
-   <ButtonLg v-if="!isPWAdetect"
-             @click="install">
+   <Button v-if="!isPWAdetect"
+           class="w-full h-14 py-2.5"
+           @click="install">
       <Download class="size-5" />
       Установить мобильное <br> приложение
-   </ButtonLg>
+   </Button>
 </template>
