@@ -3,6 +3,7 @@ import { authUser } from '@/composables/use-auth-user'
 import { formatPhone } from '@/helpers/format-phone';
 import { lastOrder } from '@/composables/orders/use-last-order'
 import { repeatOrder } from '@/composables/use-cart'
+import { MapPin, UserRound, History, RotateCcw } from '@lucide/vue'
 
 const router = useRouter()
 
@@ -20,18 +21,21 @@ function repeatLastOrder() {
    <div class="flex flex-col gap-3 mt-4">
       <Button as-child>
          <RouterLink to="/profile/delivery-addresses">
+            <MapPin class="size-4" />
             Адреса доставки
          </RouterLink>
       </Button>
 
       <Button as-child>
          <RouterLink to="/profile/edit">
+            <UserRound class="size-4" />
             Управление профилем
          </RouterLink>
       </Button>
 
       <Button as-child>
          <RouterLink to="/profile/order-history">
+            <History class="size-4" />
             История заказов
          </RouterLink>
       </Button>
@@ -44,6 +48,7 @@ function repeatLastOrder() {
    <BottomBar>
       <ButtonLgWfull v-if="lastOrder"
                      @click="repeatLastOrder">
+         <RotateCcw class="size-5" />
          Повторить последний заказ
       </ButtonLgWfull>
       <ButtonLgWfull v-else
