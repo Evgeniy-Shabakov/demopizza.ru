@@ -1,5 +1,5 @@
 <script setup>
-import { Cookie } from '@lucide/vue'
+import { Cookie, CircleCheck } from '@lucide/vue'
 import { isCookieConsentAccepted } from '@/composables/use-cookie-consent'
 
 function acceptCookieConsent() {
@@ -26,9 +26,10 @@ function acceptCookieConsent() {
                   политикой обработки персональных данных
                </BaseLink>.
             </p>
-            <Button class="w-full"
-                    size="lg"
-                    @click="acceptCookieConsent">
+<Button class="w-full"
+                     size="lg"
+                     @click="acceptCookieConsent">
+               <CircleCheck class="size-5" />
                Принять
             </Button>
          </div>
