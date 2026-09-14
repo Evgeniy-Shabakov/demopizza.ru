@@ -1,15 +1,25 @@
 <script setup>
+// onMounted(() => {
+//    //костыль который помогает убрать лишнюю высоту и полосу прокрутки
+//    //при обновлении страницы в PWA на страницах где мало контента
+//    const mainElement = document.querySelector('main')
+//
+//    const dvh = window.visualViewport ? window.visualViewport.height : window.innerHeight
+//    mainElement.style.minHeight = `${dvh}px`
+// })
+
 onMounted(() => {
-   //костыль который помогает убрать лишнюю высоту и полосу прокрутки
-   //при обновлении страницы в PWA на страницах где мало контента
    const mainElement = document.querySelector('main')
+   const desktopHeaderHeight = document.getElementById('desktop-header')?.offsetHeight ?? 0
 
    const dvh = window.visualViewport ? window.visualViewport.height : window.innerHeight
-   mainElement.style.minHeight = `${dvh}px`
+   mainElement.style.minHeight = `${dvh - desktopHeaderHeight}px`
 })
 </script>
 
 <template>
+
+   <DesktopHeader />
 
    <ContainerX>
 

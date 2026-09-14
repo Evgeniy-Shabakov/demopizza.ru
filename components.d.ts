@@ -41,6 +41,7 @@ declare module 'vue' {
     ContainerX: typeof import('./src/components/layout/container-x.vue')['default']
     CookieConsent: typeof import('./src/components/layout/cookie-consent.vue')['default']
     DeliveryAddressSelect: typeof import('./src/components/cart-page/delivery-address-select.vue')['default']
+    DesktopHeader: typeof import('./src/components/layout/desktop-header.vue')['default']
     Dialog: typeof import('./src/shadcn/ui/dialog/Dialog.vue')['default']
     DialogClose: typeof import('./src/shadcn/ui/dialog/DialogClose.vue')['default']
     DialogContent: typeof import('./src/shadcn/ui/dialog/DialogContent.vue')['default']
