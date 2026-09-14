@@ -32,8 +32,6 @@ const isNotFound = computed(() =>
 </script>
 
 <template>
-   <PageHeader>Карточка товара</PageHeader>
-
    <SpinnerCenter v-if="isLoadingCategories" />
 
    <div v-else-if="isNotFound"
