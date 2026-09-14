@@ -1,5 +1,5 @@
 <script setup>
-import { Minus, Plus } from '@lucide/vue'
+import { Minus, Plus, ShoppingCart, Hourglass } from '@lucide/vue'
 import { categories, isLoadingCategories, loadCategories } from '@/composables/use-categories'
 import { itemsInCart, addProductToCart, minusProductFromCart } from '@/composables/use-cart'
 import { isProductInStopList } from '@/helpers/is-product-in-stop-list'
@@ -65,6 +65,7 @@ const isNotFound = computed(() =>
 
       <ButtonLgWfull v-else-if="isInStopList"
                      disabled>
+         <Hourglass class="size-5" />
          Будет позже
       </ButtonLgWfull>
 
@@ -85,6 +86,7 @@ const isNotFound = computed(() =>
 
       <ButtonLgWfull v-else
                      @click="addProductToCart(id)">
+         <ShoppingCart class="size-5" />
          В корзину
       </ButtonLgWfull>
    </BottomBar>

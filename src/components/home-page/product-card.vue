@@ -1,5 +1,5 @@
 <script setup>
-import { Minus, Plus } from '@lucide/vue'
+import { Minus, Plus, ShoppingCart, Hourglass } from '@lucide/vue'
 import { itemsInCart, addProductToCart, minusProductFromCart } from '@/composables/use-cart'
 import { isProductInStopList } from '@/helpers/is-product-in-stop-list'
 
@@ -28,11 +28,12 @@ const cartItem = computed(() =>
             {{ product.descriptionShort }}
          </CardDescription>
       </RouterLink>
-      
+
       <div class="font-semibold text-sm mt-auto">{{ product.priceDefault }} ₽</div>
-      
+
       <ButtonWfull v-if="isInStopList"
                    disabled>
+         <Hourglass class="size-4" />
          Будет позже
       </ButtonWfull>
       <template v-else-if="cartItem && cartItem.quantity > 0">
@@ -49,6 +50,7 @@ const cartItem = computed(() =>
       </template>
       <ButtonWfull v-else
                    @click="addProductToCart(product.id)">
+         <ShoppingCart class="size-4" />
          В корзину
       </ButtonWfull>
 
