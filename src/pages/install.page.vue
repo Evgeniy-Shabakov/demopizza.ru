@@ -7,7 +7,7 @@ import googleOptionIcon from '@/assets/images/google-option.png'
 import googleChromeIcon from '@/assets/images/google-chrome.png'
 
 const brandName = import.meta.env.VITE_BRAND_NAME
-const linkInstallApp = window.location.origin
+const linkInstallApp = import.meta.env.VITE_LINK_INSTALL_APP
 
 const OS = detectOS()
 const Browser = detectBrowser()
