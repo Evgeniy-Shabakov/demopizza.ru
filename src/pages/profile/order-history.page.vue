@@ -29,16 +29,18 @@ function repeatOrderFromHistory(order) {
    </div>
 
    <div v-else
-        class="flex flex-col gap-3">
+        class="flex flex-col gap-8">
       <div v-for="order in ordersHistory"
            :key="order.id">
          <div class="text-sm text-muted-foreground text-center mb-1">
-            {{ new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }).format(new Date(order.createdAt)) }}
+            {{ new Intl.DateTimeFormat('ru-RU', {
+               day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit'
+            }).format(new Date(order.createdAt)) }}
          </div>
          <OrderCard :order="order" />
 
-<ButtonLgWfull class="mt-2"
-                         @click="repeatOrderFromHistory(order)">
+         <ButtonLgWfull class="mt-2"
+                        @click="repeatOrderFromHistory(order)">
             <ShoppingCartPlus class="size-5" />
             Повторить заказ
          </ButtonLgWfull>
