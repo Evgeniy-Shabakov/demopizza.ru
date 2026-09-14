@@ -32,8 +32,7 @@ const isNotFound = computed(() =>
 </script>
 
 <template>
-   <PageHeader v-if="currentProduct">{{ currentProduct.name }}</PageHeader>
-   <PageHeader v-else>Карточка товара</PageHeader>
+   <PageHeader>Карточка товара</PageHeader>
 
    <SpinnerCenter v-if="isLoadingCategories" />
 
@@ -45,9 +44,11 @@ const isNotFound = computed(() =>
    <template v-else-if="currentProduct">
       <img :src="currentProduct.imagePath"
            :alt="currentProduct.name"
-           class="w-60 mx-auto aspect-square rounded-2xl mb-4" />
+           class="w-full max-w-md mx-auto aspect-square rounded-2xl mb-4" />
 
-      <div class="text-2xl font-bold mb-2">
+      <h1 class="text-2xl font-bold mb-2">{{ currentProduct.name }}</h1>
+
+      <div class="text-lg font-semibold mb-2">
          {{ currentProduct.priceDefault }} ₽
       </div>
 
