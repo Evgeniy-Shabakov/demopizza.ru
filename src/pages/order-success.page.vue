@@ -1,5 +1,6 @@
 <script setup>
 import { authUser } from '@/composables/use-auth-user'
+import { UserRound } from '@lucide/vue'
 import { clearCart } from '@/composables/use-cart'
 import { currentOrder } from '@/composables/orders/use-current-order'
 
@@ -38,6 +39,7 @@ onBeforeRouteLeave(() => {
 
    <BottomBar>
       <ButtonLgWfull @click="$router.push('/profile')">
+         <UserRound class="size-5" />
          Личный кабинет
       </ButtonLgWfull>
    </BottomBar>
