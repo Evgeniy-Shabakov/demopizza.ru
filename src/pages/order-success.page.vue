@@ -23,7 +23,7 @@ onBeforeRouteLeave(() => {
       <div>
          Ваш заказ оформлен! <br>
          Статус заказа можно отследить <br>
-         в личном кабинете.
+         в личном кабинете
       </div>
       <div v-if="!authUser"
            class="text-sm font-normal text-destructive">
