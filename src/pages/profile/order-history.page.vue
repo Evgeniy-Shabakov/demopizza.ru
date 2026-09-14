@@ -1,6 +1,7 @@
 <script setup>
 import { ordersHistory, isLoadingOrdersHistory, ordersHistoryError, loadOrdersHistory } from '@/composables/orders/use-orders-history'
 import { repeatOrder } from '@/composables/use-cart'
+import { ShoppingCartPlus } from '@lucide/vue'
 
 const router = useRouter()
 
@@ -36,8 +37,9 @@ function repeatOrderFromHistory(order) {
          </div>
          <OrderCard :order="order" />
 
-         <ButtonLgWfull class="mt-2"
-                        @click="repeatOrderFromHistory(order)">
+<ButtonLgWfull class="mt-2"
+                         @click="repeatOrderFromHistory(order)">
+            <ShoppingCartPlus class="size-5" />
             Повторить заказ
          </ButtonLgWfull>
       </div>

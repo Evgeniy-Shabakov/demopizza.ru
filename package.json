@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@lucide/vue": "^1.28.0",
+    "@lucide/vue": "^1.45.0",
     "@tailwindcss/vite": "^4.3.0",
     "@turf/turf": "^7.3.5",
     "@vkid/sdk": "^2.6.8",
