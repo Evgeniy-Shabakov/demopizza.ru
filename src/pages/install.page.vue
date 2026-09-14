@@ -1,6 +1,7 @@
 <script setup>
 import { installPrompt } from '@/helpers/pwa/pwa-btn-initialize'
 import { BROWSER_TYPE, OS_TYPE, detectBrowser, detectOS } from '@/helpers/pwa/enviroment-detecting'
+import { Download, Home, Copy } from '@lucide/vue'
 import safariShareIcon from '@/assets/images/safari-share.png'
 import safariIcon from '@/assets/images/safari.png'
 import googleOptionIcon from '@/assets/images/google-option.png'
@@ -99,6 +100,7 @@ function copyLink() {
 
                   <div class="mt-4 flex flex-col gap-4">
                      <Button @click="copyLink">
+                        <Copy class="size-5" />
                         Скопировать ссылку
                      </Button>
                   </div>
@@ -143,6 +145,7 @@ function copyLink() {
 
                   <div class="mt-4 flex flex-col gap-4">
                      <Button @click="copyLink">
+                        <Copy class="size-5" />
                         Скопировать ссылку
                      </Button>
                   </div>
@@ -193,11 +196,13 @@ function copyLink() {
    <BottomBar>
       <ButtonLgWfull v-if="installPrompt && Browser != BROWSER_TYPE.YANDEX"
                      @click="installPrompt.prompt()">
+         <Download class="size-5" />
          Установить на {{ OS }}
       </ButtonLgWfull>
 
       <ButtonLgWfull v-else
                      @click="$router.push('/')">
+         <Home class="size-5" />
          На главную
       </ButtonLgWfull>
    </BottomBar>
