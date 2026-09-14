@@ -1,5 +1,6 @@
 <script setup>
 import { inputedPhone } from '@/composables/use-phone-input'
+import { CircleArrowRight } from '@lucide/vue'
 
 const isCheckedSoglasie = ref(false)
 </script>
@@ -20,8 +21,9 @@ const isCheckedSoglasie = ref(false)
    </div>
 
    <BottomBar>
-      <ButtonLgWfull :disabled="!isCheckedSoglasie || inputedPhone.length != 14"
-                     @click="$router.push('/order-panel')">
+<ButtonLgWfull :disabled="!isCheckedSoglasie || inputedPhone.length != 14"
+                      @click="$router.push('/order-panel')">
+         <CircleArrowRight class="size-5" />
          Продолжить
       </ButtonLgWfull>
    </BottomBar>
