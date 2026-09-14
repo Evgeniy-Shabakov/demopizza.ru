@@ -14,12 +14,12 @@ function acceptCookieConsent() {
       <ContainerX>
 
          <div class="p-4 flex flex-col gap-1">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center justify-center gap-2">
                <Cookie class="size-4 text-primary" />
                <h2 class="text-base font-semibold">Файлы cookie</h2>
             </div>
             <p class="text-sm leading-5 text-foreground mb-2">
-               Мы используем файлы cookie, чтобы сайт и мобильное приложжение работали
+               Мы используем файлы cookie, чтобы сайт и мобильное приложение работали
                корректно. Нажимая «Принять», вы соглашаетесь с
                <BaseLink to="/legal-documents">
                   политикой обработки персональных данных
