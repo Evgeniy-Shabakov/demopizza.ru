@@ -1,5 +1,6 @@
 <script setup>
 import { api } from '@/api/api'
+import { ClipboardCheck } from '@lucide/vue'
 import { currentCity } from '@/composables/use-cities'
 import {
    atRest, atRestToTable, deliveryToAddress, orderTypeId, pickUpAtCounter, orderTypeShortName
@@ -153,8 +154,9 @@ async function sendOrder() {
    </div>
 
    <BottomBar>
-      <ButtonLgWfull :disabled="!sendOrderIsActive"
-                     @click="sendOrder">
+<ButtonLgWfull :disabled="!sendOrderIsActive"
+                      @click="sendOrder">
+         <ClipboardCheck class="size-5" />
          Оформить зa {{ totalPrice }} ₽
       </ButtonLgWfull>
    </BottomBar>
