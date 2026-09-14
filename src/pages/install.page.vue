@@ -75,7 +75,7 @@ function copyLink() {
                         <img :src="safariShareIcon"
                              class="ml-2 inline size-6 bg-gray-200">
                      </li>
-                     <li>Выбирите опцию "Добавить на главный экран"</li>
+                     <li>Выберите опцию "Добавить на главный экран"</li>
                      <li>Нажмите "Добавить" в правом верхнем углу</li>
                   </ol>
                </div>
@@ -170,7 +170,7 @@ function copyLink() {
                      <li>Не требует обновлений</li>
                      <li>Защита по технологии HTTPS</li>
                   </ol>
-                  <div class="text-sm text-center text-(--danger-color)">
+                  <div class="text-sm text-center text-destructive">
                      Не все браузеры поддерживают установку PWA приложений <br>
                      Рекомендуется установка через Chrome и Safari
                   </div>
