@@ -3,7 +3,7 @@ import { authUser } from '@/composables/use-auth-user'
 import { formatPhone } from '@/helpers/format-phone';
 import { lastOrder } from '@/composables/orders/use-last-order'
 import { repeatOrder } from '@/composables/use-cart'
-import { MapPin, UserRound, History, ShoppingCartPlus, ArrowLeft } from '@lucide/vue'
+import { MapPin, UserRound, History, ShoppingCartPlus, CircleArrowLeft } from '@lucide/vue'
 
 const router = useRouter()
 
@@ -53,7 +53,7 @@ function repeatLastOrder() {
       </ButtonLgWfull>
 <ButtonLgWfull v-else
                       @click="$router.back()">
-         <ArrowLeft class="size-5" />
+         <CircleArrowLeft class="size-5" />
          Назад
       </ButtonLgWfull>
    </BottomBar>

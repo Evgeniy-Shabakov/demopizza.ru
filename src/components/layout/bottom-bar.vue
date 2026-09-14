@@ -1,5 +1,5 @@
 <script setup>
-import { ArrowLeft } from '@lucide/vue'
+import { CircleArrowLeft } from '@lucide/vue'
 </script>
 
 <template>
@@ -13,7 +13,7 @@ import { ArrowLeft } from '@lucide/vue'
 
             <ButtonLgWfull v-if="!$slots.default"
                             @click="$router.back()">
-               <ArrowLeft class="size-5" />
+               <CircleArrowLeft class="size-5" />
                Назад
             </ButtonLgWfull>
 
