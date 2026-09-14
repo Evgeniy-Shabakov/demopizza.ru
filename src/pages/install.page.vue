@@ -190,5 +190,15 @@ function copyLink() {
       </div>
    </div>
 
-   <BottomBar />
+   <BottomBar>
+      <ButtonLgWfull v-if="installPrompt && Browser != BROWSER_TYPE.YANDEX"
+                     @click="installPrompt.prompt()">
+         Установить на {{ OS }}
+      </ButtonLgWfull>
+
+      <ButtonLgWfull v-else
+                     @click="$router.push('/')">
+         На главную
+      </ButtonLgWfull>
+   </BottomBar>
 </template>
