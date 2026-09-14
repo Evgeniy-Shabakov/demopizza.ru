@@ -1,5 +1,6 @@
 <script setup>
 import { legalDocuments, loadLegalDocuments } from '@/composables/use-legal-documents'
+import { isCookieConsentAccepted } from '@/composables/use-cookie-consent'
 
 const route = useRoute()
 const id = route.params.id
@@ -23,7 +24,8 @@ function onIframeLoad() {
 
 <template>
 
-   <div class="flex-1 flex flex-col">
+   <div class="flex-1 flex flex-col"
+        :class="!isCookieConsentAccepted ? 'pb-40' : ''">
 
       <PageHeader>Правовая информация</PageHeader>
 
