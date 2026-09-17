@@ -15,13 +15,13 @@ const cartItem = computed(() =>
 </script>
 
 <template>
-   <Card class="gap-2 p-2">
+   <Card class="gap-2 p-2 rounded-sm">
 
       <RouterLink :to="{ name: 'product', params: { id: product.id } }"
                   class="flex flex-col gap-2 flex-1">
          <img :src="product.imagePath"
               :alt="product.title"
-              class="w-full aspect-square rounded-xl mb-1.5" />
+              class="w-full aspect-square rounded-sm mb-1.5" />
 
          <CardTitle>{{ product.name }}</CardTitle>
          <CardDescription class="line-clamp-2 sm:line-clamp-none">
