@@ -172,7 +172,7 @@ const isFinishedOrder = computed(() =>
       <div v-if="order.userComment"
            class="mt-2">
          <Label class="text-center block mb-2">Ваш комментарий</Label>
-         <Card class="p-2 ">{{ order.userComment }}</Card>
+         <Card class="p-2 rounded">{{ order.userComment }}</Card>
       </div>
 
    </Card>
