@@ -15,7 +15,7 @@ const cartItem = computed(() =>
 </script>
 
 <template>
-   <Card class="gap-2 p-2 rounded-sm">
+   <Card class="gap-2 p-1 rounded-sm">
 
       <RouterLink :to="{ name: 'product', params: { id: product.id } }"
                   class="flex flex-col gap-2 flex-1">
