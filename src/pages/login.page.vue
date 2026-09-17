@@ -110,7 +110,7 @@ async function handleButton() {
                      @click="handleButton">
          Продолжить с VK ID
          <img :src="vkLogo"
-               class="size-6 rounded-md object-contain"
+               class="size-6 rounded object-contain"
                alt="VK ID" />
       </ButtonLgWfull>
    </BottomBar>

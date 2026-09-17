@@ -42,7 +42,7 @@ const isNotFound = computed(() =>
    <template v-else-if="currentProduct">
       <img :src="currentProduct.imagePath"
            :alt="currentProduct.name"
-           class="w-full max-w-md mx-auto aspect-square rounded-2xl mb-4" />
+           class="w-full max-w-md mx-auto aspect-square rounded-sm mb-4" />
 
       <h1 class="text-2xl font-bold mb-2">{{ currentProduct.name }}</h1>
 
