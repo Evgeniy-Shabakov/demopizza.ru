@@ -5,7 +5,7 @@ import { productsInOrder, totalProductsInCart } from '@/composables/use-cart'
 <template>
    <div>
       <Label class="mb-1.5">Товары ({{ totalProductsInCart }} шт.)</Label>
-      <Card class="p-3 gap-2 text-sm">
+      <Card class="p-3 gap-2 text-sm rounded-sm">
          <div class="grid grid-cols-[auto_1fr_auto_auto] items-center gap-2">
             <template v-for="product in productsInOrder"
                       :key="product.productId">

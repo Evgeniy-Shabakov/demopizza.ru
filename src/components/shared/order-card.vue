@@ -76,7 +76,7 @@ const isFinishedOrder = computed(() =>
 </script>
 
 <template>
-   <Card class="gap-2 p-3 text-sm">
+   <Card class="gap-2 p-3 text-sm rounded-sm">
       <div class="grid grid-cols-3 items-center">
          <div class="justify-self-start">
             <span class="text-base font-bold text-primary">

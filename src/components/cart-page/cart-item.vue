@@ -9,7 +9,7 @@ defineProps({
 </script>
 
 <template>
-   <Card class="flex-row gap-3.5 p-2 sm:p-3 lg:p-4">
+   <Card class="flex-row gap-3.5 p-2 sm:p-3 lg:p-4 rounded-sm">
       <img :src="product.imagePath"
            class="w-1/5 sm:size-30 shrink-0 self-start aspect-square rounded-xl" />
       <div class="flex flex-col flex-1 min-w-0 justify-between">

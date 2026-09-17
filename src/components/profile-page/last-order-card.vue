@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-   <Card class="gap-2 p-3 text-sm">
+   <Card class="gap-2 p-3 text-sm rounded-sm">
       <div class="grid grid-cols-[auto_1fr_auto] items-center gap-1">
          <template v-for="orderProduct in order.orderProducts"
                    :key="orderProduct.product.id">
