@@ -122,7 +122,7 @@ const isFinishedOrder = computed(() =>
 
             <img :src="orderProduct.product.imagePath"
                  :alt="orderProduct.product.name"
-                 class="size-8 aspect-square rounded-xl object-cover" />
+                 class="size-8 aspect-square rounded object-cover" />
 
             <div class="min-w-0 truncate">
                {{ orderProduct.product.name }}

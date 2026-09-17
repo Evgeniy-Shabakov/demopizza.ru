@@ -51,8 +51,8 @@ function repeatLastOrder() {
          <ShoppingCartPlus class="size-5" />
          Повторить последний заказ
       </ButtonLgWfull>
-<ButtonLgWfull v-else
-                      @click="$router.back()">
+      <ButtonLgWfull v-else
+                     @click="$router.back()">
          <CircleArrowLeft class="size-5" />
          Назад
       </ButtonLgWfull>

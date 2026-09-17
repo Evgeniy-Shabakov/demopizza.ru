@@ -154,8 +154,8 @@ async function sendOrder() {
    </div>
 
    <BottomBar>
-<ButtonLgWfull :disabled="!sendOrderIsActive"
-                      @click="sendOrder">
+      <ButtonLgWfull :disabled="!sendOrderIsActive"
+                     @click="sendOrder">
          <ClipboardCheck class="size-5" />
          Оформить зa {{ totalPrice }} ₽
       </ButtonLgWfull>

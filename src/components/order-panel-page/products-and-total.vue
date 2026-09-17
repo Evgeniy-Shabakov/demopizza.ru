@@ -11,7 +11,7 @@ import { productsInOrder, totalProductsInCart } from '@/composables/use-cart'
                       :key="product.productId">
 
                <img :src="product.imagePath"
-                    class="size-8 aspect-square rounded-xl object-cover" />
+                    class="size-8 aspect-square rounded object-cover" />
 
                <div>
                   {{ product.name }}
