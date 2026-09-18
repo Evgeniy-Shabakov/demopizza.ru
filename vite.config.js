@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => {
          }),
          VitePWA({
             registerType: 'autoUpdate',
+            includeAssets: ['favicon.png', 'logo.png'],
             manifest: {
                name: env.VITE_BRAND_NAME,
                short_name: env.VITE_BRAND_NAME,
