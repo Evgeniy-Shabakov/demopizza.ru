@@ -21,6 +21,8 @@ const cartItem = computed(() =>
                   class="flex flex-col gap-2 flex-1">
          <img :src="product.imagePath"
               :alt="product.title"
+              loading="lazy"
+              decoding="async"
               class="w-full aspect-square rounded-sm mb-1.5" />
 
          <CardTitle>{{ product.name }}</CardTitle>
