@@ -1,7 +1,7 @@
 <script setup>
 import { Download } from '@lucide/vue'
-import { installPrompt } from '@/helpers/pwa/pwa-btn-initialize'
-import { BROWSER_TYPE, detectBrowser, isPWA } from '@/helpers/pwa/enviroment-detecting'
+import { installPrompt } from '@/pwa/helpers/pwa-btn-initialize'
+import { BROWSER_TYPE, detectBrowser, isPWA } from '@/pwa/helpers/enviroment-detecting'
 
 const router = useRouter()
 

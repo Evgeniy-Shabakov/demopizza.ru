@@ -1,11 +1,11 @@
 <script setup>
-import { installPrompt } from '@/helpers/pwa/pwa-btn-initialize'
-import { BROWSER_TYPE, OS_TYPE, detectBrowser, detectOS } from '@/helpers/pwa/enviroment-detecting'
+import { installPrompt } from '@/pwa/helpers/pwa-btn-initialize'
+import { BROWSER_TYPE, OS_TYPE, detectBrowser, detectOS } from '@/pwa/helpers/enviroment-detecting'
 import { Download, Home, Copy } from '@lucide/vue'
-import safariShareIcon from '@/assets/images/safari-share.png'
-import safariIcon from '@/assets/images/safari.png'
-import googleOptionIcon from '@/assets/images/google-option.png'
-import googleChromeIcon from '@/assets/images/google-chrome.png'
+import safariShareIcon from '@/pwa/images/safari-share.png'
+import safariIcon from '@/pwa/images/safari.png'
+import googleOptionIcon from '@/pwa/images/google-option.png'
+import googleChromeIcon from '@/pwa/images/google-chrome.png'
 
 const brandName = import.meta.env.VITE_BRAND_NAME
 const linkInstallApp = import.meta.env.VITE_LINK_INSTALL_APP

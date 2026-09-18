@@ -82,7 +82,6 @@ declare module 'vue' {
     PhoneInput: typeof import('./src/components/phone-page/phone-input.vue')['default']
     ProductCard: typeof import('./src/components/home-page/product-card.vue')['default']
     ProductsAndTotal: typeof import('./src/components/order-panel-page/products-and-total.vue')['default']
-    PwaInstallButton: typeof import('./src/components/layout/pwa-install-button.vue')['default']
     RestaurantSelect: typeof import('./src/components/cart-page/restaurant-select.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

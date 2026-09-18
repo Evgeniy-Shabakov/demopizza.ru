@@ -2,6 +2,7 @@
 import { Menu, X, Phone } from '@lucide/vue'
 import { company } from '@/composables/use-company'
 import { formatPhone } from '@/helpers/format-phone'
+import PwaInstallButton from '@/pwa/components/pwa-install-button.vue'
 
 </script>
 

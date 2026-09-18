@@ -41,6 +41,7 @@ src/
   helpers/        # Pure utility functions
   layouts/        # Layout wrappers (default.layout.vue)
   pages/          # Route page components
+  pwa/            # PWA: components (install page, install button), helpers, images, vite config
   shadcn/         # shadcn-vue components
     lib/          # cn(), shadcn utilities
     ui/           # shadcn UI primitives (kebab-case dirs)
@@ -86,6 +87,10 @@ src/
 ### Components That MUST Be Explicitly Imported
 - Layouts: `import DefaultLayout from '@/layouts/default.layout.vue'` (in router.js).
 - Page components: `import HomePage from '@/pages/home.page.vue'` (in router.js).
+- `src/pwa/` files are NOT auto-imported/auto-registered:
+  - `PwaInstallButton`: `import PwaInstallButton from '@/pwa/components/pwa-install-button.vue'` (in burger-menu.vue).
+  - `InstallPage`: `import InstallPage from '@/pwa/components/install.page.vue'` (in routes.js).
+  - `pwaBtnInitialize`: `import { pwaBtnInitialize } from '@/pwa/helpers/pwa-btn-initialize'` (in initialize.js).
 
 ### Props & Events
 - Define props using **object syntax** with `type`, `required`, `default`:

@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { VitePWA } from 'vite-plugin-pwa'
+import { pwaViteConfig } from './src/pwa/pwa-vite-config'
 
 export default defineConfig(({ mode }) => {
    const env = loadEnv(mode, process.cwd(), '')
@@ -27,22 +27,7 @@ export default defineConfig(({ mode }) => {
             extensions: ['vue'],
             dts: true,
          }),
-         VitePWA({
-            registerType: 'autoUpdate',
-            includeAssets: ['favicon.png', 'logo.png'],
-            manifest: {
-               name: env.VITE_BRAND_NAME,
-               short_name: env.VITE_BRAND_NAME,
-               start_url: '/',
-               theme_color: '#ffffff',
-               background_color: '#F5F5F5',
-               display: 'standalone',
-               icons: [
-                  { src: '/pwa-icon-192x192.png', sizes: '192x192', type: 'image/png' },
-                  { src: '/pwa-icon-512x512.png', sizes: '512x512', type: 'image/png' },
-               ],
-            },
-         }),
+         pwaViteConfig(env),
       ],
       resolve: {
          alias: {

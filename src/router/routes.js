@@ -16,7 +16,7 @@ import PhonePage from '@/pages/phone.page.vue'
 import OrderSuccessPage from '@/pages/order-success.page.vue'
 import LoginPage from '@/pages/login.page.vue'
 import ProductPage from '@/pages/product.page.vue'
-import InstallPage from '@/pages/install.page.vue'
+import InstallPage from '@/pwa/components/install.page.vue'
 
 export const routes = [
    {
