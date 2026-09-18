@@ -1,5 +1,7 @@
 <script setup>
 import { categories, isLoadingCategories } from '@/composables/use-categories'
+
+defineOptions({ name: 'HomePage' }) //для keep-alive в layout
 </script>
 
 <template>
