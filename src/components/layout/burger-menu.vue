@@ -4,20 +4,24 @@ import { company } from '@/composables/use-company'
 import { formatPhone } from '@/helpers/format-phone'
 import PwaInstallButton from '@/pwa/components/pwa-install-button.vue'
 
+const isMenuOpen = ref(false) //добавлено из-за keep-alive в layout
+const route = useRoute()
+watch(() => route.path, () => { isMenuOpen.value = false })
+
 </script>
 
 <template>
-   <DropdownMenu v-slot="{ open }">
+   <DropdownMenu v-model:open="isMenuOpen">
       <DropdownMenuTrigger as-child>
          <ButtonIcon variant="ghost">
-            <Menu v-if="!open"
+            <Menu v-if="!isMenuOpen"
                   class="size-5" />
             <X v-else
                class="size-5" />
          </ButtonIcon>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent class="flex flex-col gap-2 p-2">
+      <DropdownMenuContent class="flex flex-col gap-2 p-2 data-[state=closed]:animate-none!">
 
          <CitySelect />
 
