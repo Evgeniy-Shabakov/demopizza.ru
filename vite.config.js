@@ -35,7 +35,7 @@ export default defineConfig(({ mode }) => {
                short_name: env.VITE_BRAND_NAME,
                start_url: '/',
                theme_color: '#ffffff',
-               background_color: '#ffffff',
+               background_color: '#F8F9FA',
                display: 'standalone',
                icons: [
                   { src: '/pwa-icon-192x192.png', sizes: '192x192', type: 'image/png' },
