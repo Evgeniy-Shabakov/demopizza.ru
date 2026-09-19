@@ -1,4 +1,5 @@
 <script setup>
+import { CircleCheck, CircleX } from '@lucide/vue'
 import { ORDER_STATUS, ORDER_STATUS_NAME_BY_ID } from '@/constants/order-status'
 import { ORDER_TYPE } from '@/constants/order-type'
 import { PAYMENT_STATUS, PAYMENT_STATUS_NAME_BY_ID } from '@/constants/payment-status'
@@ -19,10 +20,18 @@ const props = defineProps({
 
 const paymentStatusClass = computed(() => {
    const status = props.order?.paymentStatusId
-   if (status === PAYMENT_STATUS.PAID.ID) return 'text-primary font-semibold'
+   if (status === PAYMENT_STATUS.PAID.ID) return 'text-green-600 dark:text-green-500 font-semibold'
    if (status === PAYMENT_STATUS.NO_PAID.ID) return 'text-destructive font-semibold'
    if (status === PAYMENT_STATUS.FAILED.ID) return 'text-destructive font-semibold'
    return 'text-chart-4 font-semibold'
+})
+
+const paymentStatusIcon = computed(() => {
+   const status = props.order?.paymentStatusId
+   if (status === PAYMENT_STATUS.PAID.ID) return CircleCheck
+   if (status === PAYMENT_STATUS.NO_PAID.ID) return CircleX
+   if (status === PAYMENT_STATUS.FAILED.ID) return CircleX
+   return null
 })
 
 const isDelivery = computed(() => props.order.orderTypeId == ORDER_TYPE.DELIVERY_TO_ADDRESS.ID)
@@ -143,7 +152,9 @@ const isFinishedOrder = computed(() =>
          <div class="flex flex-col gap-2">
             <Badge v-if="showPaymentStatus"
                    variant="outline"
-                   :class="paymentStatusClass">
+                   :class="paymentStatusClass"
+                   class="inline-flex items-center gap-1">
+               <component :is="paymentStatusIcon" class="size-4" v-if="paymentStatusIcon" />
                {{ PAYMENT_STATUS_NAME_BY_ID[order.paymentStatusId] }}
             </Badge>
             <a v-if="order.payment?.paymentUrl"
