@@ -28,13 +28,10 @@ onBeforeUnmount(() => {
          Активные заказы
       </h2>
 
-      <div v-if="isLoadingActiveOrders && !activeOrders.length"
-           class="flex min-h-8 items-center justify-center">
-         <Spinner class="size-7 text-primary" />
-      </div>
+      <SpinnerCenter v-if="isLoadingActiveOrders && !activeOrders.length" />
 
       <div v-else-if="activeOrdersError"
-           class="min-h-8 text-center text-sm text-destructive">
+           class="text-center text-sm text-destructive">
          {{ activeOrdersError }}
       </div>
 
@@ -46,7 +43,7 @@ onBeforeUnmount(() => {
       </div>
 
       <div v-else
-           class=" min-h-8  text-center text-sm text-muted-foreground">
+           class="text-center text-sm text-muted-foreground">
          Нет активных заказов
       </div>
    </section>
