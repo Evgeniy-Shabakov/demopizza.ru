@@ -28,7 +28,12 @@ onBeforeUnmount(() => {
          Активные заказы
       </h2>
 
-      <SpinnerCenter v-if="isLoadingActiveOrders && !activeOrders.length" />
+      <template v-if="isLoadingActiveOrders && !activeOrders.length">
+         <SpinnerCenter />
+         <div class="text-center text-sm text-muted-foreground">
+            Загружаем активные заказы...
+         </div>
+      </template>
 
       <div v-else-if="activeOrdersError"
            class="text-center text-sm text-destructive">
@@ -46,5 +51,6 @@ onBeforeUnmount(() => {
            class="text-center text-sm text-muted-foreground">
          Нет активных заказов
       </div>
+
    </section>
 </template>
