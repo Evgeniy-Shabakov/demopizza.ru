@@ -20,22 +20,25 @@ onBeforeUnmount(() => {
          Активные заказы
       </h2>
 
-      <SpinnerCenter v-if="isLoadingActiveOrders && !activeOrders.length" />
+      <div v-if="isLoadingActiveOrders && !activeOrders.length"
+           class="flex min-h-8 items-center justify-center">
+         <Spinner class="size-7 text-primary" />
+      </div>
 
       <div v-else-if="activeOrdersError"
-           class="text-center text-sm text-destructive">
+           class="min-h-8 text-center text-sm text-destructive">
          {{ activeOrdersError }}
       </div>
 
       <div v-else-if="activeOrders.length"
            class="flex flex-col gap-3">
          <OrderCard v-for="order in activeOrders"
-                        :key="order.id"
-                        :order="order" />
+                    :key="order.id"
+                    :order="order" />
       </div>
 
       <div v-else
-           class="text-center text-sm text-muted-foreground">
+           class=" min-h-8  text-center text-sm text-muted-foreground">
          Нет активных заказов
       </div>
    </section>
