@@ -4,6 +4,8 @@ import { normalizeProductImagePathForOrders } from '@/helpers/normalize-product-
 export const activeOrders = ref([])
 export const isLoadingActiveOrders = ref(false)
 export const activeOrdersError = ref(null)
+export const isActiveOrdersFirstLoaded = ref(false)
+export const isOrderCreatedForActiveOrders = ref(false)
 
 export async function loadActiveOrders() {
    if (isLoadingActiveOrders.value) return

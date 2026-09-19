@@ -1,11 +1,19 @@
 <script setup>
-import { activeOrders, isLoadingActiveOrders, activeOrdersError, loadActiveOrders }
+import {
+   activeOrders, isLoadingActiveOrders, activeOrdersError,
+   isActiveOrdersFirstLoaded, isOrderCreatedForActiveOrders, loadActiveOrders
+}
    from '@/composables/orders/use-active-orders'
 
 let refreshTimer = null
 
 onMounted(() => {
-   loadActiveOrders()
+   if (!isActiveOrdersFirstLoaded.value || isOrderCreatedForActiveOrders.value
+      || activeOrders.value.length > 0) {
+      isActiveOrdersFirstLoaded.value = true
+      isOrderCreatedForActiveOrders.value = false
+      loadActiveOrders()
+   }
    refreshTimer = setInterval(loadActiveOrders, 30000)
 })
 

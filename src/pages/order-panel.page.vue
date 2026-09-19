@@ -16,6 +16,7 @@ import { deliveryPrice, totalPrice, totalProductPrice } from '@/composables/use-
 import { authUser } from '@/composables/use-auth-user'
 import { currentDeliveryZone } from '@/composables/use-delivery-zones'
 import { currentOrder } from '@/composables/orders/use-current-order'
+import { isOrderCreatedForActiveOrders } from '@/composables/orders/use-active-orders'
 import { packTakeaway, tableNumber } from '@/composables/use-order-restaurant-settings'
 import { lastOrder } from '@/composables/orders/use-last-order'
 import { normalizeProductImagePathForOrder } from '@/helpers/normalize-product-image-path'
@@ -102,10 +103,11 @@ async function sendOrder() {
    try {
       const res = await api.post(`/orders`, orderData)
       currentOrder.value = res.data.data
-
+      
       normalizeProductImagePathForOrder(currentOrder.value)
-
+      
       lastOrder.value = JSON.parse(JSON.stringify(currentOrder.value))
+      isOrderCreatedForActiveOrders.value = true
 
       if (currentOrder.value.payment?.paymentUrl) {
          window.location.href = currentOrder.value.payment.paymentUrl
