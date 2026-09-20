@@ -123,7 +123,7 @@ src/
 
 ### API Layer
 - Use the shared Axios instance from `src/api/api.js`: `import { api } from '@/api/api'`.
-- Base URL from `import.meta.env.VITE_SEREVER_API_BASE_URL`.
+- Base URL computed from `window.location.hostname`: dev (`localhost`) → `http://localhost:5000`, prod → `https://api.<hostname>`, then `/api/v1`.
 - `api.get()`, `api.post()`, etc. — returns `response.data` from which composables typically destructure `response.data.data`.
 
 ### Error Handling
@@ -141,6 +141,6 @@ src/
 - `<router-link>` and `<router-view>` are auto-imported.
 - `useRoute()` and `useRouter()` are auto-imported.
 - Dark mode uses `useDark()` (auto-imported from @vueuse/core) + Tailwind dark variant.
-- `.env` contains `VITE_BRAND_NAME`, `VITE_SERVER_BASE_URL`, `VITE_SEREVER_API_BASE_URL` (the misspelling is intentional — do not "fix" it).
+- `.env` contains `VITE_BRAND_NAME`.
 - `src/app/initialize.js` runs at startup (imported in `main.js`), pre-loading cities, restaurants, and company data, and enabling dark mode.
 - When modifying shadcn components, keep the same structure: component + `index.js` exporting variants.

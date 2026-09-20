@@ -1,9 +1,9 @@
-const baseUrl = import.meta.env.VITE_SERVER_BASE_URL
+import { serverOrigin } from '@/api/api'
 
 function normalizeProductImagePath(product) {
    if (!product || !product.imagePath) return
 
-   product.imagePath = `${baseUrl}/${product.imagePath.replace(/^\//, '')
+   product.imagePath = `${serverOrigin}/${product.imagePath.replace(/^\//, '')
       .replace(/^storage\/public\/?/, '')}`
 }
 
