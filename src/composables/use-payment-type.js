@@ -9,8 +9,9 @@ export const AVAILABLE_PAYMENT_TYPES = computed(() => {
    return Object.values(PAYMENT_TYPE).filter(paymentType => enabledIds.includes(paymentType.ID))
 })
 
-watch(() => company.value?.options?.paymentTypeSetting, setting => {
+watch(company, () => {
    if (!company.value) return
+   const setting = company.value?.options?.paymentTypeSetting
    const enabledIds = setting?.enabledPaymentTypeIds ?? []
    const defaultId = setting?.paymentTypeIdByDefault
    const reassignedId = enabledIds.includes(Number(defaultId))
