@@ -2,12 +2,12 @@
 import { installPrompt } from '@/pwa/helpers/pwa-btn-initialize'
 import { BROWSER_TYPE, OS_TYPE, detectBrowser, detectOS } from '@/pwa/helpers/enviroment-detecting'
 import { Download, Home, Copy } from '@lucide/vue'
+import { company } from '@/composables/use-company'
 import safariShareIcon from '@/pwa/images/safari-share.png'
 import safariIcon from '@/pwa/images/safari.png'
 import googleOptionIcon from '@/pwa/images/google-option.png'
 import googleChromeIcon from '@/pwa/images/google-chrome.png'
 
-const brandName = import.meta.env.VITE_BRAND_NAME
 const linkInstallApp = `${window.location.origin}/install`
 
 const OS = detectOS()
@@ -44,7 +44,7 @@ function copyLink() {
       <PageHeader>
          <div>Установка приложения</div>
          <div class="flex justify-center items-center gap-2">
-            <div class="text-2xl">{{ brandName }}</div>
+            <div class="text-2xl">{{ company?.brandName }}</div>
             <img class="size-7"
                  src="/logo.png">
          </div>

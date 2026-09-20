@@ -15,8 +15,6 @@ import { company } from '@/composables/use-company'
 import { formatPhone } from '@/helpers/format-phone'
 import { totalProductsInCart } from '@/composables/use-cart'
 
-const brandName = import.meta.env.VITE_BRAND_NAME
-
 const route = useRoute()
 
 const isDark = useDark()
@@ -51,7 +49,7 @@ function isNavActive(link) {
                         class="flex items-center gap-2 shrink-0">
 <img src="/logo.png"
                      class="size-10 object-contain" />
-               <span class="font-bold text-2xl">{{ brandName }}</span>
+               <span class="font-bold text-2xl">{{ company?.brandName }}</span>
             </RouterLink>
 
             <div class="flex items-center gap-2 shrink-0">

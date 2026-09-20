@@ -5,8 +5,8 @@ export function pwaViteConfig(env) {
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'logo.png'],
       manifest: {
-         name: env.VITE_BRAND_NAME,
-         short_name: env.VITE_BRAND_NAME,
+         name: env.VITE_PWA_NAME,
+         short_name: env.VITE_PWA_NAME,
          start_url: '/',
          theme_color: '#ffffff',
          background_color: '#F5F5F5',
