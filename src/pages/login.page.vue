@@ -2,27 +2,30 @@
 import * as VKID from '@vkid/sdk'
 import { User, PackageCheck, MapPin } from '@lucide/vue'
 import { loginUser } from '@/composables/use-auth-user'
+import { company } from '@/composables/use-company'
 import vkLogo from '@/assets/images/vk-logo.png'
 
 const route = useRoute()
 const router = useRouter()
 
-const vkAppId = import.meta.env.VITE_VK_APP_ID
+const vkAppId = computed(() => company.value?.vkAppId)
 const isCheckedSoglasie = ref(false)
 const isLoading = ref(false)
 const errorAuth = ref()
 
-if (vkAppId) {
+watch(vkAppId, (id) => {
+   if (!id) return
+
    VKID.Config.init({
-      app: import.meta.env.VITE_VK_APP_ID,
+      app: id,
       redirectUrl:  `${window.location.origin}/login`,
       responseMode: VKID.ConfigResponseMode.Callback,
       scope: 'phone',
    })
-}
+}, { immediate: true })
 
 async function handleButton() {
-   if (!vkAppId) return
+   if (!vkAppId.value) return
 
    errorAuth.value = null
    isLoading.value = true
