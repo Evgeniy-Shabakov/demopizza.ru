@@ -5,6 +5,7 @@ export const paymentTypeId = useLocalStorage('payment_type_id', 0)
 
 export const AVAILABLE_PAYMENT_TYPES = computed(() => {
    const enabledIds = company.value?.options?.paymentTypeSetting?.enabledPaymentTypeIds ?? []
+   if (!enabledIds.length) return [PAYMENT_TYPE.CASH]
    return Object.values(PAYMENT_TYPE).filter(paymentType => enabledIds.includes(paymentType.ID))
 })
 
