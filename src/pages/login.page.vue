@@ -15,7 +15,7 @@ const errorAuth = ref()
 if (vkAppId) {
    VKID.Config.init({
       app: import.meta.env.VITE_VK_APP_ID,
-      redirectUrl: import.meta.env.VITE_VK_REDIRECT_URL,
+      redirectUrl:  `${window.location.origin}/login`,
       responseMode: VKID.ConfigResponseMode.Callback,
       scope: 'phone',
    })
