@@ -1,10 +1,10 @@
-name: ${PROJECT_NAME}-client
+name: ${DOCKER_NAME}-client
 
 services:
   client-service:
     build: .
-    image: ${PROJECT_NAME}-client-image:latest
-    container_name: ${PROJECT_NAME}-client-container
+    image: ${DOCKER_NAME}-client-image:latest
+    container_name: ${DOCKER_NAME}-client-container
     restart: unless-stopped
     networks:
       - docker-network
