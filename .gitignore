@@ -2,10 +2,6 @@
 
 docker-compose.override.yml
 
-favicon.*
-logo.*
-
-public/manifest.webmanifest
 public/pwa-icon-192x192.png
 public/pwa-icon-512x512.png
 

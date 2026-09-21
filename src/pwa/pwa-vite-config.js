@@ -3,7 +3,6 @@ import { VitePWA } from 'vite-plugin-pwa'
 export function pwaViteConfig(env) {
    return VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.png'],
       manifest: {
          name: env.VITE_PWA_NAME,
          short_name: env.VITE_PWA_NAME,
