@@ -13,10 +13,18 @@ pwaBtnInitialize()
 
 useDark()
 
-useFavicon(`${serverOrigin}/images/favicon.png`)
-
 loadCategories()
 loadAuthUser()
 loadCities()
 loadRestaurants()
 loadCompany()
+
+setServerFavicon()
+
+function setServerFavicon() {
+   const serverFaviconUrl = `${serverOrigin}/images/favicon.png`
+
+   const faviconProbe = new Image()
+   faviconProbe.onload = () => useFavicon(serverFaviconUrl)
+   faviconProbe.src = serverFaviconUrl
+}
