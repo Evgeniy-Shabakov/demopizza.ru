@@ -14,6 +14,7 @@ import {
 import { company } from '@/composables/use-company'
 import { formatPhone } from '@/helpers/format-phone'
 import { totalProductsInCart } from '@/composables/use-cart'
+import { serverOrigin } from '@/api/api'
 
 const route = useRoute()
 
@@ -39,7 +40,7 @@ function isNavActive(link) {
 
 <template>
    <header id="desktop-header"
-        class="hidden lg:block border-b bg-background">
+           class="hidden lg:block border-b bg-background">
 
       <ContainerX>
 
@@ -47,8 +48,8 @@ function isNavActive(link) {
 
             <RouterLink to="/"
                         class="flex items-center gap-2 shrink-0">
-<img src="/logo.png"
-                     class="size-10 object-contain" />
+               <img :src="`${serverOrigin}/images/logo.png`"
+                    class="size-10 object-contain" />
                <span class="font-bold text-2xl">{{ company?.brandName }}</span>
             </RouterLink>
 
