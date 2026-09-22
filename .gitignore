@@ -1,6 +1,6 @@
 .env
 
-docker-compose.override.yml
+deploy/
 
 # Logs
 logs
