@@ -141,6 +141,6 @@ src/
 - `<router-link>` and `<router-view>` are auto-imported.
 - `useRoute()` and `useRouter()` are auto-imported.
 - Dark mode uses `useDark()` (auto-imported from @vueuse/core) + Tailwind dark variant.
-- `.env` contains `VITE_PWA_NAME` (used only for the PWA manifest).
+- PWA manifest is served by the API (`api.<host>/api/v1/pwa/manifest.json`, tenant-specific) and proxied by nginx to `/<manifest.json>`; `index.html` has `<link rel="manifest" href="/manifest.json">`, `vite-plugin-pwa` runs with `manifest: false`.
 - `src/app/initialize.js` runs at startup (imported in `main.js`), pre-loading cities, restaurants, and company data, and enabling dark mode.
 - When modifying shadcn components, keep the same structure: component + `index.js` exporting variants.
