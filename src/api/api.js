@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const serverOrigin = window.location.hostname === 'localhost'
    ? 'http://localhost:5000'
-   : `https://api.${window.location.hostname}`
+   : `https://${window.location.hostname}`
 
 export const api = axios.create({
   baseURL: `${serverOrigin}/api/v1`,
